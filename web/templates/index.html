@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEE Detector | Hybrid Sandbox</title>
+    <!-- Modern Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-mesh"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h1>SEE Detector</h1>
+            </div>
+            <p class="subtitle">Stealth Extension Exfiltration Analysis via Machine Learning</p>
+        </header>
+
+        <main>
+            <!-- Upload Section -->
+            <section id="upload-section" class="glass-panel">
+                <h2>Unggah Ekstensi</h2>
+                <p>Masukkan file <code>.crx</code> atau <code>.zip</code> untuk memulai proses Hybrid Analysis (Statis & Dinamis).</p>
+                
+                <div id="drop-zone" class="drop-zone">
+                    <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+                    <p>Seret & Lepas file ke sini</p>
+                    <span>ATAU</span>
+                    <label for="file-input" class="btn-primary">Pilih File</label>
+                    <input type="file" id="file-input" accept=".crx,.zip" hidden>
+                </div>
+                <p id="file-info" class="file-info"></p>
+                
+                <button id="btn-analyze" class="btn-scan" disabled>
+                    <i class="fa-solid fa-magnifying-glass"></i> Analisis Sekarang
+                </button>
+            </section>
+
+            <!-- Loading Section -->
+            <section id="loading-section" class="glass-panel hidden">
+                <div class="loader-container">
+                    <div class="radar-spinner"></div>
+                    <h2>Menjalankan Analisis...</h2>
+                    <p class="loading-text">Mengekstrak file ekstensi...</p>
+                    <p class="warning-text"><i class="fa-solid fa-triangle-exclamation"></i> Harap tunggu, proses analisis dinamis Playwright membutuhkan waktu ~20 detik.</p>
+                </div>
+                
+                <!-- Fake terminal lines to look cool -->
+                <div class="fake-terminal">
+                    <ul id="terminal-logs">
+                        <li>[SYSTEM] Initializing Sandbox Environment...</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="result-section" class="hidden">
+                <div class="result-header glass-panel">
+                    <div id="status-badge" class="status-badge">
+                        <i id="status-icon" class="fa-solid"></i>
+                        <h2 id="status-text">SAFE</h2>
+                    </div>
+                    <div class="score-container">
+                        <h3>Vulnerability Score</h3>
+                        <div class="score-circle" id="score-circle">
+                            <span id="score-value">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="glass-panel">
+                        <h3><i class="fa-solid fa-chart-simple"></i> ML Features Insight</h3>
+                        <ul id="insights-list" class="insights-list">
+                            <!-- Filled via JS -->
+                        </ul>
+                        
+                        <h3 class="mt-4"><i class="fa-solid fa-tags"></i> SEE Categories Detected</h3>
+                        <div id="categories-badge" class="categories-badge">
+                            <!-- Filled via JS -->
+                        </div>
+                    </div>
+
+                    <div class="glass-panel">
+                        <h3><i class="fa-solid fa-network-wired"></i> Dynamic Network Logs</h3>
+                        <p class="text-sm text-gray">Tertangkap oleh Chrome DevTools Protocol saat runtime.</p>
+                        <div class="table-container">
+                            <table id="logs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Domain</th>
+                                        <th>Payload Hint</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Filled via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="btn-reset" class="btn-secondary mt-4">Analisis File Lain</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

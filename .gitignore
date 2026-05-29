@@ -1,0 +1,33 @@
+# Virtual Environment
+.venv/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Data — raw extensions are too large for GitHub
+data/raw/
+data/extracted/
+data/models/*.pkl
+
+# Web uploads (temporary runtime files)
+web/uploads/
+web/extracted/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+*.stackdump
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Output reports (generated at runtime, can be reproduced)
+output/
