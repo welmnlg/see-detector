@@ -674,6 +674,53 @@ def generate_markdown_report(evidence, output_path):
         f.write("\n".join(lines))
 
 
+import threading
+traffic_lock = threading.Lock()
+
+def _save_network_traffic(evidence, output_dir):
+    """Menyimpan detail traffic network ke CSV global."""
+    csv_path = os.path.join(output_dir, "forensic_network_traffic.csv")
+    ext_id = evidence["extension_id"]
+    requests = evidence.get("extension_requests", [])
+    
+    if not requests:
+        return
+        
+    file_exists = os.path.isfile(csv_path)
+    
+    with traffic_lock:
+        with open(csv_path, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            if not file_exists:
+                writer.writerow(["extension_id", "timestamp", "source", "method", "url", "domain", "post_data_preview", "is_unauthorized", "is_cookie_theft", "is_exfiltration"])
+            
+            # Helper list of URLs for quick lookup
+            unauth_urls = {r["url"] for r in evidence.get("unauthorized_requests", [])}
+            cookie_urls = {r["url"] for r in evidence.get("cookie_theft_evidence", [])}
+            exfil_urls = {r["url"] for r in evidence.get("user_data_exfil_evidence", [])}
+            
+            for req in requests:
+                url = req.get("url", "")
+                post_data = req.get("post_data") or ""
+                preview = post_data[:500].replace('\n', ' ').replace('\r', '') if post_data else ""
+                
+                is_unauth = "Yes" if url in unauth_urls else "No"
+                is_cookie = "Yes" if url in cookie_urls else "No"
+                is_exfil = "Yes" if url in exfil_urls else "No"
+                
+                writer.writerow([
+                    ext_id,
+                    req.get("timestamp_readable", ""),
+                    req.get("source", ""),
+                    req.get("method", ""),
+                    url,
+                    req.get("domain", ""),
+                    preview,
+                    is_unauth,
+                    is_cookie,
+                    is_exfil
+                ])
+
 def _analyze_single_task(ext_path, output_dir):
     """Helper function untuk menjalankan satu task dalam thread."""
     try:
@@ -681,6 +728,10 @@ def _analyze_single_task(ext_path, output_dir):
         evidence = analyzer.run()
         report_path = os.path.join(output_dir, f"{evidence['extension_id']}_forensic.md")
         generate_markdown_report(evidence, report_path)
+        
+        # Simpan detail network traffic
+        _save_network_traffic(evidence, output_dir)
+        
         return {
             "extension_id": evidence["extension_id"],
             "verdict": evidence["verdict"],
