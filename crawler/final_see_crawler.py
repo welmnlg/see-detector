@@ -315,7 +315,13 @@ def process_directory(input_path, output_dir, num_workers):
         perm_out_dir = os.path.join(output_dir, first_perm)
         os.makedirs(perm_out_dir, exist_ok=True)
         crx_output_path = os.path.join(perm_out_dir, f"{ext_id}")
+        crx_path = crx_output_path + ".crx"
         
+        # Jika file CRX sudah ada, berarti ekstensi ini SEBELUMNYA sudah berhasil didownload
+        # dan LOLOS filter (karena yang gagal filternya di-os.remove()). Jadi kita bisa langsung skip!
+        if os.path.exists(crx_path):
+            return ext_id, crx_path
+            
         success, fpath, reason = download_and_check_manifest(ext_id, crx_output_path)
         if success:
             return ext_id, fpath
