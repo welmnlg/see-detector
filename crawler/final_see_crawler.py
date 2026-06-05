@@ -185,7 +185,7 @@ def process_directory(input_path, output_dir, num_workers):
     print(f"  FINAL SEE CRAWLER (MULTI-WORKER + REALTIME SAVE)")
     print(f"  Input Path : {input_path}")
     print(f"  Output Dir : {output_dir}")
-    print(f"  Workers    : {num_workers}")
+    print(f"  Workers    : {num_workers} (Selenium)")
     print(f"{'='*60}\n")
     
     # 1. Kumpulkan JSON
@@ -211,7 +211,7 @@ def process_directory(input_path, output_dir, num_workers):
     
     print(f"[*] Ditemukan {len(all_unique_ids)} ID ekstensi unik.")
     
-    # 2. Cek ekstensi yang sudah diproses (Resume Capability & Auto-Recovery)
+    # Setup File
     processed_ids_file = os.path.join(output_dir, "processed_ids.txt")
     csv_path = os.path.join(output_dir, "crawler_results.csv")
     md_path = os.path.join(output_dir, "critical_report.md")
@@ -224,7 +224,6 @@ def process_directory(input_path, output_dir, num_workers):
         with open(csv_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                # Convert string 'True'/'False' back to boolean for consistency
                 row['has_critical'] = (row['has_critical'] == 'True')
                 final_results.append(row)
                 csv_ids.add(row['id'])
@@ -234,38 +233,124 @@ def process_directory(input_path, output_dir, num_workers):
             for line in f:
                 processed_ids.add(line.strip())
                 
-    # AUTO-RECOVERY LOGIC
-    # Jika internet putus, ada ekstensi yg CRX-nya terdownload dan tercatat di processed_ids, 
-    # tapi gagal masuk ke CSV. Kita harus memaksa crawler memproses ulang ID tersebut.
+    # Auto-recovery: Jika CRX ada tapi tidak di CSV, berarti terputus sebelum Selenium selesai
     recovered_count = 0
     for ext_id in list(processed_ids):
         if ext_id not in csv_ids:
-            # Cek apakah CRX-nya ada di folder
             if ext_id in permission_map:
                 first_perm = permission_map[ext_id][0]
                 crx_check_path = os.path.join(output_dir, first_perm, f"{ext_id}.crx")
                 if os.path.exists(crx_check_path):
-                    # Ekstensi ini terputus di tengah jalan! Hapus dari processed agar diulang
                     processed_ids.remove(ext_id)
                     recovered_count += 1
                     
     if recovered_count > 0:
-        print(f"[*] AUTO-RECOVERY: Ditemukan {recovered_count} ekstensi terputus yang CRX-nya sudah ada tapi gagal di-crawl. Akan diproses ulang!")
+        print(f"[*] AUTO-RECOVERY: Ditemukan {recovered_count} ekstensi terputus yang akan diproses ulang!")
                 
-    pending_ids = all_unique_ids - processed_ids
+    pending_ids = list(all_unique_ids - processed_ids)
     skipped_count = len(all_unique_ids) - len(pending_ids)
     
     if skipped_count > 0:
-        print(f"[*] Melewati {skipped_count} ekstensi yang sudah berstatus FINAL (ditolak atau sukses).")
+        print(f"[*] Melewati {skipped_count} ekstensi yang sudah diproses.")
         
     if not pending_ids:
         print("[*] Semua ekstensi sudah selesai diproses!")
         return
 
-    print(f"[*] Sisa ekstensi yang akan diproses: {len(pending_ids)}")
+    file_lock = threading.Lock()
 
-    # Inisialisasi Pool Browser
-    print(f"\n[*] Membuka {num_workers} Browser Chrome di latar belakang...")
+    def mark_rejected(ext_id):
+        with file_lock:
+            with open(processed_ids_file, 'a', encoding='utf-8') as f:
+                f.write(f"{ext_id}\n")
+
+    def save_result(result_dict):
+        with file_lock:
+            # Tulis ke processed_ids
+            with open(processed_ids_file, 'a', encoding='utf-8') as f:
+                f.write(f"{result_dict['id']}\n")
+                
+            final_results.append(result_dict)
+            file_exists = os.path.isfile(csv_path)
+            with open(csv_path, 'a', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=["id", "first_found_by_permission", "all_permissions", "has_critical", "critical_reasons", "crx_path"])
+                if not file_exists:
+                    writer.writeheader()
+                writer.writerow(result_dict)
+            
+            # Update Markdown
+            critical_count = sum(1 for r in final_results if r['has_critical'])
+            with open(md_path, 'w', encoding='utf-8') as f:
+                f.write("# Laporan Ekstensi SEE (Realtime Update)\n\n")
+                f.write(f"**Tanggal Update:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}\n")
+                f.write(f"**Lolos Filter (Di-download):** {len(final_results)}\n")
+                f.write(f"**Berlabel Critical:** {critical_count}\n\n")
+                if critical_count > 0:
+                    f.write("## Daftar Ekstensi Critical\n\n")
+                    f.write("| No | ID | Permissions | Alasan Critical |\n")
+                    f.write("|---|---|---|---|\n")
+                    idx = 1
+                    for res in final_results:
+                        if res["has_critical"]:
+                            f.write(f"| {idx} | `{res['id']}` | {res['all_permissions']} | {res['critical_reasons']} |\n")
+                            idx += 1
+
+    def print_progress(stage, completed_count, total_count, latest_ext_id=""):
+        bar_len = 30
+        filled_len = int(round(bar_len * completed_count / float(total_count))) if total_count > 0 else 0
+        percents = round(100.0 * completed_count / float(total_count), 1) if total_count > 0 else 100
+        bar = '=' * filled_len + '-' * (bar_len - filled_len)
+        sys.stdout.write("\033[K") 
+        sys.stdout.write(f"\r[{stage}] [{bar}] {percents}% ({completed_count}/{total_count}) | Last: {latest_ext_id[:10]}...")
+        sys.stdout.flush()
+
+    # ════════════════════════════════════════════════════════════════════════
+    # TAHAP 1: DOWNLOAD & FILTER MANIFEST (CEPAT)
+    # ════════════════════════════════════════════════════════════════════════
+    print(f"\n[TAHAP 1] Mendownload dan memfilter manifest ekstensi...")
+    passed_extensions = []
+    
+    def download_task(ext_id):
+        first_perm = permission_map[ext_id][0]
+        perm_out_dir = os.path.join(output_dir, first_perm)
+        os.makedirs(perm_out_dir, exist_ok=True)
+        crx_output_path = os.path.join(perm_out_dir, f"{ext_id}")
+        
+        success, fpath, reason = download_and_check_manifest(ext_id, crx_output_path)
+        if success:
+            return ext_id, fpath
+        else:
+            return ext_id, None
+
+    dl_total = len(pending_ids)
+    dl_completed = 0
+    print_progress("Download", dl_completed, dl_total)
+
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = {executor.submit(download_task, ext_id): ext_id for ext_id in pending_ids}
+        for future in as_completed(futures):
+            ext_id = futures[future]
+            _, fpath = future.result()
+            
+            if fpath: # Lolos filter
+                passed_extensions.append((ext_id, fpath))
+            else: # Gagal filter, langsung tandai sebagai processed agar tidak diulang
+                mark_rejected(ext_id)
+                
+            dl_completed += 1
+            print_progress("Download", dl_completed, dl_total, ext_id)
+            
+    print(f"\n[*] Tahap 1 Selesai. {len(passed_extensions)} ekstensi lolos filter dan masuk ke Tahap 2.")
+
+    if not passed_extensions:
+        print("[*] Tidak ada ekstensi yang perlu di-crawl di Tahap 2.")
+        return
+
+    # ════════════════════════════════════════════════════════════════════════
+    # TAHAP 2: SELENIUM CHROME-STATS CRAWL
+    # ════════════════════════════════════════════════════════════════════════
+    print(f"\n[TAHAP 2] Mengecek informasi Critical via Chrome-Stats...")
+    print(f"[*] Membuka {num_workers} Browser Chrome di latar belakang...")
     driver_queue = queue.Queue()
     all_drivers = []
     
@@ -274,6 +359,7 @@ def process_directory(input_path, output_dir, num_workers):
         options.add_argument(f'--window-position=-2000,{-2000 + (i*100)}')
         try:
             driver = uc.Chrome(options=options, version_main=148)
+            driver.set_page_load_timeout(60)
             driver.minimize_window()
             driver_queue.put(driver)
             all_drivers.append(driver)
@@ -281,90 +367,60 @@ def process_directory(input_path, output_dir, num_workers):
             print(f"Gagal membuka browser worker {i+1}: {e}")
             
     if driver_queue.empty():
-        print("Gagal membuka semua browser. Berhenti.")
+        print("[-] Gagal membuka semua browser. Berhenti.")
         return
 
-    actual_workers = driver_queue.qsize()
-    print(f"[*] Berhasil membuka {actual_workers} browser. Memulai eksekusi paralel...\n")
-    
-    total = len(pending_ids)
-    completed = 0
-    
-    # Mutex & Realtime Save setup
-    file_lock = threading.Lock()
-    
-    # Pastikan file CSV punya header jika baru dibuat
-    if not os.path.exists(csv_path):
-        with open(csv_path, 'w', newline='', encoding='utf-8') as f:
-            writer = csv.DictWriter(f, fieldnames=["id", "first_found_by_permission", "all_permissions", "has_critical", "critical_reasons", "crx_path"])
-            writer.writeheader()
+    print(f"[*] Berhasil membuka {driver_queue.qsize()} browser. Memulai eksekusi Selenium...")
 
-    def update_markdown_report():
-        # Regen markdown berdasarkan final_results yg sudah terkumpul
-        critical_count = sum(1 for r in final_results if r['has_critical'])
-        with open(md_path, 'w', encoding='utf-8') as f:
-            f.write("# Laporan Ekstensi SEE (Realtime Update)\n\n")
-            f.write(f"**Tanggal Update:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}\n")
-            f.write(f"**Total ID di JSON:** {len(all_unique_ids)}\n")
-            f.write(f"**Lolos Filter (Di-download):** {len(final_results)}\n")
-            f.write(f"**Berlabel Critical:** {critical_count}\n\n")
-            
-            if critical_count > 0:
-                f.write("## Daftar Ekstensi Critical\n\n")
-                f.write("| No | ID | Permissions | Alasan Critical |\n")
-                f.write("|---|---|---|---|\n")
-                idx = 1
-                for res in final_results:
-                    if res["has_critical"]:
-                        f.write(f"| {idx} | `{res['id']}` | {res['all_permissions']} | {res['critical_reasons']} |\n")
-                        idx += 1
-            else:
-                f.write("Tidak ada ekstensi berlabel Critical.\n")
-
-    def mark_as_processed_and_save(ext_id, result_dict):
-        with file_lock:
-            # 1. Catat ID sebagai diproses
-            with open(processed_ids_file, 'a', encoding='utf-8') as f:
-                f.write(f"{ext_id}\n")
-            
-            # 2. Jika lolos filter (ada result_dict), simpan realtime ke CSV dan MD
-            if result_dict:
-                final_results.append(result_dict)
-                with open(csv_path, 'a', newline='', encoding='utf-8') as f:
-                    writer = csv.DictWriter(f, fieldnames=["id", "first_found_by_permission", "all_permissions", "has_critical", "critical_reasons", "crx_path"])
-                    writer.writerow(result_dict)
+    def selenium_task(ext_id, fpath):
+        driver = driver_queue.get()
+        try:
+            url = f"https://chrome-stats.com/d/{ext_id}"
+            try:
+                driver.get(url)
+            except Exception:
+                driver.execute_script("window.stop();")
+                time.sleep(2)
                 
-                # Update Markdown secara langsung
-                update_markdown_report()
-
-    def print_progress(completed_count, total_count, latest_ext_id=""):
-        bar_len = 40
-        filled_len = int(round(bar_len * completed_count / float(total_count)))
-        percents = round(100.0 * completed_count / float(total_count), 1)
-        bar = '=' * filled_len + '-' * (bar_len - filled_len)
-        
-        sys.stdout.write("\033[K") 
-        sys.stdout.write(f"\r[Progress] [{bar}] {percents}% ({completed_count}/{total_count}) | Last: {latest_ext_id[:10]}...")
-        sys.stdout.flush()
-
-    print_progress(0, total)
-    
-    try:
-        with ThreadPoolExecutor(max_workers=actual_workers) as executor:
-            futures = {
-                executor.submit(process_single_extension, ext_id, permission_map, output_dir, driver_queue): ext_id 
-                for ext_id in pending_ids
+            wait_time = 0
+            while "Just a moment..." in driver.page_source and wait_time < 30:
+                time.sleep(1)
+                wait_time += 1
+                
+            html = driver.page_source
+            if "Just a moment..." in html:
+                has_critical, critical_reasons = False, ["Timeout Cloudflare"]
+            else:
+                has_critical, critical_reasons = extract_critical_reasons(html)
+                
+            result_dict = {
+                "id": ext_id,
+                "first_found_by_permission": permission_map[ext_id][0],
+                "all_permissions": "; ".join(permission_map[ext_id]),
+                "crx_path": fpath,
+                "has_critical": has_critical,
+                "critical_reasons": " | ".join(critical_reasons)
             }
-            
+            return result_dict
+        finally:
+            driver_queue.put(driver)
+
+    sel_total = len(passed_extensions)
+    sel_completed = 0
+    print_progress("Selenium", sel_completed, sel_total)
+
+    try:
+        with ThreadPoolExecutor(max_workers=driver_queue.qsize()) as executor:
+            futures = {executor.submit(selenium_task, ext_id, fpath): ext_id for ext_id, fpath in passed_extensions}
             for future in as_completed(futures):
                 ext_id = futures[future]
-                result = future.result()
+                result_dict = future.result()
                 
-                # Simpan REALTIME: jika gagal/tolak, result=None. Jika sukses, result=dict.
-                mark_as_processed_and_save(ext_id, result)
+                # Simpan REALTIME ke CSV per ekstensi
+                save_result(result_dict)
                 
-                completed += 1
-                print_progress(completed, total, ext_id)
+                sel_completed += 1
+                print_progress("Selenium", sel_completed, sel_total, ext_id)
                 
     finally:
         print("\n\n[*] Menutup semua browser...")
@@ -380,9 +436,9 @@ def process_directory(input_path, output_dir, num_workers):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", required=True, help="Path ke direktori JSON atau file JSON tunggal")
-    parser.add_argument("--output", required=True, help="Direktori penyimpanan CRX dan laporan")
-    parser.add_argument("--workers", type=int, default=1, help="Jumlah worker (browser) yang dijalankan paralel")
+    parser.add_argument("--input", required=True, help="Path ke direktori JSON")
+    parser.add_argument("--output", required=True, help="Direktori penyimpanan")
+    parser.add_argument("--workers", type=int, default=1, help="Jumlah worker Selenium")
     args = parser.parse_args()
     
     process_directory(args.input, args.output, args.workers)
