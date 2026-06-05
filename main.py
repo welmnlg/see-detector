@@ -35,6 +35,11 @@ def main():
     parser_report = subparsers.add_parser('report', help='Generate dynamic analysis report for vulnerable extensions')
     parser_report.add_argument('--workers', type=int, default=4,
                                help='Number of parallel Chrome windows (default: 4)')
+                               
+    # Generate static report
+    parser_static_report = subparsers.add_parser('static-report', help='Generate static analysis report for vulnerable extensions')
+    parser_static_report.add_argument('--workers', type=int, default=4,
+                               help='Number of parallel workers (default: 4)')
     
     # Run web server
     subparsers.add_parser('web', help='Start the Flask web server')
@@ -68,6 +73,11 @@ def main():
         from generate_dynamic_report import generate_reports
         print(f"Generating dynamic report with {args.workers} parallel Chrome windows...")
         generate_reports(workers=args.workers)
+        
+    elif args.command == 'static-report':
+        from generate_static_report import generate_static_reports
+        print(f"Generating static report with {args.workers} parallel workers...")
+        generate_static_reports(workers=args.workers)
         
     elif args.command == 'web':
         print("Starting Flask web server...")

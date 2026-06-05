@@ -7,14 +7,18 @@ __pycache__/
 *$py.class
 *.egg-info/
 
-# Data — raw extensions are too large for GitHub
+# Data — raw extensions & extracted CRX are too large for GitHub
 data/raw/
 data/extracted/
 data/models/*.pkl
+# Forensic reports are generated at runtime (reproduced by re-running forensic)
+data/forensic_reports/
 
 # Web uploads (temporary runtime files)
 web/uploads/
 web/extracted/
+web_v2/uploads/
+web_v2/extracted/
 
 # IDE
 .vscode/
@@ -31,3 +35,4 @@ Thumbs.db
 
 # Output reports (generated at runtime, can be reproduced)
 output/
+

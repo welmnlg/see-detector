@@ -97,3 +97,4 @@ python generate_dynamic_report.py --workers 6
 
 ## Referensi
 - Lim, Y., Yaacob, S., et al. (2025). *Stealth Extension Exfiltration (SEE) Attacks: Stealing User Data without Permissions via Browser Extensions.*
+"# see-detector" 

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEE Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <h1>Stealth Extension Exfiltration (SEE) Detector</h1>
+        </div>
+        <p class="subtitle">Analisis Keamanan Ekstensi Chrome (Stealth Extension Exfiltration)</p>
+    </header>
+
+    <main class="container">
+        <!-- Input Section -->
+        <section class="input-section" id="input-section">
+            <div class="tabs">
+                <button class="tab-btn active" data-target="tab-file">FILE</button>
+                <button class="tab-btn" data-target="tab-url">URL</button>
+            </div>
+
+            <!-- Tab: File Upload -->
+            <div class="tab-content active" id="tab-file">
+                <div class="upload-area" id="upload-area">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <h2>Pilih file, lalu analisis</h2>
+                    <p>Format yang didukung: .crx, .zip (Maks 50MB)</p>
+                    <input type="file" id="file-input" accept=".crx,.zip" hidden>
+                    <button class="btn-primary" id="btn-browse">Pilih File</button>
+                    <div id="file-name-display" class="file-name-display" style="display: none;"></div>
+                </div>
+                <button class="btn-submit" id="btn-analyze-file" disabled>Analisis File</button>
+            </div>
+
+            <!-- Tab: URL Upload -->
+            <div class="tab-content" id="tab-url">
+                <div class="url-area">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                    <h2>Analisis Tautan Ekstensi</h2>
+                    <p>Masukkan tautan dari Chrome Web Store</p>
+                    <div class="input-group">
+                        <input type="url" id="url-input" placeholder="https://chromewebstore.google.com/detail/..."
+                            required>
+                    </div>
+                </div>
+                <button class="btn-submit" id="btn-analyze-url">Analisis Tautan</button>
+            </div>
+        </section>
+
+        <!-- Loading Section -->
+        <section class="loading-section" id="loading-section" style="display: none;">
+            <div class="spinner"></div>
+            <h2 id="loading-text">Sedang Menganalisis...</h2>
+            <p>Proses ini dapat memakan waktu 10-30 detik</p>
+            <div class="process-table-container">
+                <table class="process-table">
+                    <tbody id="process-list">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result-section" id="result-section" style="display: none;">
+            <div class="result-header">
+                <h2 id="result-status-title">Aman</h2>
+                <div class="score-circle" id="result-score-circle">
+                    <span id="result-score">0</span>
+                    <span class="score-label">/ 100</span>
+                </div>
+                <p id="result-description" class="result-desc">Tidak ditemukan aktivitas eksfiltrasi data tersembunyi.
+                </p>
+            </div>
+
+            <div class="result-columns">
+                <div class="result-col" id="insights-container">
+                    <h3>Insights Temuan:</h3>
+                    <ul class="insight-list" id="insight-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+
+                <div class="result-col" id="network-logs-container" style="display: none;">
+                    <h3>Log Jaringan (Sandbox):</h3>
+                    <div class="table-responsive">
+                        <table class="network-table">
+                            <thead>
+                                <tr>
+                                    <th>URL Tujuan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="network-list">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-actions">
+                <button class="btn-secondary" id="btn-analyze-new">Analisis Ekstensi Lain</button>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section class="error-section" id="error-section" style="display: none;">
+            <div class="error-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="#c52420" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <h2>Terjadi Kesalahan</h2>
+                <p id="error-message">Pesan error di sini.</p>
+                <button class="btn-secondary" id="btn-retry">Coba Lagi</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
