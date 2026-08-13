@@ -7,6 +7,10 @@
     "management",
     "storage"
   ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Buka Dashboard SEE Protector"
+  },
   "background": {
     "service_worker": "background.js"
   }

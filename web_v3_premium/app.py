@@ -340,5 +340,5 @@ def analyze_url():
 
 
 if __name__ == '__main__':
-    print("Mulai server Web V3 Premium di http://localhost:5001")
-    app.run(debug=True, use_reloader=False, port=5001)
+    print("Mulai server Web V3 Premium di http://0.0.0.0:5001 (Bisa diakses dari jaringan lokal/Host)")
+    app.run(host='0.0.0.0', debug=True, use_reloader=False, port=5001)
