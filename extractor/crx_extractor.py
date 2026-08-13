@@ -47,6 +47,16 @@ def extract_crx_or_zip(file_path, output_dir):
         # Remove the temporary zip
         os.remove(temp_zip_path)
         
+        # Cari lokasi sebenarnya dari manifest.json (untuk menangani ZIP yang dibungkus folder)
+        manifest_path = None
+        for root, dirs, files in os.walk(ext_dir):
+            if 'manifest.json' in files:
+                manifest_path = root
+                break
+                
+        if manifest_path:
+            return True, str(manifest_path)
+            
         return True, str(ext_dir)
 
     except Exception as e:

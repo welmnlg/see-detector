@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 300px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #1a1a2e;
+        color: #eee;
+        padding: 20px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .header h1 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #9ba4b5;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* --- Toggle switch (shared) --- */
+
+      .toggle-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .toggle-label {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 36px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: #2a2a4a;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .toggle-slider::before {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        left: 3px;
+        top: 3px;
+        background: #888;
+        border-radius: 50%;
+        transition: transform 0.2s, background 0.2s;
+      }
+
+      .toggle-switch input:checked + .toggle-slider {
+        background: #f0b429;
+      }
+
+      .toggle-switch input:checked + .toggle-slider::before {
+        transform: translateX(16px);
+        background: #fff;
+      }
+
+      /* --- Always-On toggle in header --- */
+
+      .always-on-toggle-header {
+        gap: 6px;
+      }
+
+      .always-on-toggle-header .always-on-label {
+        font-size: 11px;
+        color: #9ba4b5;
+      }
+
+      /* --- Frequency display --- */
+
+      .frequency-display {
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      .frequency-value {
+        font-size: 48px;
+        font-weight: 700;
+        color: #4CAF50;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .frequency-unit {
+        font-size: 16px;
+        color: #9ba4b5;
+        margin-top: 4px;
+      }
+
+      /* --- Timer display (free tier) --- */
+
+      .timer-display {
+        text-align: center;
+        margin-top: 4px;
+        font-size: 13px;
+        color: #f0b429;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* --- Status --- */
+
+      .status {
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #2a2a4a;
+      }
+
+      .status.active {
+        color: #4CAF50;
+      }
+
+      .status.inactive {
+        color: #f44336;
+      }
+
+      .status.limit {
+        color: #f0b429;
+      }
+
+      /* --- Button --- */
+
+      #start-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 12px;
+        border: none;
+        border-radius: 6px;
+        background: #4CAF50;
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      #start-btn:hover {
+        background: #43a047;
+      }
+
+      #start-btn.stop {
+        background: #f44336;
+      }
+
+      #start-btn.stop:hover {
+        background: #e53935;
+      }
+
+      #start-btn:disabled {
+        background: #333;
+        color: #666;
+        cursor: not-allowed;
+      }
+
+      /* --- Note display (pro) --- */
+
+      .note-display {
+        text-align: center;
+        margin-top: 4px;
+      }
+
+      .note-name {
+        font-size: 20px;
+        font-weight: 600;
+        color: #7c83ff;
+      }
+
+      .note-cents {
+        font-size: 12px;
+        color: #9ba4b5;
+        margin-top: 2px;
+      }
+
+      /* --- Spectrum (pro) --- */
+
+      .spectrum-container {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #2a2a4a;
+      }
+
+      .section-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #666;
+        margin-bottom: 6px;
+      }
+
+      #spectrum-canvas {
+        width: 100%;
+        height: 80px;
+        border-radius: 4px;
+        background: #12121f;
+      }
+
+      /* --- Peaks list (pro) --- */
+
+      .peaks-container {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #2a2a4a;
+      }
+
+      .peak-row {
+        display: flex;
+        align-items: center;
+        padding: 3px 0;
+        font-size: 12px;
+        gap: 6px;
+      }
+
+      .peak-rank {
+        color: #666;
+        width: 14px;
+        flex-shrink: 0;
+      }
+
+      .peak-freq {
+        color: #eee;
+        font-variant-numeric: tabular-nums;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .peak-note {
+        color: #7c83ff;
+        width: 36px;
+        text-align: right;
+        flex-shrink: 0;
+      }
+
+      .peak-mag {
+        color: #666;
+        width: 40px;
+        text-align: right;
+        font-size: 11px;
+        flex-shrink: 0;
+      }
+
+      .peak-bar-bg {
+        flex: 0 0 50px;
+        height: 4px;
+        background: #2a2a4a;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .peak-bar {
+        height: 100%;
+        background: #4CAF50;
+        border-radius: 2px;
+        transition: width 0.1s;
+      }
+
+      /* --- Upgrade prompt (free tier) --- */
+
+      .upgrade-card {
+        margin-top: 14px;
+        background: linear-gradient(135deg, #1e1e3a 0%, #252547 100%);
+        border: 1px solid #f0b42933;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .upgrade-header {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 14px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .upgrade-badge {
+        font-size: 10px;
+        font-weight: 700;
+        color: #1a1a2e;
+        background: linear-gradient(135deg, #f0b429, #f7d070);
+        padding: 2px 6px;
+        border-radius: 3px;
+        letter-spacing: 0.5px;
+      }
+
+      .upgrade-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #eee;
+        flex: 1;
+      }
+
+      .upgrade-chevron {
+        font-size: 12px;
+        color: #666;
+        transition: transform 0.2s;
+      }
+
+      .upgrade-card.expanded .upgrade-chevron {
+        transform: rotate(180deg);
+      }
+
+      .upgrade-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease;
+      }
+
+      .upgrade-card.expanded .upgrade-body {
+        max-height: 300px;
+      }
+
+      .upgrade-body-inner {
+        padding: 0 14px 14px;
+      }
+
+      .upgrade-features {
+        list-style: none;
+        margin-bottom: 12px;
+      }
+
+      .upgrade-features li {
+        font-size: 12px;
+        color: #b0b8c8;
+        padding: 3px 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .upgrade-features li::before {
+        content: "";
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        background: #f0b429;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .upgrade-btn {
+        display: block;
+        width: 100%;
+        padding: 9px;
+        border: none;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #f0b429, #e0a020);
+        color: #1a1a2e;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        letter-spacing: 0.3px;
+      }
+
+      .upgrade-btn:hover {
+        opacity: 0.9;
+      }
+
+      .upgrade-price {
+        font-size: 11px;
+        color: #666;
+        text-align: center;
+        margin-top: 6px;
+      }
+
+      /* --- Code redemption --- */
+
+      .code-section {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #2a2a4a33;
+      }
+
+      .code-input-row {
+        display: flex;
+        gap: 6px;
+      }
+
+      .code-input {
+        flex: 1;
+        padding: 7px 10px;
+        border: 1px solid #2a2a4a;
+        border-radius: 5px;
+        background: #12121f;
+        color: #eee;
+        font-size: 12px;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .code-input:focus {
+        border-color: #f0b429;
+      }
+
+      .code-input::placeholder {
+        color: #555;
+      }
+
+      .code-submit-btn {
+        padding: 7px 12px;
+        border: none;
+        border-radius: 5px;
+        background: #f0b429;
+        color: #1a1a2e;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        white-space: nowrap;
+      }
+
+      .code-submit-btn:hover {
+        opacity: 0.9;
+      }
+
+      .code-submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .code-message {
+        font-size: 11px;
+        margin-top: 6px;
+        min-height: 14px;
+      }
+
+      .code-message.success {
+        color: #4CAF50;
+      }
+
+      .code-message.error {
+        color: #f44336;
+      }
+
+      .or-divider {
+        text-align: center;
+        font-size: 11px;
+        color: #555;
+        margin: 8px 0;
+      }
+
+      .support-link {
+        display: block;
+        text-align: center;
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid #2a2a4a;
+        font-size: 11px;
+        color: #666;
+        text-decoration: none;
+      }
+
+      .support-link:hover {
+        color: #9ba4b5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Hertz Detector</h1>
+      <div class="always-on-toggle-header toggle-row" id="always-on-container">
+        <span class="toggle-label always-on-label">Always On</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="always-on-toggle" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="frequency-display">
+      <div class="frequency-value" id="freq-value">--</div>
+      <div class="frequency-unit">Hz</div>
+    </div>
+
+    <div class="timer-display" id="timer-display" style="display: none">
+      <span id="timer-text"></span>
+    </div>
+
+    <div class="note-display" id="note-display" style="display: none">
+      <span class="note-name" id="note-name"></span>
+      <div class="note-cents" id="note-cents"></div>
+    </div>
+
+    <div class="spectrum-container" id="spectrum-container" style="display: none">
+      <div class="section-label">Spectrum</div>
+      <canvas id="spectrum-canvas" width="520" height="160"></canvas>
+    </div>
+
+    <div class="peaks-container" id="peaks-container" style="display: none">
+      <div class="section-label">Detected Frequencies</div>
+      <div id="peaks-list"></div>
+    </div>
+
+    <div class="status inactive" id="status">Not detecting</div>
+
+    <button id="start-btn">Detect</button>
+
+    <div class="upgrade-card" id="upgrade-card">
+      <div class="upgrade-header" id="upgrade-header">
+        <span class="upgrade-badge">PRO</span>
+        <span class="upgrade-title">Unlock full power</span>
+        <span class="upgrade-chevron">&#9660;</span>
+      </div>
+      <div class="upgrade-body">
+        <div class="upgrade-body-inner">
+          <ul class="upgrade-features">
+            <li>Musical note detection &amp; tuning</li>
+            <li>Live spectrum visualizer</li>
+            <li>Multi-frequency analysis</li>
+            <li>Unlimited detection time</li>
+            <li>Always-On auto-detection</li>
+          </ul>
+          <button class="upgrade-btn" id="upgrade-btn">Upgrade to Pro &mdash; $9</button>
+          <div class="upgrade-price">One-time payment, forever yours</div>
+          <div class="or-divider">or</div>
+          <div class="code-section">
+            <div class="code-input-row">
+              <input type="text" class="code-input" id="code-input" placeholder="Enter upgrade code" />
+              <button class="code-submit-btn" id="code-submit-btn">Redeem</button>
+            </div>
+            <div class="code-message" id="code-message"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a class="support-link" href="https://tawk.to/chat/6989eb0955a5d71c35acb1d8/1jh1bs88b" target="_blank">Support / Feedback</a>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

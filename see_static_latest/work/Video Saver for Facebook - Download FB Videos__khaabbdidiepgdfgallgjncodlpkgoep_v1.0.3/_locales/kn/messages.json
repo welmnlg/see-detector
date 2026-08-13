@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "Simple video downloader for Facebook Reels and posts. Click once to save HD videos watermark-free from any content on your feed."
+  },
+  "extensionName": {
+    "message": "Save FB Videos - Reel Downloader"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

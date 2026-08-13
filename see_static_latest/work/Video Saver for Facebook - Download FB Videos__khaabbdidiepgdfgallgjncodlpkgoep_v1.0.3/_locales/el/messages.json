@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "Securely download Facebook videos and Reels without sharing credentials. Save HD clips privately with no watermark and no tracking."
+  },
+  "extensionName": {
+    "message": "Secure Facebook Video Saver Tool"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

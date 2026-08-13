@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy URL</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup__setup" id="setup-needed" hidden>
+    <img src="../icons/icon32.png" alt="" class="popup__icon" width="24" height="24">
+    <p class="popup__title">Setup Required</p>
+    <p class="popup__status">Complete the initial setup to start using Copy URL.</p>
+    <button class="popup__copy-btn" id="open-onboarding-btn">Complete Setup</button>
+  </div>
+
+  <div class="popup" id="popup-main">
+    <div class="popup__header">
+      <img src="../icons/icon32.png" alt="" class="popup__icon" width="24" height="24">
+      <h1 class="popup__title">Copy URL</h1>
+    </div>
+
+    <div class="popup__toggle-row">
+      <label class="toggle" for="toggle-shortcut">
+        <input type="checkbox" id="toggle-shortcut" class="toggle__input" checked>
+        <span class="toggle__slider"></span>
+      </label>
+      <span class="popup__toggle-label" id="shortcut-display">Ctrl+Shift+C</span>
+    </div>
+
+    <p class="popup__status" id="status-text">
+      Press Ctrl+Shift+C to copy URL
+    </p>
+
+    <div class="popup__shortcut-section">
+      <button class="popup__shortcut-btn" id="change-shortcut-btn" type="button">
+        Change shortcut
+      </button>
+      <div class="popup__recorder" id="shortcut-recorder" hidden>
+        <div class="popup__recorder-input" id="recorder-display">Press a key combo…</div>
+        <div class="popup__recorder-actions">
+          <button class="popup__recorder-cancel" id="cancel-record-btn" type="button">Cancel</button>
+        </div>
+      </div>
+      <button class="popup__reset-btn" id="reset-shortcut-btn" type="button" hidden>
+        Reset to default
+      </button>
+    </div>
+
+    <div class="popup__footer">
+      <button class="popup__copy-btn" id="copy-now-btn" type="button">
+        Copy Current URL
+      </button>
+      <p class="popup__tip">
+        Shortcut not working on a tab? Reload the tab or restart Chrome.
+      </p>
+    </div>
+  </div>
+
+  <script src="../shared/shortcut-utils.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

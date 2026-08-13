@@ -1,0 +1,104 @@
+{
+  "extName": {
+    "message": "Ultimate Brightness Control"
+  },
+  "extDescription": {
+    "message": "Web sayfalarını %10'dan %200'e kadar karart veya parlat. Tam ekran videolarda da çalışır. Ücretsiz."
+  },
+  "actionTitle": {
+    "message": "Ultimate Brightness Control"
+  },
+  "popupTitle": {
+    "message": "Ultimate Brightness Control"
+  },
+  "popupHeading": {
+    "message": "Parlaklık"
+  },
+  "popupSubheading": {
+    "message": "Her sitede, tam ekranda bile çalışan karartma"
+  },
+  "brightnessLabel": {
+    "message": "Parlaklık"
+  },
+  "siteOnlyToggle": {
+    "message": "Yalnızca bu siteye uygula"
+  },
+  "disableHereButton": {
+    "message": "Bu sitede kapat"
+  },
+  "enableHereButton": {
+    "message": "Bu sitede aç"
+  },
+  "disableEverywhereButton": {
+    "message": "Her yerde kapat"
+  },
+  "enableEverywhereButton": {
+    "message": "Her yerde aç"
+  },
+  "openGuideButton": {
+    "message": "Hızlı rehberi aç"
+  },
+  "statusGlobal": {
+    "message": "Global parlaklık kullanılıyor"
+  },
+  "statusSite": {
+    "message": "Bu site için kaydedilen ayar kullanılıyor"
+  },
+  "statusGlobalDisabled": {
+    "message": "Parlaklık kontrolü her yerde kapalı"
+  },
+  "statusSiteDisabled": {
+    "message": "Parlaklık kontrolü bu sitede kapalı"
+  },
+  "statusUnsupported": {
+    "message": "Bu sayfada siteye özel kontroller kullanılamıyor"
+  },
+  "badgeGlobal": {
+    "message": "Global"
+  },
+  "badgeSite": {
+    "message": "Bu site"
+  },
+  "badgeGlobalDisabled": {
+    "message": "Her yerde kapalı"
+  },
+  "badgeSiteDisabled": {
+    "message": "Bu sitede kapalı"
+  },
+  "hostLabel": {
+    "message": "Geçerli site"
+  },
+  "tickHint": {
+    "message": "Hızlı ayar için her 10 puanda işaret bulunur"
+  },
+  "welcomeTitle": {
+    "message": "Ultimate Brightness Control"
+  },
+  "welcomeHeading": {
+    "message": "Tarayıcınız artık tam ekranda da kısık kalır"
+  },
+  "welcomeIntro": {
+    "message": "Birçok parlaklık uzantısı yalnızca temel sayfayı karartır. Bu uzantı videolar tarayıcının tam ekran üst katmanına geçtiğinde veya iframe oynatıcılarda çalıştığında da karartma katmanını korur."
+  },
+  "welcomeFeatureOne": {
+    "message": "Tüm sekmeler için tek bir global parlaklık kullanın."
+  },
+  "welcomeFeatureTwo": {
+    "message": "Geçerli hostname için farklı bir parlaklık kaydedin."
+  },
+  "welcomeFeatureThree": {
+    "message": "Efekti tek tıkla bir sitede veya her yerde kapatın."
+  },
+  "welcomePrimary": {
+    "message": "Uzantıyı aç"
+  },
+  "welcomePrivacy": {
+    "message": "Gizlilik Politikası"
+  },
+  "welcomeSupport": {
+    "message": "Destek"
+  },
+  "welcomeTerms": {
+    "message": "Kullanım Koşulları"
+  }
+}

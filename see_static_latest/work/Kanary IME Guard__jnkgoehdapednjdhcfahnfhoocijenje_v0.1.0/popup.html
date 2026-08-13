@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanary IME Guard</title>
+    <style>
+      /* ── Design tokens (aligned with calendar-launcher) ───── */
+      :root {
+        --bg-primary: #f8f7f4;
+        --bg-surface: #ffffff;
+        --bg-elevated: #f0eeea;
+        --text-primary: #1a1a1a;
+        --text-secondary: #6b6b6b;
+        --text-tertiary: #9a9a9a;
+        --accent: #c4963a;
+        --accent-dim: #a87e2e;
+        --accent-glow: rgba(196, 150, 58, 0.2);
+        --accent-glow-strong: rgba(196, 150, 58, 0.4);
+        --border: rgba(0, 0, 0, 0.07);
+        --border-accent: rgba(196, 150, 58, 0.2);
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
+        --radius: 10px;
+        --radius-sm: 6px;
+        --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        --font-display: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-primary: #1a1a1f;
+          --bg-surface: #242429;
+          --bg-elevated: #2e2e35;
+          --text-primary: #e8e6e3;
+          --text-secondary: #7a7a7e;
+          --text-tertiary: #55555a;
+          --accent: #d4a853;
+          --accent-dim: #b8923f;
+          --accent-glow: rgba(212, 168, 83, 0.2);
+          --accent-glow-strong: rgba(212, 168, 83, 0.4);
+          --border: rgba(255, 255, 255, 0.07);
+          --border-accent: rgba(212, 168, 83, 0.2);
+          --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+          --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--text-primary);
+        background: var(--bg-primary);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .popup-root {
+        width: 360px;
+        min-height: 220px;
+      }
+
+      /* ── App bar ──────────────────────────────────────────── */
+      .app-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .app-bar__toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 52px;
+        padding: 0 16px;
+      }
+
+      .app-bar__sigil {
+        width: 22px;
+        height: 22px;
+        color: var(--accent);
+        flex: none;
+      }
+
+      .app-bar__title-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .app-bar__title {
+        font-family: var(--font-display);
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 1.1;
+        letter-spacing: 0.01em;
+        color: var(--text-primary);
+      }
+
+      .app-bar__subtitle {
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .app-bar__spacer {
+        flex: 1;
+      }
+
+      .app-bar__status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px 4px 8px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--bg-surface);
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .app-bar__status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow:
+          0 0 6px var(--accent-glow),
+          0 0 12px var(--accent-glow);
+        animation: dotPulse 2.4s ease-in-out infinite;
+      }
+
+      body[data-mode='off'] .app-bar__status-dot {
+        background: var(--text-tertiary);
+        box-shadow: none;
+        animation: none;
+      }
+
+      body[data-mode='off'] .app-bar__status {
+        color: var(--text-tertiary);
+      }
+
+      /* ── Popup body ───────────────────────────────────────── */
+      .popup-body {
+        padding: 14px 14px 6px;
+      }
+
+      /* ── Mode list ────────────────────────────────────────── */
+      .modes {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .modes__legend {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      .mode {
+        display: grid;
+        grid-template-columns: 20px 1fr auto;
+        align-items: start;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        border: 1px solid transparent;
+        cursor: pointer;
+        position: relative;
+        transition:
+          border-color 0.2s ease,
+          background 0.2s ease,
+          box-shadow 0.2s ease;
+        animation: fadeSlideIn 0.4s ease both;
+      }
+
+      .mode:nth-child(2) {
+        animation-delay: 60ms;
+      }
+      .mode:nth-child(3) {
+        animation-delay: 120ms;
+      }
+      .mode:nth-child(4) {
+        animation-delay: 180ms;
+      }
+
+      .mode:hover {
+        background: var(--bg-surface);
+        border-color: var(--border);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .mode input {
+        position: absolute;
+        width: 0;
+        height: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .mode__rail {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 5px;
+      }
+
+      .mode__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--text-tertiary);
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+      }
+
+      .mode__content {
+        min-width: 0;
+        padding-top: 1px;
+      }
+
+      .mode__title {
+        font-family: var(--font-display);
+        font-weight: normal;
+        font-size: 15px;
+        line-height: 1.25;
+        color: var(--text-primary);
+        letter-spacing: 0.01em;
+      }
+
+      .mode__meta {
+        margin-top: 2px;
+        font-size: 11px;
+        line-height: 1.4;
+        color: var(--text-secondary);
+        letter-spacing: 0.01em;
+      }
+
+      .mode__glyph {
+        flex: none;
+        font-family: var(--font-body);
+        font-size: 13px;
+        line-height: 1;
+        color: var(--text-tertiary);
+        min-width: 30px;
+        padding: 5px 8px 6px;
+        text-align: center;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-surface);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+        transition:
+          color 0.2s ease,
+          border-color 0.2s ease,
+          background 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+        margin-top: 1px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .mode__glyph {
+          box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+        }
+      }
+
+      /* ── Active state ─────────────────────────────────────── */
+      .mode:has(input:checked) {
+        background: var(--bg-surface);
+        border-color: var(--border-accent);
+        box-shadow:
+          0 0 20px var(--accent-glow),
+          inset 0 0 0 1px var(--border-accent);
+      }
+
+      .mode:has(input:checked):hover {
+        border-color: var(--accent-glow-strong);
+      }
+
+      .mode:has(input:checked) .mode__dot {
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        box-shadow:
+          0 0 8px var(--accent-glow-strong),
+          0 0 16px var(--accent-glow);
+        animation: dotPulse 2.4s ease-in-out infinite;
+      }
+
+      .mode:has(input:checked) .mode__title {
+        color: var(--text-primary);
+      }
+
+      .mode:has(input:checked) .mode__glyph {
+        color: var(--accent);
+        border-color: var(--border-accent);
+        background: var(--accent-glow);
+        box-shadow:
+          inset 0 -1px 0 rgba(196, 150, 58, 0.15),
+          0 0 8px var(--accent-glow);
+        animation: keyPress 420ms cubic-bezier(0.2, 0.8, 0.3, 1);
+      }
+
+      .mode:has(input:focus-visible) {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      /* ── Footer ───────────────────────────────────────────── */
+      .footer {
+        padding: 10px 16px 14px;
+        border-top: 1px solid var(--border);
+        margin-top: 10px;
+      }
+
+      .footer__text {
+        margin: 0;
+        font-size: 11px;
+        line-height: 1.5;
+        color: var(--text-tertiary);
+        letter-spacing: 0.01em;
+      }
+
+      .footer__text strong {
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      /* ── Animations ───────────────────────────────────────── */
+      @keyframes fadeSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes dotPulse {
+        0%,
+        100% {
+          box-shadow:
+            0 0 6px var(--accent-glow),
+            0 0 12px var(--accent-glow);
+        }
+        50% {
+          box-shadow:
+            0 0 12px var(--accent-glow-strong),
+            0 0 24px var(--accent-glow);
+        }
+      }
+
+      @keyframes keyPress {
+        0% {
+          transform: translateY(0);
+        }
+        35% {
+          transform: translateY(2px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/chunks/popup-BAMODFHC.js"></script>
+  </head>
+  <body>
+    <div class="popup-root">
+      <header class="app-bar">
+        <div class="app-bar__toolbar">
+          <svg class="app-bar__sigil" viewBox="0 0 128 128" role="img" aria-label="Kanary IME Guard" xmlns="http://www.w3.org/2000/svg">
+            <path d="M64 13C79 20 93 24 107 28v22c0 18-4 33-10 43-7 10-17 18-33 24-16-6-26-14-33-24-6-10-10-25-10-43V28c14-4 28-8 43-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="9" />
+            <path d="M78 40v18c0 11-8 19-19 19H46" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="9" />
+            <path d="M46 77l10-10M46 77l10 10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="9" />
+          </svg>
+
+          <div class="app-bar__title-group">
+            <span class="app-bar__title">Kanary</span>
+            <span class="app-bar__subtitle">IME Guard</span>
+          </div>
+
+          <span class="app-bar__spacer"></span>
+
+          <span class="app-bar__status" role="status" aria-live="polite">
+            <span class="app-bar__status-dot" aria-hidden="true"></span>
+            <span class="app-bar__status-label">Guarding</span>
+          </span>
+        </div>
+      </header>
+
+      <div class="popup-body">
+        <fieldset class="modes">
+          <legend class="modes__legend">Guard mode</legend>
+
+          <label class="mode">
+            <input type="radio" name="guard-mode" value="off">
+            <span class="mode__rail" aria-hidden="true">
+              <span class="mode__dot"></span>
+            </span>
+            <span class="mode__content">
+              <span class="mode__title">Off</span>
+              <span class="mode__meta">Pass every keystroke through.</span>
+            </span>
+            <span class="mode__glyph" aria-hidden="true">—</span>
+          </label>
+
+          <label class="mode">
+            <input type="radio" name="guard-mode" value="standard">
+            <span class="mode__rail" aria-hidden="true">
+              <span class="mode__dot"></span>
+            </span>
+            <span class="mode__content">
+              <span class="mode__title">Standard</span>
+              <span class="mode__meta">Block Enter while composing.</span>
+            </span>
+            <span class="mode__glyph" aria-hidden="true">↵</span>
+          </label>
+
+          <label class="mode">
+            <input type="radio" name="guard-mode" value="aggressive">
+            <span class="mode__rail" aria-hidden="true">
+              <span class="mode__dot"></span>
+            </span>
+            <span class="mode__content">
+              <span class="mode__title">Aggressive</span>
+              <span class="mode__meta">Also block related keystrokes.</span>
+            </span>
+            <span class="mode__glyph" aria-hidden="true">↵</span>
+          </label>
+        </fieldset>
+      </div>
+
+      <footer class="footer">
+        <p class="footer__text">
+          <strong>Note:</strong>
+          Aggressive mode may conflict with custom editors on some sites.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

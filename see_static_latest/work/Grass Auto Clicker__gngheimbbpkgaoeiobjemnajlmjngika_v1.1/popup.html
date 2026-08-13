@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"> <style>
+    body {
+      width: 230px; /* Slimmed down from 280px */
+      margin: 0;
+      padding: 12px; /* Slightly tighter padding */
+      background-color: #f0f8ff; /* Sky blue */
+      color: #333333;
+      font-family: "Nunito", "Segoe UI", "Helvetica Neue", sans-serif; 
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 18px; /* Slightly smaller to fit the new width */
+      color: #006400; /* Dark green */
+      font-weight: 800;
+    }
+
+    .panel {
+      background: #ffffff;
+      border: 1px solid #cce0ff; 
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(34, 139, 34, 0.1); 
+    }
+
+    .label-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #228b22; 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      color: #444444;
+      font-weight: 500;
+    }
+
+    .radio-group input {
+      margin-right: 8px;
+      accent-color: #228b22; 
+    }
+
+    button {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 5px;
+      background: #ffffff;
+      color: #006400;
+      border: 1px solid #b3d9b3;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      background: #e8f5e9; 
+      border-color: #228b22;
+    }
+
+    button.hidden {
+      display: none;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      box-sizing: border-box;
+      background: #ffffff;
+      color: #333333;
+      border: 1px solid #b3d9b3;
+      padding: 6px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input[type="number"]:focus {
+      border-color: #228b22;
+      box-shadow: 0 0 0 3px rgba(34, 139, 34, 0.15);
+    }
+
+    #btn-toggle {
+      background: #228b22; 
+      color: #ffffff;
+      border: none;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(34, 139, 34, 0.3);
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    #btn-toggle:hover {
+      background: #006400; 
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 100, 0, 0.4);
+    }
+
+    #btn-toggle:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(0, 100, 0, 0.3);
+    }
+
+    #btn-toggle.stop {
+      background: #ff4500; 
+      box-shadow: 0 4px 12px rgba(255, 69, 0, 0.3);
+    }
+
+    #btn-toggle.stop:hover {
+      background: #cc3700;
+      box-shadow: 0 6px 16px rgba(255, 69, 0, 0.4);
+    }
+
+    .status-container {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #777777;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h2>Auto Clicker</h2>
+  
+  <div class="panel">
+    <span class="label-title">Click Mode</span>
+    <div class="radio-group">
+      <label><input type="radio" name="mode" value="follow" checked> Follow Mouse</label>
+      <label><input type="radio" name="mode" value="fixed"> Fixed Element</label>
+      <label><input type="radio" name="mode" value="coordinate"> Fixed Coordinates</label>
+    </div>
+    <button id="btn-pick" class="hidden">🎯 Pick Element</button>
+    <button id="btn-pick-coord" class="hidden">🎯 Pick Screen Location</button>
+  </div>
+
+  <div class="panel">
+    <span class="label-title">Speed (Clicks/Sec)</span>
+    <input type="number" id="cps" value="10" min="1" max="1000">
+  </div>
+
+  <div class="panel">
+    <span class="label-title">Keyboard Shortcut</span>
+    <button id="btn-set-key">Alt + Shift + S</button>
+  </div>
+
+  <button id="btn-toggle">START</button>
+  <div class="status-container">
+    <span id="status-text">Stopped</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

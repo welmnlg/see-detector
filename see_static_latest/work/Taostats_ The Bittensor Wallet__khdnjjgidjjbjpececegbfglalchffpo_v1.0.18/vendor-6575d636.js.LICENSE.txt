@@ -1,0 +1,40 @@
+/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+
+/*!
+ * Chart.js v4.4.7
+ * https://www.chartjs.org
+ * (c) 2024 Chart.js Contributors
+ * Released under the MIT License
+ */
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+/*! @license DOMPurify 3.2.6 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.2.6/LICENSE */
+
+/*! Axios v1.13.0 Copyright (c) 2025 Matt Zabriskie and contributors */
+
+/**
+	 * A handy class to calculate color values.
+	 *
+	 * @version 1.0
+	 * @author Robert Eisele <robert@xarg.org>
+	 * @copyright Copyright (c) 2010, Robert Eisele
+	 * @link http://www.xarg.org/2010/03/generate-client-side-png-files-using-javascript/
+	 * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+	 *
+	 */
+
+/**
+ * @license bcrypt.js (c) 2013 Daniel Wirtz <dcode@dcode.io>
+ * Released under the Apache License, Version 2.0
+ * see: https://github.com/dcodeIO/bcrypt.js for details
+ */

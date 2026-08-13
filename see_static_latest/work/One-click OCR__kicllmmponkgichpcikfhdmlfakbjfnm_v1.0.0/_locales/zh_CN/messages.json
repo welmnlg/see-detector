@@ -1,0 +1,184 @@
+{
+  "extName": {
+    "message": "一键读图（OCR）",
+    "description": "扩展名称"
+  },
+  "extDescription": {
+    "message": "在网页上框选区域截图，于当前页弹窗内 OCR 识别文字；支持多语言与本地保存语言偏好。",
+    "description": "扩展描述"
+  },
+  "cmdScreenshot": {
+    "message": "截图选择",
+    "description": "命令：截图选择"
+  },
+  "popupTitle": {
+    "message": "一键读图（OCR）",
+    "description": "Popup 标题"
+  },
+  "popupTagline": {
+    "message": "框选网页区域，在当前页识别文字",
+    "description": "Popup 副标题"
+  },
+  "popupScreenshot": {
+    "message": "截图选择",
+    "description": "截图按钮"
+  },
+  "popupScreenshotDesc": {
+    "message": "拖动框选区域，自动 OCR 并可在页面内复制结果",
+    "description": "截图说明"
+  },
+  "popupFooterInfo": {
+    "message": "截图选区 · 页面内识别 · 本地 OCR",
+    "description": "Footer 信息"
+  },
+  "popupSettingsShortcut": {
+    "message": "设置快捷方式",
+    "description": "设置按钮 title"
+  },
+  "popupStatusNoTab": {
+    "message": "无法获取当前标签页",
+    "description": "状态：无标签页"
+  },
+  "popupStatusScreenshot": {
+    "message": "请在网页上选择截图区域",
+    "description": "状态：选择截图区域"
+  },
+  "popupStatusSent": {
+    "message": "已发送",
+    "description": "状态：已发送"
+  },
+  "popupStatusError": {
+    "message": "操作失败",
+    "description": "状态：操作失败"
+  },
+  "overlayScreenshot": {
+    "message": "拖动鼠标选择截图区域",
+    "description": "遮罩：截图提示"
+  },
+  "overlayPressEsc": {
+    "message": "按 ESC 取消",
+    "description": "遮罩：ESC 提示"
+  },
+  "pipScreenshotFailed": {
+    "message": "截图失败",
+    "description": "截图失败提示"
+  },
+  "pipScreenshotInvalidResponse": {
+    "message": "截图失败: 无效响应",
+    "description": "截图无效响应"
+  },
+  "ocrRecognizeBtn": {
+    "message": "识别文本",
+    "description": "OCR 识别按钮"
+  },
+  "ocrLangLabel": {
+    "message": "文本语言",
+    "description": "语言标签"
+  },
+  "ocrLangTriggerTitle": {
+    "message": "识别语言（可多选）",
+    "description": "语言下拉 title"
+  },
+  "ocrLangTriggerLabel": {
+    "message": "语言",
+    "description": "语言按钮默认文案"
+  },
+  "ocrLangPanelTitle": {
+    "message": "选择语言",
+    "description": "语言面板标题"
+  },
+  "ocrLangToggleAll": {
+    "message": "全选 / 取消",
+    "description": "全选取消按钮"
+  },
+  "ocrResultFormatTitle": {
+    "message": "整理（移除空格，保留换行）",
+    "description": "整理按钮 title"
+  },
+  "ocrResultCopyTitle": {
+    "message": "复制",
+    "description": "复制按钮 title"
+  },
+  "ocrStatusInit": {
+    "message": "正在初始化 OCR 引擎...",
+    "description": "OCR 状态：初始化"
+  },
+  "ocrStatusLoadLang": {
+    "message": "加载语言包中...（首次会较慢）",
+    "description": "OCR 状态：加载语言包"
+  },
+  "ocrStatusPreparing": {
+    "message": "准备识别...",
+    "description": "OCR 状态：准备"
+  },
+  "ocrStatusRecognizing": {
+    "message": "正在识别文字... $progress$%",
+    "description": "OCR 状态：识别中",
+    "placeholders": {
+      "progress": { "content": "$1" }
+    }
+  },
+  "ocrStatusDone": {
+    "message": "✓ 识别完成！共识别 $count$ 个字符。可信度$pct$%",
+    "description": "OCR 状态：完成",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "pct": { "content": "$2" }
+    }
+  },
+  "ocrStatusNoText": {
+    "message": "未识别到文字内容",
+    "description": "OCR 状态：无文字"
+  },
+  "ocrStatusError": {
+    "message": "✗ 识别失败: $error$",
+    "description": "OCR 状态：失败",
+    "placeholders": {
+      "error": { "content": "$1" }
+    }
+  },
+  "ocrStatusCopyOk": {
+    "message": "✓ 文本已复制到剪贴板",
+    "description": "复制成功"
+  },
+  "ocrStatusCopyFail": {
+    "message": "✗ 复制失败",
+    "description": "复制失败"
+  },
+  "bgOcrJustification": {
+    "message": "OCR 需在具备 Worker 的环境中运行 Tesseract.js",
+    "description": "Offscreen 创建理由"
+  },
+  "bgOcrNoResponse": {
+    "message": "无响应",
+    "description": "OCR 无响应错误"
+  },
+  "inPageOcrTitle": {
+    "message": "截图 OCR 识别结果",
+    "description": "页面内 OCR 弹框标题"
+  },
+  "inPageOcrClose": {
+    "message": "关闭",
+    "description": "页面内 OCR 弹框关闭按钮"
+  },
+  "inPageOcrRescreenshot": {
+    "message": "再次截图",
+    "description": "页面内 OCR 弹框：关闭后重新框选截图"
+  },
+  "inPageOcrCopyEmpty": {
+    "message": "没有可复制的文本",
+    "description": "页面内 OCR 复制空文本提示"
+  },
+  "inPageOcrPreviewAlt": {
+    "message": "截图预览",
+    "description": "页面内 OCR 截图预览 alt"
+  },
+  "inPageOcrTextareaPlaceholder": {
+    "message": "识别结果将显示在这里…",
+    "description": "页面内 OCR 结果输入框 placeholder"
+  },
+  "inPageOcrStatusLoadCore": {
+    "message": "加载 OCR 核心...",
+    "description": "页面内 OCR 状态：加载核心"
+  }
+}

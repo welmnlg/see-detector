@@ -1,0 +1,26 @@
+{
+  "extName": {
+    "message": "डबल राइट-क्लिक से टैब बंद करें"
+  },
+  "extDescription": {
+    "message": "वेब पेज पर डबल राइट-क्लिक करके टैब बंद करें। हल्का, तेज और बिना ट्रैकिंग के।"
+  },
+  "optionsTitle": {
+    "message": "Double Right Click Options"
+  },
+  "modeSuppressFirst": {
+    "message": "Reliable close, delay single right-click menu"
+  },
+  "modeSuppressFirstHint": {
+    "message": "Best for double right-click closing."
+  },
+  "modePreserveMenu": {
+    "message": "Show single right-click menu immediately"
+  },
+  "modePreserveMenuHint": {
+    "message": "The browser menu is preserved; double right-click may depend on the page and system menu behavior."
+  },
+  "optionsSaved": {
+    "message": "Saved."
+  }
+}

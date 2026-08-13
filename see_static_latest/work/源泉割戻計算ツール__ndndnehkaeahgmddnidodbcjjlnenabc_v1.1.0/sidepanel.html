@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>源泉割戻計算</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="page-title">源泉割戻計算</h1>
+      <p class="subtitle" id="page-subtitle">手取り額から税引前を逆算</p>
+    </header>
+
+    <!-- 計算モード切替 -->
+    <section class="mode-section">
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="reverse">
+          割戻計算
+          <span class="mode-desc">手取り → 税引前</span>
+        </button>
+        <button class="mode-tab" data-mode="forward">
+          順計算
+          <span class="mode-desc">税引前 → 手取り</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 法人/個人 切替 -->
+    <section class="entity-section">
+      <div class="entity-tabs">
+        <button class="entity-tab active" data-entity="corporate">法人</button>
+        <button class="entity-tab" data-entity="individual">個人</button>
+      </div>
+    </section>
+
+    <!-- 区分選択 -->
+    <section class="type-section">
+      <div id="type-buttons" class="type-tabs"></div>
+      <div class="type-info">
+        <span id="entity-status" class="entity-status corporate">法人</span>
+        <span id="tax-rate-display">源泉徴収税率: 15.315%</span>
+        <span id="tax-detail-display" class="detail-text">所得税15% + 復興特別所得税0.315%</span>
+      </div>
+    </section>
+
+    <!-- 入力 -->
+    <section class="input-section">
+      <div class="field">
+        <label for="net-input" id="input-label">手取り金額 <span class="unit">円</span></label>
+        <input type="text" id="net-input" placeholder="金額を選択 or 入力" inputmode="numeric">
+        <p class="hint">ページ上の金額をカーソルで選択すると自動入力されます</p>
+      </div>
+      <button id="calc-btn" type="button">割戻計算</button>
+    </section>
+
+    <!-- 結果 -->
+    <section class="result-section" style="display:none;">
+      <h2>計算結果</h2>
+
+      <div class="result-card highlight">
+        <div class="result-main">
+          <span class="result-label" id="result-primary-label">税引前金額（割戻後）</span>
+          <span class="result-value" id="gross-result">-</span>
+        </div>
+        <button class="copy-btn" id="copy-gross" title="コピー">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="result-details">
+        <div class="result-row">
+          <span id="input-echo-label">手取り金額</span>
+          <span id="net-display">-</span>
+        </div>
+
+        <div id="tax-breakdown-area">
+          <!-- 動的に税額内訳を挿入 -->
+        </div>
+
+        <div class="result-row sub-detail" id="resident-tax-row" style="display:none;">
+          <span>住民税（5%）</span>
+          <span id="resident-tax-detail">-</span>
+        </div>
+
+        <div class="result-row total-row">
+          <span>源泉徴収合計</span>
+          <span id="total-tax" class="negative">-</span>
+        </div>
+
+        <div class="result-row check-row">
+          <span id="check-label">検算（税引前 - 税額）</span>
+          <span id="check-amount">-</span>
+          <span id="check-status" class="check-ok">-</span>
+        </div>
+      </div>
+
+      <div class="copy-actions">
+        <button class="action-btn" id="copy-national">国税額コピー</button>
+        <button class="action-btn" id="copy-tax">合計税額コピー</button>
+        <button class="action-btn" id="copy-all">全結果コピー</button>
+      </div>
+    </section>
+
+    <!-- 履歴 -->
+    <section class="history-section">
+      <div class="history-header">
+        <h2>計算履歴</h2>
+        <button id="clear-history" class="link-btn" style="display:none;">クリア</button>
+      </div>
+      <div id="history-list" class="history-list">
+        <p class="empty-state">まだ計算履歴はありません</p>
+      </div>
+    </section>
+
+    <footer>
+      <table class="rate-table">
+        <thead><tr><th>区分</th><th>法人</th><th>個人</th></tr></thead>
+        <tbody>
+          <tr><td>配当（上場）</td><td>15.315%</td><td>20.315%</td></tr>
+          <tr><td>配当（非上場）</td><td>20.42%</td><td>20.42%</td></tr>
+          <tr><td>利息</td><td>15.315%</td><td>20.315%</td></tr>
+          <tr><td>報酬（100万以下）</td><td>-</td><td>10.21%</td></tr>
+          <tr><td>報酬（100万超）</td><td>-</td><td>20.42%</td></tr>
+        </tbody>
+      </table>
+      <p class="caution">※ 端数処理により1円程度の差異が生じる場合があります</p>
+      <p class="caution">※ 正確な税額は支払調書等でご確認ください</p>
+    </footer>
+  </div>
+
+  <script src="calc.js"></script>
+</body>
+</html>

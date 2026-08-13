@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messenger Notifications</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Messenger Notifications</h1>
+      <p class="subtitle">Get notified for new Messenger messages</p>
+    </header>
+    
+    <section class="silent-mode-section">
+      <div class="toggle-container">
+        <label class="toggle">
+          <input type="checkbox" id="silentModeToggle">
+          <span class="slider"></span>
+        </label>
+        <div class="toggle-label">
+          <span class="toggle-title" id="silentModeLabel">Notifications ON</span>
+          <span class="toggle-description">Toggle silent mode when you need to focus</span>
+        </div>
+      </div>
+    </section>
+    
+    <section class="test-section">
+      <button id="testNotificationBtn" class="btn-test">Test Notification</button>
+      <p class="test-hint">Click to verify notifications are working</p>
+    </section>
+    
+    <footer>
+      <p class="status" id="statusMessage"></p>
+      <p class="footer-note">Works on facebook.com/messages and supports messenger.com during migration</p>
+    </footer>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

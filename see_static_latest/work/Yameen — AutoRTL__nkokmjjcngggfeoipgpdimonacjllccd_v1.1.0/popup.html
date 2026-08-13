@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">ع</div>
+      <div class="header-text">
+        <h1>AutoRTL</h1>
+        <div class="status-line">
+          <span class="status-dot" id="statusDot"></span>
+          <span class="status-text" id="statusText">Auto-detecting Arabic text</span>
+        </div>
+      </div>
+    </div>
+    <div class="toggle-pill on" id="togglePill">
+      <span class="toggle-label" id="toggleLabel">Active</span>
+      <div class="toggle-track"></div>
+    </div>
+  </div>
+
+  <!-- ── Mode (Primary) ── -->
+  <div class="section">
+    <div class="section-title">Mode</div>
+    <div class="mode-selector">
+      <button class="mode-btn active" data-mode="auto">
+        <span class="mode-icon">🔄</span>Auto
+      </button>
+      <button class="mode-btn" data-mode="force-rtl">
+        <span class="mode-icon">⬅️</span>RTL
+      </button>
+      <button class="mode-btn" data-mode="force-ltr">
+        <span class="mode-icon">➡️</span>LTR
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Font ── -->
+  <div class="section">
+    <div class="section-title">Arabic Font</div>
+    <div class="font-chips" id="fontChips">
+      <button class="font-chip active" data-font="">Default</button>
+      <button class="font-chip" data-font="'Cairo', sans-serif">Cairo</button>
+      <button class="font-chip" data-font="'Amiri', serif">Amiri</button>
+      <button class="font-chip" data-font="'Tajawal', sans-serif">Tajawal</button>
+      <button class="font-chip" data-font="'Almarai', sans-serif">Almarai</button>
+      <button class="font-chip" data-font="'Noto Naskh Arabic', serif">Naskh</button>
+      <button class="font-chip" data-font="'IBM Plex Sans Arabic', sans-serif">IBM Plex</button>
+      <button class="font-chip" data-font="'Readex Pro', sans-serif">Readex</button>
+      <button class="font-chip" data-font="'Noto Kufi Arabic', sans-serif">Kufi</button>
+      <button class="font-chip" data-font="'Scheherazade New', serif">Scheherazade</button>
+    </div>
+    <div class="font-preview" id="fontPreview">بسم الله الرحمن الرحيم</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Stats ── -->
+  <div class="section">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="statFixed">—</div>
+        <div class="stat-label">Fixed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statInputs">—</div>
+        <div class="stat-label">Inputs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statMode">Auto</div>
+        <div class="stat-label">Mode</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <div class="footer">
+    <a class="footer-link" href="https://github.com/OAbouHajar/AutoRTL" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Contribute
+    </a>
+    <a class="footer-link" href="https://www.facebook.com/oabouhajar/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0 0 3.603 0 8.05 0 12.067 2.925 15.396 6.75 16v-5.624H4.719V8.049H6.75V6.276c0-2.017 1.195-3.132 3.022-3.132.877 0 1.795.157 1.795.157v1.98h-1.01c-.997 0-1.308.621-1.308 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+      Facebook
+    </a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

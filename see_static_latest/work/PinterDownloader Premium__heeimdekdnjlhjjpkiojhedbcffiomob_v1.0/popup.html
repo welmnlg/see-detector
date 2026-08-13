@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PinterDownloader</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="glass-container">
+    <header>
+      <h1>Pinter<span>Downloader</span></h1>
+      <p class="subtitle">고화질 이미지 스마트 스캐너</p>
+    </header>
+
+    <div class="controls">
+      <button id="scan-btn" class="btn-primary">이미지 스캔하기</button>
+      <div class="actions hidden" id="action-group">
+        <label class="checkbox-container">
+          <input type="checkbox" id="select-all">
+          <span class="checkmark"></span>
+          전체 선택 (<span id="selected-count">0</span>)
+        </label>
+        <button id="download-btn" class="btn-download">선택 다운로드</button>
+      </div>
+    </div>
+
+    <div id="image-list" class="image-grid">
+      <!-- 이미지가 여기에 동적으로 추가됩니다 -->
+      <p class="empty-msg">핀터레스트 페이지에서 스캔 버튼을 눌러주세요.</p>
+    </div>
+
+    <div id="status-bar" class="status-bar hidden">
+      <div class="progress-bg">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+      <p id="status-text">다운로드 준비 중...</p>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

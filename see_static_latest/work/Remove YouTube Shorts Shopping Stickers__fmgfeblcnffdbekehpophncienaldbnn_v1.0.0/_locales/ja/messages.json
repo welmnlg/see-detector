@@ -1,0 +1,6 @@
+{
+  "extName": { "message": "YouTube Shortsショッピングステッカーを削除" },
+  "extDescription": { "message": "YouTube Shortsに表示されるショッピングステッカーを自動的に削除します。" },
+  "toggleLabel": { "message": "ショッピングステッカーを削除" },
+  "footerText": { "message": "youtube.com で有効" }
+}

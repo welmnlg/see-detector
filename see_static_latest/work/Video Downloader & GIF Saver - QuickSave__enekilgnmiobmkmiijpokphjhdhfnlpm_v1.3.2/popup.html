@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Saver</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <!-- User Agreement Modal -->
+    <div id="agreement-modal" class="modal">
+        <div class="modal-content">
+            <h2>User Agreement</h2>
+            <p>This extension does not host content. It allows users to save media files that are publicly accessible. Users are responsible for complying with applicable copyright laws and website terms.</p>
+            <button id="agree-button">I Agree</button>
+        </div>
+    </div>
+
+    <!-- Main Popup -->
+    <div id="main-popup" style="display: none;">
+        <div class="header">
+            <h1>Media Saver</h1>
+        </div>
+        <div class="content">
+            <div id="settings">
+                <!-- Optional settings can go here -->
+            </div>
+            <div class="disclaimer">
+                <p><strong>Disclaimer:</strong> This extension allows you to download publicly accessible media. You are responsible for respecting copyright and website terms of service.</p>
+            </div>
+            <div class="help">
+                <h3>Help / FAQ</h3>
+                <p><strong>How do I download?</strong><br>Hover over an image or video, and a "Download" button will appear. You can also right-click on media and select "Download Media".</p>
+                <p><strong>What about "Download All"?</strong><br>This button will attempt to download all detected media on the current page. This may result in a large download.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

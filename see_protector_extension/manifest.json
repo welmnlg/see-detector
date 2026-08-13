@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "SEE Protector",
+  "version": "1.0.0",
+  "description": "Ekstensi pendeteksi keamanan (Real-Time Protection) terhadap serangan Stealth Extension Exfiltration.",
+  "permissions": [
+    "management",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

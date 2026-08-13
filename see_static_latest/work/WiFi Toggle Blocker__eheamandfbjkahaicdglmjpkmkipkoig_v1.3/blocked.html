@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Connect to WiFi</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Google Sans", "Segoe UI", Arial, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      user-select: none;
+    }
+    .container { max-width: 480px; padding: 40px; }
+    .icon { font-size: 80px; margin-bottom: 24px; }
+    h1 { font-size: 26px; margin-bottom: 16px; font-weight: 500; }
+    p { font-size: 15px; color: #aaa; line-height: 1.6; margin-bottom: 32px; }
+    .status {
+      display: inline-block;
+      padding: 10px 28px;
+      border-radius: 24px;
+      background: #e74c3c;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .status.online { background: #27ae60; }
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">&#128225;</div>
+    <h1>WiFi Connection Required</h1>
+    <p>This Chromebook is not connected to the internet.<br>
+       Turn on WiFi and connect to the school network to continue.</p>
+    <div class="status pulse" id="status">Disconnected &mdash; Waiting for WiFi&hellip;</div>
+  </div>
+  <script>
+    var redirecting = false;
+    function checkAndRedirect() {
+      if (redirecting) return;
+      if (navigator.onLine) {
+        redirecting = true;
+        var el = document.getElementById("status");
+        el.textContent = "Connected! Redirecting\u2026";
+        el.classList.add("online");
+        el.classList.remove("pulse");
+        setTimeout(function() {
+          window.location.href = "chrome://newtab";
+        }, 500);
+      }
+    }
+    setInterval(checkAndRedirect, 1000);
+    window.addEventListener("online", checkAndRedirect);
+  </script>
+</body>
+</html>

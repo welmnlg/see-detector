@@ -1,0 +1,6 @@
+{
+  "extName": { "message": "移除 YouTube Shorts 购物贴纸" },
+  "extDescription": { "message": "自动移除 YouTube Shorts 视频中显示的购物贴纸广告。" },
+  "toggleLabel": { "message": "移除购物贴纸" },
+  "footerText": { "message": "已在 youtube.com 上启用" }
+}

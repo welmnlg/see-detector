@@ -1,0 +1,223 @@
+/* Word Scramble - Modern Dark Theme */
+@media screen and (max-height: 640px) {
+    .container.container-single{
+        padding-top: 3px !important;
+    }
+}
+#gamebox {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    text-align: center;
+    padding: 5px;
+    background: #0f1419;
+    width: 700px;
+    height: 440px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+input:focus{
+    outline: none;
+}
+#header{
+    height: 40px;
+    font-size: 26px;
+    color: #e2e8f0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+#score{
+    float: left;
+    width: 140px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 22px;
+}
+#answer{
+    float: left;
+    width: 220px;
+    text-align: center;
+    height: 43px;
+    padding-left: 50px;
+}
+
+#answer span{
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: #f87171;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+#time{
+    float: right;
+    width: 180px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 22px;
+}
+#scorev, #timer {
+    color: #f87171;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
+}
+#game-container {
+    width: 580px;
+    margin: auto;
+    font-size: 36px;
+}
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    padding: 0px 30px;
+    height: 150px;
+    justify-items: anchor-center;
+}
+#gameover{
+    display: none;
+    position: absolute;
+    top: 0px;
+    width: 700px;
+    height: 440px;
+    background: rgba(10, 15, 20, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 8px;
+}
+#gameover p.msg {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 38px;
+    color: #64748b;
+    margin: 0 auto;
+    margin-top: 80px;
+    font-weight: 700;
+}
+#tryagainbtn, #nextlevelbtn, #resetbtn {
+    display: block;
+    width: 160px;
+    padding: 8px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s ease;
+}
+#tryagainbtn {
+    margin: 36px auto 16px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.25);
+}
+#nextlevelbtn {
+    margin: 16px auto;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+#resetbtn {
+    margin: 16px auto;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+#tryagainbtn:hover {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}
+#nextlevelbtn:hover {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+#resetbtn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+.grid-item {
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    font-weight: 700;
+    transition: all 0.15s ease;
+}
+.grid-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.02);
+}
+
+#word-input {
+    padding: 5px 14px;
+    display: block;
+    margin: 50px auto 10px;
+    height: 50px;
+    width: 280px;
+    border-radius: 10px;
+    font-size: 24px;
+    background-color: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    transition: border-color 0.2s ease;
+}
+#word-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+#word-input::placeholder {
+    color: #475569;
+}
+
+#submit-button, #next-button, #view-button{
+    padding: 6px 16px;
+    font-size: 20px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.25);
+}
+#submit-button:hover, #next-button:hover, #view-button:hover {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(34, 197, 94, 0.35);
+}
+#next-button {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25);
+}
+#next-button:hover {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    box-shadow: 0 3px 10px rgba(59, 130, 246, 0.35);
+}
+#view-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: none;
+}
+#view-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#score-container {
+    margin-top: 20px;
+}

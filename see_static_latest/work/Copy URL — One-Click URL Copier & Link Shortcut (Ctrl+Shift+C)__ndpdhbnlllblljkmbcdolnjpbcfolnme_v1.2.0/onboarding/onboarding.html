@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set Up Copy URL</title>
+  <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+  <div class="onboarding">
+
+    <div class="onboarding__progress">
+      <div class="onboarding__dot onboarding__dot--active" data-step="1"></div>
+      <div class="onboarding__dot" data-step="2"></div>
+      <div class="onboarding__dot" data-step="3"></div>
+    </div>
+
+    <!-- Step 1: Welcome -->
+    <section class="onboarding__step onboarding__step--active" id="step-welcome">
+      <div class="onboarding__icon-wrapper">
+        <img src="../icons/icon128.png" alt="" class="onboarding__logo" width="80" height="80">
+      </div>
+      <h1 class="onboarding__heading">Welcome to Copy URL</h1>
+      <p class="onboarding__subheading">
+        Copy any page's URL to your clipboard instantly with a keyboard shortcut.
+        Let's set up your preferred shortcut.
+      </p>
+      <button class="onboarding__btn onboarding__btn--primary" id="btn-get-started">
+        Get Started
+      </button>
+    </section>
+
+    <!-- Step 2: Choose Shortcut -->
+    <section class="onboarding__step" id="step-shortcut">
+      <h1 class="onboarding__heading">Choose Your Shortcut</h1>
+      <p class="onboarding__subheading">
+        Press any key combination with at least one modifier
+        (Ctrl, Shift, Alt, or Cmd).
+      </p>
+      <div class="onboarding__recorder">
+        <div class="onboarding__recorder-display" id="recorder-display">
+          Press a key combo&hellip;
+        </div>
+      </div>
+      <p class="onboarding__hint" id="recorder-hint">
+        Example: Ctrl+Shift+C
+      </p>
+      <button class="onboarding__btn onboarding__btn--primary" id="btn-confirm-shortcut" disabled>
+        Use This Shortcut
+      </button>
+      <button class="onboarding__btn onboarding__btn--ghost" id="btn-use-default">
+        Use default (Ctrl+Shift+C)
+      </button>
+    </section>
+
+    <!-- Step 3: Success -->
+    <section class="onboarding__step" id="step-done">
+      <div class="onboarding__success">
+        <div class="onboarding__checkmark"></div>
+      </div>
+      <div class="onboarding__eyebrow">Setup complete</div>
+      <h1 class="onboarding__heading">You're all set</h1>
+
+      <div class="onboarding__shortcut-label">Your shortcut</div>
+      <div class="onboarding__keycaps" id="final-keycaps" aria-label="Shortcut"></div>
+      <span class="onboarding__sr" id="final-shortcut-label">Ctrl+Shift+C</span>
+      <p class="onboarding__try-hint" id="try-hint">Try it now &mdash; press these keys.</p>
+      <p class="onboarding__try-success" id="try-success" hidden>
+        <span class="onboarding__try-check">&check;</span>
+        Your shortcut works! You'll see this on every website after you restart Chrome.
+      </p>
+      <p class="onboarding__fallback-note" id="fallback-note" hidden>
+        Ctrl+Shift+C also keeps working as a universal fallback.
+      </p>
+
+      <div class="onboarding__restart">
+        <div class="onboarding__restart-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+            <path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"></path>
+            <path d="M3 21v-5h5"></path>
+          </svg>
+        </div>
+        <div class="onboarding__restart-body">
+          <div class="onboarding__restart-title">One last step: restart Chrome</div>
+          <p class="onboarding__restart-text">
+            Tabs you had open before install need Chrome to restart before your shortcut can reach them.
+          </p>
+        </div>
+      </div>
+
+      <button class="onboarding__btn onboarding__btn--primary" id="btn-start-using">
+        Close Chrome
+      </button>
+      <button class="onboarding__btn onboarding__btn--ghost" id="btn-try-here" type="button">
+        Preview the toast on this page
+      </button>
+
+      <section class="onboarding__notes">
+        <h2 class="onboarding__notes-title">Good to know</h2>
+        <div class="onboarding__notes-grid">
+          <div class="onboarding__note onboarding__note--ok">
+            <div class="onboarding__note-icon">&check;</div>
+            <div class="onboarding__note-head">Every website</div>
+            <p class="onboarding__note-body">Works on all http / https pages.</p>
+          </div>
+          <div class="onboarding__note onboarding__note--ok">
+            <div class="onboarding__note-icon">&check;</div>
+            <div class="onboarding__note-head">Chrome's own pages</div>
+            <p class="onboarding__note-body">
+              Ctrl+Shift+C still copies &mdash; you'll see a <span class="onboarding__badge">&check;</span> on the toolbar icon instead of a toast.
+            </p>
+          </div>
+          <div class="onboarding__note onboarding__note--warn">
+            <div class="onboarding__note-icon">!</div>
+            <div class="onboarding__note-head">Custom shortcuts are limited</div>
+            <p class="onboarding__note-body">
+              They won't fire on <code>chrome://</code>, the Web Store, the new-tab page, or PDFs. Ctrl+Shift+C still does.
+            </p>
+          </div>
+          <div class="onboarding__note onboarding__note--warn">
+            <div class="onboarding__note-icon">!</div>
+            <div class="onboarding__note-head">Local files</div>
+            <p class="onboarding__note-body">
+              <code>file://</code> pages need "Allow access to file URLs" enabled in <code>chrome://extensions</code>.
+            </p>
+          </div>
+          <div class="onboarding__note onboarding__note--info onboarding__note--wide">
+            <div class="onboarding__note-icon">i</div>
+            <div class="onboarding__note-head">DevTools open?</div>
+            <p class="onboarding__note-body">
+              Ctrl+Shift+C behaves as Chrome's built-in Inspect. Close DevTools to copy URLs instead.
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+  </div>
+
+  <script src="../shared/shortcut-utils.js"></script>
+  <script src="onboarding.js"></script>
+</body>
+</html>

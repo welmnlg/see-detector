@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 220px; padding: 15px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 14px; }
+    h3 { margin: 0 0 15px 0; font-size: 16px; color: #333; }
+    label { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; user-select: none; }
+    input { margin-right: 10px; transform: scale(1.2); }
+    .footer { margin-top: 15px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px; }
+  </style>
+</head>
+<body>
+  <h3>Settings</h3>
+  <label>
+    <input type="checkbox" id="disableSide">
+    Side Buttons (Back/Forward)
+  </label>
+  <label>
+    <input type="checkbox" id="disableMiddle">
+    Middle Click (Auto-scroll)
+  </label>
+  <label>
+    <input type="checkbox" id="disableScroll">
+    Mouse Wheel Scroll
+  </label>
+  <div class="footer">Changes apply immediately</div>
+  <script src="popup.js"></script>
+</body>
+</html>

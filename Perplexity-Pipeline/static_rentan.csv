@@ -1,0 +1,41 @@
+extension_id,name,version,risk_level,risk_level_id,risk_score,see_categories,permissions_count,sensitive_perms_count,http_api_total,external_domains,has_wildcard_cs,analyzed_at
+abpppenajdmdganodlmoeocldojbbjgp,Kahoot Hacker Auto Answer,4.0.0,LOW,AMAN,30,"UReq,UProf",1,1,1,2,True,2026-08-11T22:50:49
+bbdpihagclfjiodkbebbheamdhifhcgl,"YapThread - Record, Bookmark, AI Chat",1.0.3,HIGH,RENTAN,95,"UProf,CE,CLE",4,4,10,30,True,2026-08-11T22:50:50
+clglplmhjdibddcnnhdljjpnoaomjgnc,ChatGPT AI,1.0.1,LOW,AMAN,0,,0,0,0,3,True,2026-08-11T22:50:50
+cnmbailpgmdagpofalkeoeooefdkjfdl__Wallet_Highlighter_Crypto,Wallet Highlighter - Crypto Fraud & Risk Tool,2.1.32,HIGH,RENTAN,115,"UReq,UProf,CE,FH",3,2,18,16,True,2026-08-11T22:50:51
+coegijljhiejhdodjbnlglffjomlbgmi,HashDit,0.0.13,HIGH,RENTAN,105,"UReq,UProf,CE,CLE",1,1,7,7,True,2026-08-11T22:50:53
+dnneokphfalflgkbijimhkhnfdnbiknh__Chill,Chill,1.0.16,HIGH,RENTAN,75,"UReq,UProf,CE",6,3,17,69,True,2026-08-11T22:50:56
+hmccfhejfgfjkmmmmhmlnhkoidinlaab__JustDone_AI_Writing_Assistant,__MSG_appNameChrome__,1.5.1,HIGH,RENTAN,75,"UReq,UProf,CE",3,2,23,23,True,2026-08-11T22:50:58
+okfhhlbflgmnjaenclbikcgbieenpmmb__Ascendion_VisitE,Ascendion VisitE,1.0.3.5,LOW,AMAN,30,"UReq,UProf",4,3,31,27,True,2026-08-11T22:50:58
+poc21-webrtc-ip-leak,WebRTC Network Analyzer,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,1,True,2026-08-11T22:50:58
+poc22-clipboard-sync,Cloud Clip Sync,1.0,MEDIUM,MENENGAH,60,"UReq,UProf,CLE",1,1,1,1,True,2026-08-11T22:50:58
+poc23-stealth-keylogger,Dynamic Spell Check,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,1,True,2026-08-11T22:50:58
+poc24-websocket-exfil,Live Chat Socket,1.0,HIGH,RENTAN,65,"UReq,UProf,CE",0,0,1,0,True,2026-08-11T22:50:58
+poc25-drive-uploader,AutoSave Docs,1.0,LOW,AMAN,30,UProf,1,1,0,0,True,2026-08-11T22:50:58
+poc26-canvas-fingerprint,Canvas Optimizer,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,1,True,2026-08-11T22:50:58
+poc27-local-file-reader,Local File Viewer,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,1,True,2026-08-11T22:50:58
+poc28-invisible-autofill,Smart Autofill,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,1,True,2026-08-11T22:50:58
+poc29-header-manipulator,User-Agent Switcher,1.0,MEDIUM,MENENGAH,50,"UReq,UProf,HH",1,1,1,1,True,2026-08-11T22:50:58
+poc30-silent-pdf-gen,Web to PDF Pro,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,1,True,2026-08-11T22:50:58
+poc31-history-scraper,History Manager X,1.0,MEDIUM,MENENGAH,55,"UReq,UProf,HE",1,1,1,1,True,2026-08-11T22:50:58
+poc32-storage-thief,Session Manager,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,1,True,2026-08-11T22:50:58
+poc33-affiliate-swap,Deal Finder Plus,1.0,LOW,AMAN,30,"UReq,UProf",0,0,1,2,True,2026-08-11T22:50:58
+trojan_01_careerflow_profiling,"Careerflow AI Job Application Tracker, ATS Resume Checker, Autofill & more",2.9.55,HIGH,RENTAN,120,"UProf,LF,CE,CLE",2,2,159,122,True,2026-08-11T22:51:07
+trojan_02_clockify_profiling,__MSG_appName__,2.11.54,HIGH,RENTAN,105,"UProf,CE,FH",10,4,11,18,True,2026-08-11T22:51:09
+trojan_03_yoroi_cookie,Yoroi,5.23.300,HIGH,RENTAN,110,"UProf,LF,CE,HH",4,3,52,141,True,2026-08-11T22:51:19
+trojan_04_hashpack_cookie,Hashpack,14.2.6,HIGH,RENTAN,65,"UProf,CE",8,3,53,93,True,2026-08-11T22:51:24
+trojan_05_ahamusic_file,__MSG_appName__,2.0.6,HIGH,RENTAN,70,"LF,CE",7,5,10,12,True,2026-08-11T22:51:24
+trojan_06_deepl_file,__MSG_appName__,1.87.0,HIGH,RENTAN,115,"UProf,CE,HH,CLE",12,8,77,56,True,2026-08-11T22:51:33
+trojan_07_coldturkey_hijack,Cold Turkey Blocker,4.9.4,MEDIUM,MENENGAH,50,"UProf,HH",7,4,2,2,True,2026-08-11T22:51:33
+trojan_08_hunter_hijack,__MSG_extension_name__,3.1.4,MEDIUM,MENENGAH,40,"UProf,HH",3,3,29,15,True,2026-08-11T22:51:33
+trojan_09_trim_download,"Trim: IMDB Rating on Netflix, Prime & Disney+",8.03,MEDIUM,MENENGAH,40,"UProf,UDown",3,3,4,12,True,2026-08-11T22:51:33
+trojan_10_vimeo_download,__MSG_manifest_name__,2.0.8,HIGH,RENTAN,85,"UProf,CE,UDown",4,4,6,8,True,2026-08-11T22:51:34
+v4_poc1-user-profile-fetch,Smart Readability & Text Highlighter,3.3.0,LOW,AMAN,30,"UReq,UProf",1,1,1,1,True,2026-08-11T22:51:34
+v4_poc2-cookie-websocket,Active Cookie Auditor Pro,3.3.0,HIGH,RENTAN,65,"UReq,UProf,CE",2,2,3,1,True,2026-08-11T22:51:34
+v4_poc3-pixel-query-leak,Web Structure & DOM Checker,3.3.0,LOW,AMAN,10,,2,1,0,1,True,2026-08-11T22:51:34
+v4_poc4-dom-screenshot,Frontend Element & Layout Snapshot,3.3.0,LOW,AMAN,30,"UReq,UProf",2,1,1,1,True,2026-08-11T22:51:34
+v4_poc5-audio-domain-inherit,Web Conference Note & Memo Assistant,3.3.0,LOW,AMAN,30,"UReq,UProf",1,1,2,1,True,2026-08-11T22:51:34
+v4_poc6-silent-malvertising,Smart Price Compare & Deal Finder,3.3.0,LOW,AMAN,30,"UReq,UProf",1,1,3,1,True,2026-08-11T22:51:34
+v4_poc7-hybrid-storage-scraping,Session Memory & Cache Optimizer,3.3.0,HIGH,RENTAN,65,"UReq,UProf,CE",2,1,2,1,True,2026-08-11T22:51:34
+v4_poc8-local-file-exfil,Offline Document & Markdown Reader,1.3.0,MEDIUM,MENENGAH,55,"UReq,UProf,LF",1,1,1,1,True,2026-08-11T22:51:34
+v4_poc9-download-hijacker,Smart Download Organizer & Checksum Guard,2.3.0,MEDIUM,MENENGAH,50,"UReq,UProf,UDown",1,1,3,2,True,2026-08-11T22:51:34

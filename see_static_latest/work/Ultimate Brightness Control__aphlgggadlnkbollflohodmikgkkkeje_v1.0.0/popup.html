@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="popupTitle">Brightness Control</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sun: #FFD93D;
+      --amber: #FF9F1C;
+      --deep: #0A0F18;
+      --card: #111827;
+      --border: rgba(255,217,61,0.14);
+      --border-subtle: rgba(255,255,255,0.07);
+      --text: #F0F0F0;
+      --muted: #6B7FA0;
+      --danger: rgba(255,107,107,0.14);
+      --danger-border: rgba(255,107,107,0.22);
+      --danger-text: #ff8f8f;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 340px;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--deep);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; top: 0; left: 0; right: 0; height: 120px;
+      background: radial-gradient(ellipse 80% 100% at 50% 0%, rgba(255,217,61,.08) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .app { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 14px 16px;
+      position: relative; overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--sun), transparent);
+    }
+
+    .header-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: .8rem;
+      background: linear-gradient(90deg, var(--sun), var(--amber));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .mode-badge {
+      display: inline-flex; align-items: center;
+      background: rgba(255,217,61,.1);
+      border: 1px solid rgba(255,217,61,.22);
+      border-radius: 999px; padding: .2rem .7rem;
+      font-size: .7rem; font-weight: 600; color: var(--sun);
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+
+    .host-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .host-label { font-size: .72rem; color: var(--muted); }
+    .host-value { font-size: .78rem; font-weight: 500; color: var(--text); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .big-value {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 2.4rem; letter-spacing: -0.04em;
+      background: linear-gradient(90deg, var(--sun), var(--amber));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1; margin-top: 8px;
+    }
+
+    .status-note { font-size: .72rem; color: var(--muted); margin-top: 4px; min-height: 1em; }
+
+    /* ── SLIDER PANEL ── */
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px; padding: 14px 16px;
+    }
+
+    .panel-title {
+      font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--muted); font-weight: 600; margin-bottom: 12px;
+      data-i18n: "brightnessLabel";
+    }
+
+    .slider-wrap { position: relative; padding-bottom: 22px; }
+
+    input[type=range] {
+      -webkit-appearance: none; width: 100%; height: 5px;
+      border-radius: 999px; outline: none; cursor: pointer;
+      background: rgba(255,255,255,.08);
+      position: relative; z-index: 2;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sun), var(--amber));
+      box-shadow: 0 0 8px rgba(255,217,61,.45); cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); box-shadow: 0 0 14px rgba(255,217,61,.65); }
+    input[type=range].snapping::-webkit-slider-thumb { box-shadow: 0 0 16px rgba(255,217,61,.85); transform: scale(1.15); }
+
+    .tick-svg {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      width: 100%; height: 18px; pointer-events: none; z-index: 1;
+      overflow: visible;
+    }
+
+    .tick-svg line {
+      stroke: rgba(255,255,255,0.22);
+      stroke-width: 1.5;
+      transition: stroke 0.1s, stroke-width 0.1s;
+    }
+    .tick-svg line.active { stroke: rgba(255,217,61,1); stroke-width: 2; }
+    .tick-svg line.near   { stroke: rgba(255,255,255,0.55); }
+    .tick-svg line.label  { stroke: rgba(255,255,255,0.45); }
+
+    .tick-hint { font-size: .68rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── TOGGLE ── */
+    .toggle-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 0 2px;
+    }
+
+    .toggle-label { font-size: .82rem; color: var(--text); cursor: pointer; }
+
+    /* custom checkbox */
+    .toggle-row input[type=checkbox] {
+      -webkit-appearance: none; width: 36px; height: 20px;
+      border-radius: 999px; background: rgba(255,255,255,.1);
+      border: 1px solid var(--border-subtle); cursor: pointer;
+      position: relative; transition: background .2s;
+      flex-shrink: 0;
+    }
+    .toggle-row input[type=checkbox]::after {
+      content: ''; position: absolute;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--muted); top: 2px; left: 2px;
+      transition: transform .2s, background .2s;
+    }
+    .toggle-row input[type=checkbox]:checked { background: rgba(255,217,61,.2); border-color: rgba(255,217,61,.35); }
+    .toggle-row input[type=checkbox]:checked::after { transform: translateX(16px); background: var(--sun); }
+
+    /* ── BUTTONS ── */
+    .btn-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-full { grid-column: 1 / -1; }
+
+    button {
+      border: none; border-radius: 12px;
+      padding: 10px 12px;
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: .8rem;
+      cursor: pointer; transition: transform .15s, opacity .15s;
+      text-align: center;
+    }
+    button:hover { transform: translateY(-1px); }
+    button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.1); }
+
+    .btn-danger {
+      background: var(--danger);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
+    }
+    .btn-danger:hover { background: rgba(255,107,107,.22); }
+
+    .btn-guide {
+      background: linear-gradient(135deg, var(--sun), var(--amber));
+      color: #0A0F18; font-weight: 600;
+    }
+    .btn-guide:hover { box-shadow: 0 4px 16px rgba(255,159,28,.35); }
+
+    /* ── WARNING BANNER ── */
+    .warn-banner {
+      display: none;
+      align-items: flex-start; gap: .6rem;
+      background: rgba(255,159,28,.08);
+      border: 1px solid rgba(255,159,28,.25);
+      border-radius: 12px; padding: .75rem 1rem;
+      font-size: .75rem; color: #c8a060; line-height: 1.55;
+      animation: fadeUp .3s ease both;
+    }
+    .warn-banner.show { display: flex; }
+    .warn-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-top">
+        <span class="logo">☀ UBC</span>
+        <span class="mode-badge" id="modeBadge">Global</span>
+      </div>
+      <div class="host-row">
+        <span class="host-label" data-i18n="hostLabel">Site</span>
+        <span class="host-value" id="hostValue">—</span>
+      </div>
+      <div class="big-value" id="valueDisplay">100%</div>
+      <div class="status-note" id="statusDescription"></div>
+    </div>
+
+    <!-- SLIDER -->
+    <div class="panel">
+      <div class="panel-title" data-i18n="brightnessLabel">Brightness</div>
+      <div class="slider-wrap">
+        <input type="range" id="brightnessSlider" min="10" max="200" step="1" value="100"/>
+        <svg class="tick-svg" id="tickSvg" aria-hidden="true" viewBox="0 0 100 18" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="tick-hint" data-i18n="tickHint"></div>
+
+      <label class="toggle-row">
+        <input type="checkbox" id="siteOnlyToggle"/>
+        <span class="toggle-label" data-i18n="siteOnlyToggle">Apply only to this site</span>
+      </label>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="panel" style="padding:14px 16px">
+      <div class="btn-grid">
+        <button id="disableHereButton" class="btn-secondary" data-i18n="disableHereButton">Disable here</button>
+        <button id="disableEverywhereButton" class="btn-danger" data-i18n="disableEverywhereButton">Disable everywhere</button>
+        <button id="guideButton" class="btn-guide btn-full" data-i18n="openGuideButton">Open guide</button>
+      </div>
+    </div>
+
+    <!-- WARNING BANNER -->
+    <div class="warn-banner" id="warnBanner">
+      <span class="warn-icon">⚠️</span>
+      <span>Brightness control is temporarily applied to this tab. After refreshing, it will only apply if it matches your scoping settings.</span>
+    </div>
+
+  </div>
+
+
+  <script src="popup-ticks.js"></script>
+  <script src="lib/settings.js"></script>
+  <script src="localize.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+/* styles.css - Styles ONLY for webpages (injected by content script) */
+
+.media-saver-download-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.media-saver-container:hover .media-saver-download-button {
+    opacity: 1;
+}
+
+.media-saver-container {
+    position: relative;
+    display: inline-block;
+}

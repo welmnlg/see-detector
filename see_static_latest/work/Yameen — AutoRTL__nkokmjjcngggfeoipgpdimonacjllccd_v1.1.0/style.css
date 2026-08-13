@@ -1,0 +1,8 @@
+/* ================================================
+   AutoRTL — Injected Styles (content pages)
+   ================================================ */
+
+/* Mixed-text fix class */
+.autortl-active {
+  unicode-bidi: plaintext !important;
+}

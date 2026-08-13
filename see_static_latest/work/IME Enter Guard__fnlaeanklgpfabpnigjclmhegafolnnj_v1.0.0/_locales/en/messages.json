@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "IME Enter Guard",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Prevents accidental form submission when pressing Enter to confirm IME conversion",
+    "description": "Extension description"
+  }
+}

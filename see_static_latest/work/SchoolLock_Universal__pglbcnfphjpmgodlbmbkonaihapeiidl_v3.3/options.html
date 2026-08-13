@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100dvh; margin: 0; }
+    .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 90%; max-width: 500px; box-sizing: border-box; }
+    h2 { color: #1a73e8; margin-top: 0; font-size: 1.5rem; }
+    h3 { color: #5f6368; font-size: 1.1rem; margin-top: 25px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+    p { font-size: 14px; color: #5f6368; line-height: 1.5; }
+    input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #dadce0; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+    button { width: 100%; padding: 14px; background: #1a73e8; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 16px; }
+    button:active { transform: scale(0.98); }
+    
+    /* リセットボタン用のスタイル */
+    .btn-danger { background: #d93025; margin-top: 10px; }
+    .btn-danger:active { background: #b31412; }
+
+    #status { margin-top: 15px; font-size: 14px; text-align: center; min-height: 1.2em; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>SchoolLock 設定</h2>
+    
+    <h3>接続設定</h3>
+    <p>この学校で使用するGASのデプロイURLを貼り付けてください。</p>
+    <input type="text" id="gasUrl" placeholder="https://script.google.com/macros/s/.../exec">
+    <button id="save">設定を保存する</button>
+
+    <h3>生徒情報設定</h3>
+    <p>学年・番号の入力ミスや、端末の利用者が変わった場合はこちらでリセットしてください。</p>
+    <button id="resetInfo" class="btn-danger">生徒情報をリセットする</button>
+
+    <div id="status"></div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entry Plus 설정</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 320px;
+      padding: 20px;
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    #title {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .header p {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .features-container {
+      background: white;
+      border-radius: 8px;
+      padding: 0px 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .feature-item:last-child {
+      border-bottom: none;
+    }
+    
+    .feature-info {
+      flex: 1;
+    }
+    
+    .feature-name {
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    
+    .feature-desc {
+      font-size: 11px;
+      color: #888;
+    }
+    
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      background: #ccc;
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.3s;
+      flex-shrink: 0;
+      margin-left: 15px;
+    }
+    
+    .toggle-switch.active {
+      background: #32d27d;
+    }
+    
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      
+    }
+    
+    .toggle-switch.active::after {
+      left: 26px;
+    }
+    
+    .apply-button-container {
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .apply-button {
+      width: 100%;
+      padding: 12px;
+      background: #32d27d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s, opacity 0.3s;
+    }
+    
+    .apply-button:hover:not(:disabled) {
+      background: #32d27d;
+    }
+    
+    .apply-button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .domain-warning {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #856404;
+      text-align: center;
+    }
+    
+    .entry-site-warning {
+      background: rgba(50, 210, 125, 1);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: white;
+      text-align: center;
+      font-weight: 500;
+      width: 100%;
+      display: none;
+    }
+    
+    .entry-site-warning.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 id="title">Entry Plus</h1>
+    <p>엔트리를 위한 다양한 기능</p>
+  </div>
+  
+  <div class="entry-site-warning" id="entrySiteWarning">
+    엔트리 사이트가 아닙니다.
+  </div>
+  
+  <div class="features-container" id="featuresContainer">
+  </div>
+  
+  <div class="apply-button-container">
+    <button id="applyButton" class="apply-button" disabled>적용</button>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

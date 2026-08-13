@@ -1,0 +1,30 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "源泉割戻計算ツール",
+  "version": "1.1.0",
+  "description": "手取り金額をカーソルで選択して、配当・利息・報酬の源泉徴収前の金額を逆算する",
+  "permissions": ["sidePanel", "activeTab", "contextMenus"],
+  "action": {
+    "default_title": "源泉割戻計算"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content-styles.css"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

@@ -1,0 +1,166 @@
+/* Mine Finder - Modern Dark Theme */
+@media screen and (max-height: 640px) {
+    .container.container-single{
+        padding-top: 3px !important;
+    }
+}
+#gamebox {
+    width: 750px;
+    height: 440px;
+    background-color: #0f1419;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+#mine {
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 10px 20px 0px 20px;
+}
+
+.level {
+    text-align: left;
+    font-size: 18px;
+    float: left;
+    width: 530px;
+}
+
+.level button {
+    padding: 5px 15px;
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(14, 165, 233, 0.25);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+.level button:hover {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(14, 165, 233, 0.35);
+}
+
+.level button.active {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+}
+
+table {
+    border-spacing: 1px;
+    background-color: #1e293b;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+td {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #475569;
+    border: 2px solid;
+    border-color: #64748b #334155 #334155 #64748b;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+td:hover {
+    background-color: #536378;
+}
+
+.tips {
+    color: #f87171;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mine {
+    background: #94a3b8 url(/games/images/mine-finder/mine.png) no-repeat center;
+    background-size: cover;
+    border-color: #94a3b8;
+}
+
+.flag {
+    background: #475569 url(/games/images/mine-finder/flag.png) no-repeat center;
+    background-size: cover;
+}
+
+.info {
+    text-align: right;
+    font-size: 18px;
+    color: #e2e8f0;
+    width: 170px;
+    float: right;
+    font-weight: 600;
+}
+
+.header{
+    width: 100%;
+    height: 50px;
+    padding: 5px 0px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 14px;
+}
+
+td.zero {
+    background-color: #1e293b;
+    border-color: #1e293b;
+}
+
+td.one {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #60a5fa;
+}
+
+td.two {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #4ade80;
+}
+
+td.three {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #f87171;
+}
+
+td.four {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #c084fc;
+}
+
+td.five {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #fb923c;
+}
+
+td.six {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #f0abfc;
+}
+
+td.seven {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #67e8f9;
+}
+
+td.eight {
+    background-color: #1e293b;
+    border-color: #1e293b;
+    color: #86efac;
+}

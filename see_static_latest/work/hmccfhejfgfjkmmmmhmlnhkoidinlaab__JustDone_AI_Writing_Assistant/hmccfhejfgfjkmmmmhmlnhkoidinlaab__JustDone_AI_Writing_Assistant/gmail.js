@@ -1,0 +1,1 @@
+var brapi="undefined"!=typeof chrome?chrome:"undefined"!=typeof browser?browser:{};!function(){const e=document.createElement("script");e.type="text/javascript",e.src=brapi.runtime.getURL("gmail.bundle.js"),document.documentElement.appendChild(e)}();

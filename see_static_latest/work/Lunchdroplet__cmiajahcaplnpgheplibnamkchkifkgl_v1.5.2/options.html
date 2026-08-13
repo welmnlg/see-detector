@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lunchdroplet Settings</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 24px;
+      max-width: 400px;
+      color: #1a1a1a;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0 0 16px;
+    }
+    h2 {
+      font-size: 15px;
+      margin: 20px 0 10px;
+      padding-top: 16px;
+      border-top: 2px solid #ddd;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    label + label {
+      border-top: 1px solid #eee;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+    .volume-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 0 10px 28px;
+      font-size: 13px;
+      color: #555;
+    }
+    .volume-row.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .volume-row input[type="range"] {
+      flex: 1;
+      height: 4px;
+      accent-color: #009900;
+    }
+    .volume-row span {
+      min-width: 32px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .saved {
+      color: #009900;
+      font-size: 13px;
+      margin-top: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .saved.show {
+      opacity: 1;
+    }
+    .fav-add {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .fav-add input[type="text"] {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 13px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .fav-add button {
+      padding: 6px 12px;
+      font-size: 13px;
+      border: none;
+      border-radius: 4px;
+      background: #009900;
+      color: #fff;
+      cursor: pointer;
+    }
+    .fav-add button:hover {
+      background: #007700;
+    }
+    .fav-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+    }
+    .fav-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px solid #eee;
+    }
+    .fav-list li button {
+      background: none;
+      border: none;
+      color: #cc0000;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 2px 6px;
+    }
+    .fav-list li button:hover {
+      text-decoration: underline;
+    }
+    .fav-empty {
+      font-size: 13px;
+      color: #999;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Notification Settings</h1>
+  <label>
+    <input type="checkbox" id="browser" checked>
+    Browser notifications
+  </label>
+  <label>
+    <input type="checkbox" id="alerts">
+    Alert popups
+  </label>
+  <label>
+    <input type="checkbox" id="voice">
+    Voice notifications
+  </label>
+  <div class="volume-row" id="volume-row">
+    <label for="volume">Volume</label>
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.25">
+    <span id="volume-value">25%</span>
+  </div>
+
+  <h2>Alert Mode</h2>
+  <label>
+    <input type="radio" name="alertMode" id="mode-all" value="all" checked>
+    Alert on all new restaurant availability
+  </label>
+  <label>
+    <input type="radio" name="alertMode" id="mode-favorites" value="favorites">
+    Alert only for favorite restaurant availability
+  </label>
+
+  <h2>Favorite Restaurants</h2>
+  <p style="font-size:13px;color:#666;margin:0 0 6px;">
+    Names are substring-matched (case-insensitive).
+  </p>
+  <div class="fav-add">
+    <input type="text" id="fav-input" placeholder="e.g. Tso Chinese">
+    <button id="fav-add-btn">Add</button>
+  </div>
+  <ul class="fav-list" id="fav-list"></ul>
+  <div class="fav-empty" id="fav-empty">No favorites yet.</div>
+
+  <div class="saved" id="saved">Settings saved</div>
+  <script src="options.js"></script>
+</body>
+</html>

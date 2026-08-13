@@ -1,0 +1,11 @@
+{
+  "appNameChrome": {
+    "message": "Justdone: GPT-4o 인공지능 글쓰기 도우미 및 문법 검사기"
+  },
+  "appNameFirefox": {
+    "message": "Justdone: GPT-4o 인공지능 글쓰기 도우미 및 문법 검사기"
+  },
+  "appDesc": {
+    "message": "문법 검사, 의역, AI 글쓰기 등을 위한 올인원 도구인 Justdone으로 글쓰기 수준을 한 단계 높여보세요."
+  }
+}

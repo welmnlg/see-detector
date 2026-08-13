@@ -1,0 +1,26 @@
+{
+  "extName": {
+    "message": "Zamknij kartę podwójnym prawym kliknięciem"
+  },
+  "extDescription": {
+    "message": "Zamykaj karty podwójnym kliknięciem prawym przyciskiem myszy na stronach. Lekkie, szybkie i bez śledzenia."
+  },
+  "optionsTitle": {
+    "message": "Double Right Click Options"
+  },
+  "modeSuppressFirst": {
+    "message": "Reliable close, delay single right-click menu"
+  },
+  "modeSuppressFirstHint": {
+    "message": "Best for double right-click closing."
+  },
+  "modePreserveMenu": {
+    "message": "Show single right-click menu immediately"
+  },
+  "modePreserveMenuHint": {
+    "message": "The browser menu is preserved; double right-click may depend on the page and system menu behavior."
+  },
+  "optionsSaved": {
+    "message": "Saved."
+  }
+}

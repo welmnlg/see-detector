@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkextension=self.webpackChunkextension||[]).push([[486],{50486:(e,n,r)=>{r.r(n),r.d(n,{default:()=>s});var a=r(46440),t=r(14280);const s=async e=>{const n=new Uint8Array([0]),r=e=>new Uint8Array([e>>8,255&e]),s=Math.ceil(e.length/t.Aw);return Array.from({length:s}).map((n,r)=>e.subarray(r*t.Aw,(r+1)*t.Aw)).map((e,t)=>(0,a.z)(n,r(s),r(t),e))}}}]);
+//# sourceMappingURL=chunk.486.js.map

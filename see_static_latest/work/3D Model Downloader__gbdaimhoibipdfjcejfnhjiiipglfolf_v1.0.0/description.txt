@@ -1,0 +1,7 @@
+Download 3D meshes from web pages as OBJ files, which can be used in 3D graphics applications such as Blender and the Autodesk editors.
+
+Technical note: this extension currently only supports 3D meshes displayed using Three.js. The easiest way to find out if a mesh is displayed using Three.js is to download this extension.
+
+Contributions for other 3D JS frameworks are welcome.
+
+This extension was originally developed to download 3D medical/anatomical scans from web displays.

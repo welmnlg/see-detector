@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=300">
+  <title>Shopify Dev Tools</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header / Store Info -->
+    <div id="store-info" class="info-bar">
+      <div class="info-row">
+        <span class="info-label">Store</span>
+        <span id="store-name" class="info-value">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Theme</span>
+        <span id="theme-name" class="info-value">—</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">ID</span>
+        <span id="theme-id" class="info-value">—</span>
+      </div>
+    </div>
+
+    <!-- Error state -->
+    <div id="error-state" class="error-state hidden">
+      <span class="error-icon">⚠️</span>
+      <span class="error-text">Not a Shopify store</span>
+    </div>
+
+    <!-- Actions -->
+    <div id="actions" class="actions">
+      <button class="btn" id="btn-copy-preview">
+        <span class="btn-icon">📋</span>
+        <span class="btn-label">Copy Preview URL</span>
+        <span class="btn-feedback hidden">✓</span>
+      </button>
+
+      <button class="btn" id="btn-copy-theme-name">
+        <span class="btn-icon">📋</span>
+        <span class="btn-label">Copy Theme Name</span>
+        <span class="btn-feedback hidden">✓</span>
+      </button>
+
+      <button class="btn" id="btn-copy-customizer">
+        <span class="btn-icon">📋</span>
+        <span class="btn-label">Copy Customizer Link</span>
+        <span class="btn-feedback hidden">✓</span>
+      </button>
+
+      <div class="divider"></div>
+
+      <button class="btn" id="btn-open-customizer">
+        <span class="btn-icon">🔗</span>
+        <span class="btn-label">Open Customizer</span>
+      </button>
+
+      <button class="btn" id="btn-open-admin">
+        <span class="btn-icon">🔗</span>
+        <span class="btn-label">Open in Admin</span>
+      </button>
+
+      <button class="btn" id="btn-open-edit-code">
+        <span class="btn-icon">🔗</span>
+        <span class="btn-label">Open Edit Code</span>
+      </button>
+
+      <button class="btn" id="btn-open-page-customizer">
+        <span class="btn-icon">🔗</span>
+        <span class="btn-label">Open Page in Customizer</span>
+      </button>
+
+      <div class="divider"></div>
+
+      <button class="btn" id="btn-changelog">
+        <span class="btn-icon">📋</span>
+        <span class="btn-label">Generate Changelog</span>
+        <span class="btn-feedback hidden">✓</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

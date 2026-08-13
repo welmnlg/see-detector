@@ -1,0 +1,83 @@
+#mindful-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(15px); 
+    z-index: 2147483647;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* System fonts */
+    animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mindful-container {
+    all: initial; 
+    font-family: inherit;
+    display: flex;
+    gap: 40px; 
+    align-items: center;
+    justify-content: center;
+}
+
+#mindful-overlay button {
+    width: 220px;
+    height: 140px; 
+    font-size: 20px;
+    font-weight: 500; 
+    letter-spacing: 0.5px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Impulse */
+#mindful-overlay #btn-impulse {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#mindful-overlay #btn-impulse:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.02);
+}
+
+/* Informed */
+#mindful-overlay #btn-informed {
+    background: #ffffff;
+    color: #000000; 
+    font-weight: 600;
+}
+
+#mindful-overlay #btn-informed:hover {
+    background: #f0f0f0;
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2); 
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 600px) {
+    .mindful-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    #mindful-overlay button {
+        width: 180px;
+        height: 80px;
+    }
+}

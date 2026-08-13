@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 270px;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      background: #0f0f1a;
+      color: #fff;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #6C63FF 0%, #3b82f6 100%);
+      padding: 16px 18px 14px;
+      position: relative;
+    }
+    .header h1 { font-size: 15px; font-weight: 700; }
+    .header p  { font-size: 11px; opacity: .85; margin-top: 3px; }
+
+    /* ── Language switcher ── */
+    .lang-bar {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px 14px;
+      background: #131325;
+      border-bottom: 1px solid #1e293b;
+      flex-wrap: wrap;
+    }
+    .lang-btn {
+      padding: 3px 9px;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      background: transparent;
+      color: #64748b;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .lang-btn:hover { border-color: #6C63FF; color: #a78bfa; }
+    .lang-btn.active {
+      background: rgba(108,99,255,.2);
+      border-color: #6C63FF;
+      color: #a78bfa;
+      font-weight: 700;
+    }
+
+    /* ── Content ── */
+    .content { padding: 14px; }
+
+    .btn-main {
+      width: 100%; padding: 12px;
+      border: none; border-radius: 10px;
+      background: linear-gradient(135deg, #6C63FF, #3b82f6);
+      color: #fff; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: inherit;
+    }
+    .btn-main:hover { transform: translateY(-1px); box-shadow: 0 5px 20px rgba(108,99,255,.4); }
+    .btn-main.active {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      box-shadow: 0 5px 20px rgba(239,68,68,.4);
+    }
+
+    .status-badge {
+      text-align: center; margin: 10px 0; font-size: 11px; color: #94a3b8;
+    }
+    .status-badge span {
+      background: #1e293b; padding: 3px 10px;
+      border-radius: 20px; border: 1px solid #334155;
+    }
+    .status-badge.on span {
+      background: rgba(108,99,255,.2); border-color: #6C63FF; color: #a78bfa;
+    }
+
+    .divider { border: none; border-top: 1px solid #1e293b; margin: 10px 0; }
+
+    .btn-reset {
+      width: 100%; padding: 9px;
+      border: 1px solid #334155; border-radius: 8px;
+      background: transparent; color: #94a3b8;
+      font-size: 11px; cursor: pointer; transition: all .2s;
+      font-family: inherit;
+    }
+    .btn-reset:hover { background: #1e293b; color: #fff; border-color: #475569; }
+
+    .instructions {
+      margin-top: 12px; background: #1e293b;
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 11px; color: #94a3b8; line-height: 1.8;
+    }
+    .step { display: flex; align-items: center; gap: 6px; }
+    .step + .step { margin-top: 4px; }
+    .num {
+      background: #6C63FF; color: #fff;
+      width: 17px; height: 17px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 id="popupTitle">🔄 RTL / LTR Switcher</h1>
+    <p  id="popupSubtitle"></p>
+  </div>
+
+  <div class="lang-bar">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ar">AR عربي</button>
+    <button class="lang-btn" data-lang="he">HE עברית</button>
+    <button class="lang-btn" data-lang="fa">FA فارسی</button>
+    <button class="lang-btn" data-lang="ur">UR اردو</button>
+  </div>
+
+  <div class="content">
+    <button class="btn-main" id="toggleBtn">
+      <span id="btnIcon">🎯</span>
+      <span id="btnText"></span>
+    </button>
+
+    <div class="status-badge" id="statusBadge">
+      <span id="statusText"></span>
+    </div>
+
+    <hr class="divider">
+
+    <button class="btn-reset" id="resetBtn"></button>
+
+    <div class="instructions">
+      <div class="step"><div class="num">1</div><span id="step1"></span></div>
+      <div class="step"><div class="num">2</div><span id="step2"></span></div>
+      <div class="step"><div class="num">3</div><span id="step3"></span></div>
+      <div class="step"><div class="num">⎋</div><span id="stepEsc"></span></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

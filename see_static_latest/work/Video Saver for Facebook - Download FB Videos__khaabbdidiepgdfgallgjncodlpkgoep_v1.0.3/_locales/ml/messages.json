@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "Download Facebook videos and Reels efficiently in bulk. Batch saver with one-click simplicity for storing HD, watermark-free clips offline."
+  },
+  "extensionName": {
+    "message": "Bulk FB Video Downloader"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

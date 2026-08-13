@@ -1,0 +1,104 @@
+{
+  "extName": {
+    "message": "Ultimate Brightness Control"
+  },
+  "extDescription": {
+    "message": "Dim or boost any webpage from 10% to 200%. Works in fullscreen videos and iframe players too. Free."
+  },
+  "actionTitle": {
+    "message": "Ultimate Brightness Control"
+  },
+  "popupTitle": {
+    "message": "Ultimate Brightness Control"
+  },
+  "popupHeading": {
+    "message": "Brightness"
+  },
+  "popupSubheading": {
+    "message": "Fullscreen-safe dimming for every site"
+  },
+  "brightnessLabel": {
+    "message": "Brightness"
+  },
+  "siteOnlyToggle": {
+    "message": "Apply only to this site"
+  },
+  "disableHereButton": {
+    "message": "Disable here"
+  },
+  "enableHereButton": {
+    "message": "Enable here"
+  },
+  "disableEverywhereButton": {
+    "message": "Disable everywhere"
+  },
+  "enableEverywhereButton": {
+    "message": "Enable everywhere"
+  },
+  "openGuideButton": {
+    "message": "Open quick guide"
+  },
+  "statusGlobal": {
+    "message": "Using global brightness"
+  },
+  "statusSite": {
+    "message": "Using a saved setting for this site"
+  },
+  "statusGlobalDisabled": {
+    "message": "Brightness control is disabled everywhere"
+  },
+  "statusSiteDisabled": {
+    "message": "Brightness control is disabled on this site"
+  },
+  "statusUnsupported": {
+    "message": "Site-specific controls are unavailable on this page"
+  },
+  "badgeGlobal": {
+    "message": "Global"
+  },
+  "badgeSite": {
+    "message": "This site"
+  },
+  "badgeGlobalDisabled": {
+    "message": "Disabled everywhere"
+  },
+  "badgeSiteDisabled": {
+    "message": "Disabled here"
+  },
+  "hostLabel": {
+    "message": "Current site"
+  },
+  "tickHint": {
+    "message": "Marked every 10 points for faster adjustments"
+  },
+  "welcomeTitle": {
+    "message": "Ultimate Brightness Control"
+  },
+  "welcomeHeading": {
+    "message": "Your browser finally stays dim in fullscreen"
+  },
+  "welcomeIntro": {
+    "message": "Most brightness extensions only dim the base page. This extension keeps the dimming overlay working when videos move into the browser's fullscreen top layer or live inside iframe players."
+  },
+  "welcomeFeatureOne": {
+    "message": "Use a single global brightness for every tab."
+  },
+  "welcomeFeatureTwo": {
+    "message": "Save a different brightness only for the current hostname."
+  },
+  "welcomeFeatureThree": {
+    "message": "Disable the effect for one site or everywhere with one click."
+  },
+  "welcomePrimary": {
+    "message": "Open extension"
+  },
+  "welcomePrivacy": {
+    "message": "Privacy Policy"
+  },
+  "welcomeSupport": {
+    "message": "Support"
+  },
+  "welcomeTerms": {
+    "message": "Terms"
+  }
+}

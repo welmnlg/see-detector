@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "Facebook 동영상과 Reels를 고화질로 다운로드, 워터마크 없음."
+  },
+  "extensionName": {
+    "message": "Video Saver for Facebook - FB 동영상 다운로드"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

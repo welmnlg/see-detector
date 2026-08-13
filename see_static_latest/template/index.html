@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEE Analyzer — Deteksi Kerentanan Ekstensi Browser</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+  .header{background:linear-gradient(135deg,#1a1f2e,#0f1117);border-bottom:1px solid #2d3748;
+    padding:20px 40px;display:flex;align-items:center;gap:16px}
+  .logo{font-size:28px;font-weight:800;color:#63b3ed;letter-spacing:-1px}
+  .logo span{color:#fc8181}
+  .subtitle{color:#718096;font-size:14px}
+  .container{max-width:860px;margin:48px auto;padding:0 24px}
+  .card{background:#1a1f2e;border:1px solid #2d3748;border-radius:16px;padding:36px;margin-bottom:24px}
+  h2{font-size:20px;font-weight:700;margin-bottom:8px;color:#e2e8f0}
+  .desc{color:#718096;font-size:14px;margin-bottom:28px;line-height:1.6}
+  .tabs{display:flex;gap:8px;margin-bottom:24px}
+  .tab-btn{padding:10px 20px;border-radius:8px;border:1px solid #2d3748;background:#0f1117;
+    color:#718096;cursor:pointer;font-size:14px;font-weight:600;transition:all .2s}
+  .tab-btn.active{background:#2b6cb0;border-color:#2b6cb0;color:#fff}
+  .tab-panel{display:none}.tab-panel.active{display:block}
+  .dropzone{border:2px dashed #2d3748;border-radius:12px;padding:48px 24px;text-align:center;
+    cursor:pointer;transition:all .2s;background:#0f1117;position:relative}
+  .dropzone:hover,.dropzone.drag{border-color:#63b3ed;background:#1a2744}
+  .dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+  .dropzone-icon{font-size:40px;margin-bottom:12px}
+  .dropzone-text{color:#718096;font-size:14px}
+  .dropzone-text strong{color:#63b3ed;display:block;font-size:16px;margin-bottom:4px}
+  .file-list{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+  .file-item{display:flex;align-items:center;gap:10px;background:#0f1117;
+    border:1px solid #2d3748;border-radius:8px;padding:10px 14px;font-size:13px}
+  .file-icon{font-size:18px}
+  .file-name{flex:1;color:#e2e8f0;font-weight:500}
+  .file-size{color:#718096}
+  .btn{display:block;width:100%;padding:14px;border-radius:10px;border:none;
+    background:linear-gradient(135deg,#2b6cb0,#2c5282);color:#fff;font-size:16px;
+    font-weight:700;cursor:pointer;margin-top:20px;transition:all .2s;letter-spacing:.3px}
+  .btn:hover{background:linear-gradient(135deg,#3182ce,#2b6cb0);transform:translateY(-1px)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:0}
+  .info-card{background:#0f1117;border:1px solid #2d3748;border-radius:12px;padding:20px;text-align:center}
+  .info-card .num{font-size:32px;font-weight:800;color:#63b3ed}
+  .info-card .lbl{color:#718096;font-size:12px;margin-top:4px}
+  .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+  .cat-card{background:#0f1117;border:1px solid #2d3748;border-radius:10px;padding:14px}
+  .cat-code{font-weight:800;color:#fc8181;font-size:15px}
+  .cat-name{color:#718096;font-size:11px;margin-top:2px;line-height:1.4}
+  .flash{padding:14px 20px;border-radius:10px;margin-bottom:20px;font-size:14px}
+  .flash.error{background:#2d1515;border:1px solid #fc8181;color:#fc8181}
+  .loading{display:none;text-align:center;padding:20px;color:#63b3ed}
+  .spinner{width:40px;height:40px;border:3px solid #2d3748;border-top-color:#63b3ed;
+    border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="logo">SEE<span>Analyzer</span></div>
+    <div class="subtitle">Stealth Extension Exfiltration — Static Analysis Tool</div>
+  </div>
+</div>
+
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+
+  <div class="card">
+    <h2>Analisis Kerentanan Ekstensi Browser</h2>
+    <p class="desc">Upload file <strong>.crx</strong> atau <strong>.zip</strong> ekstensi browser untuk dianalisis secara statis. 
+    Sistem akan mendeteksi 9 kategori serangan SEE: <strong>UReq, UProf, LF, CE, HH, UDown, CLE, HE, FH</strong>.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('single',this)">📁 Satu Ekstensi</button>
+      <button class="tab-btn" onclick="switchTab('batch',this)">📦 Batch (Banyak Ekstensi)</button>
+    </div>
+
+    <!-- Tab: Single -->
+    <div id="tab-single" class="tab-panel active">
+      <form method="POST" action="/analyze" enctype="multipart/form-data" id="form-single">
+        <input type="hidden" name="mode" value="single">
+        <div class="dropzone" id="dz-single">
+          <input type="file" name="file" accept=".crx,.zip" id="file-single" onchange="showFiles('single')">
+          <div class="dropzone-icon">🧩</div>
+          <div class="dropzone-text">
+            <strong>Klik atau seret file ke sini</strong>
+            Mendukung format .crx dan .zip
+          </div>
+        </div>
+        <div class="file-list" id="fl-single"></div>
+        <button type="submit" class="btn" id="btn-single" onclick="showLoading()">🔍 Analisis Ekstensi</button>
+      </form>
+    </div>
+
+    <!-- Tab: Batch -->
+    <div id="tab-batch" class="tab-panel">
+      <form method="POST" action="/analyze" enctype="multipart/form-data" id="form-batch">
+        <input type="hidden" name="mode" value="batch">
+        <div class="dropzone" id="dz-batch">
+          <input type="file" name="files" accept=".crx,.zip" multiple id="file-batch" onchange="showFiles('batch')">
+          <div class="dropzone-icon">📦</div>
+          <div class="dropzone-text">
+            <strong>Upload banyak file sekaligus</strong>
+            Tahan Ctrl/Cmd untuk pilih lebih dari 1 file
+          </div>
+        </div>
+        <div class="file-list" id="fl-batch"></div>
+        <button type="submit" class="btn" onclick="showLoading()">🔍 Analisis Semua Ekstensi</button>
+      </form>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div>Sedang menganalisis... Mohon tunggu.</div>
+    </div>
+  </div>
+
+  <!-- Info: Kategori SEE -->
+  <div class="card">
+    <h2>Kategori SEE yang Dideteksi</h2>
+    <p class="desc">Sistem mendeteksi 9 kategori Stealth Extension Exfiltration (6 original + 3 extended penelitian ini).</p>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="cat-code">UReq</div><div class="cat-name">Unauthorized HTTP Request</div></div>
+      <div class="cat-card"><div class="cat-code">UProf</div><div class="cat-name">User Profiling</div></div>
+      <div class="cat-card"><div class="cat-code">LF</div><div class="cat-name">Local File Access</div></div>
+      <div class="cat-card"><div class="cat-code">CE</div><div class="cat-name">Cookie Exfiltration</div></div>
+      <div class="cat-card"><div class="cat-code">HH</div><div class="cat-name">HTTP Hijacking</div></div>
+      <div class="cat-card"><div class="cat-code">UDown</div><div class="cat-name">Unauthorized Download</div></div>
+      <div class="cat-card" style="border-color:#2b6cb0"><div class="cat-code" style="color:#63b3ed">CLE</div><div class="cat-name">Clipboard Exfiltration <em>(extended)</em></div></div>
+      <div class="cat-card" style="border-color:#2b6cb0"><div class="cat-code" style="color:#63b3ed">HE</div><div class="cat-name">History Exfiltration <em>(extended)</em></div></div>
+      <div class="cat-card" style="border-color:#2b6cb0"><div class="cat-code" style="color:#63b3ed">FH</div><div class="cat-name">Form/Credential Harvesting <em>(extended)</em></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+function showFiles(mode) {
+  const inp = document.getElementById('file-'+mode);
+  const fl  = document.getElementById('fl-'+mode);
+  fl.innerHTML = '';
+  for (const f of inp.files) {
+    const size = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : (f.size/1024).toFixed(0)+' KB';
+    fl.innerHTML += `<div class="file-item"><span class="file-icon">🧩</span>
+      <span class="file-name">${f.name}</span><span class="file-size">${size}</span></div>`;
+  }
+}
+function showLoading() {
+  setTimeout(() => { document.getElementById('loading').style.display = 'block'; }, 100);
+}
+// drag & drop
+['single','batch'].forEach(mode => {
+  const dz = document.getElementById('dz-'+mode);
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag');
+    document.getElementById('file-'+mode).files = e.dataTransfer.files; showFiles(mode); });
+});
+</script>
+</body>
+</html>

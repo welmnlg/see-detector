@@ -1,0 +1,26 @@
+{
+  "extName": {
+    "message": "雙擊右鍵關閉分頁"
+  },
+  "extDescription": {
+    "message": "在網頁中連按兩下滑鼠右鍵即可關閉分頁。輕量、快速、無追蹤。"
+  },
+  "optionsTitle": {
+    "message": "Double Right Click Options"
+  },
+  "modeSuppressFirst": {
+    "message": "Reliable close, delay single right-click menu"
+  },
+  "modeSuppressFirstHint": {
+    "message": "Best for double right-click closing."
+  },
+  "modePreserveMenu": {
+    "message": "Show single right-click menu immediately"
+  },
+  "modePreserveMenuHint": {
+    "message": "The browser menu is preserved; double right-click may depend on the page and system menu behavior."
+  },
+  "optionsSaved": {
+    "message": "Saved."
+  }
+}

@@ -1,0 +1,14 @@
+extension_id,extension_name,extension_dir,browser_version,analyzed_at,s1_download_hijack,s1_extra_downloads,s2_cookie_theft,s2_canary_count,s2_hardware_access,s3_traffic_redirect,s3_unexpected_nav_count,s3_injected_elements,see_behavior_detected,total_outbound_requests,unauthorized_domain_count,unauthorized_domains,suspicious_domain_count,suspicious_domains,s1_evidence_summary,s2_evidence_summary,s3_evidence_summary,error
+aapbdbdomjkkjkaonfhkkikfgjllcleb,,aapbdbdomjkkjkaonfhkkikfgjllcleb,Chrome 150,2026-07-27T14:35:51.930206,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+aapbdbdomjkkjkaonfhkkikfgjllcleb,,aapbdbdomjkkjkaonfhkkikfgjllcleb,Chrome 151,2026-07-27T14:35:51.930206,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+aapbdbdomjkkjkaonfhkkikfgjllcleb,,aapbdbdomjkkjkaonfhkkikfgjllcleb,Chrome 149,2026-07-27T14:35:51.930206,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+ahofgjkfjljcliehioeefaanagffnffa,,ahofgjkfjljcliehioeefaanagffnffa,Chrome 150,2026-07-27T14:35:51.930206,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+ahofgjkfjljcliehioeefaanagffnffa,,ahofgjkfjljcliehioeefaanagffnffa,Chrome 149,2026-07-27T14:35:51.930206,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+ahofgjkfjljcliehioeefaanagffnffa,,ahofgjkfjljcliehioeefaanagffnffa,Chrome 151,2026-07-27T14:35:51.930206,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+aiifbnbfobpmeekipheeijimdpnlpgpp,Station Wallet,aiifbnbfobpmeekipheeijimdpnlpgpp,Chrome 151,2026-07-27T14:35:52.549503,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,"Runtime error: TargetClosedError: BrowserContext.new_page: Target page, context or browser has been closed"
+aiifbnbfobpmeekipheeijimdpnlpgpp,,aiifbnbfobpmeekipheeijimdpnlpgpp,Chrome 150,2026-07-27T14:39:22.036304,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+aiifbnbfobpmeekipheeijimdpnlpgpp,,aiifbnbfobpmeekipheeijimdpnlpgpp,Chrome 149,2026-07-27T14:39:22.031461,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+aholpfdialjgjfhomihkjbmgjidlcdno,,aholpfdialjgjfhomihkjbmgjidlcdno,Chrome 151,2026-07-27T14:39:22.039476,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+aholpfdialjgjfhomihkjbmgjidlcdno,,aholpfdialjgjfhomihkjbmgjidlcdno,Chrome 149,2026-07-27T14:39:22.036304,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+aholpfdialjgjfhomihkjbmgjidlcdno,,aholpfdialjgjfhomihkjbmgjidlcdno,Chrome 150,2026-07-27T14:39:22.039476,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s
+ajcnllagebcaahcdfbappndlmhmpdhif,,ajcnllagebcaahcdfbappndlmhmpdhif,Chrome 151,2026-07-27T14:39:56.723239,False,0,False,0,False,False,0,0,False,0,0,,0,,,,,TIMEOUT after 180s

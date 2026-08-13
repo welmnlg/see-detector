@@ -1,0 +1,70 @@
+/* Apple Snake - Modern Dark Theme */
+@media screen and (max-height: 640px) {
+    .container.container-single{
+        padding-top: 3px !important;
+    }
+}
+#gamebox {
+    margin: 0px;
+    position: relative;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+}
+canvas {
+    border: 0px;
+    background: #0f1419;
+}
+.gameover {
+    display: none;
+    position: absolute;
+    width: 750px;
+    height: 425px;
+    top: 0;
+    left: 0;
+    background: rgba(10, 15, 20, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.gameover .overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.gameover .overlay-content h2 {
+    color: #f87171;
+    font-size: 36px;
+    font-weight: 700;
+    text-shadow: 0 0 15px rgba(248, 113, 113, 0.3);
+    margin: 0 0 20px 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+#restartgamebutton {
+    padding: 10px 28px;
+    font-size: 18px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.25);
+    text-decoration: none;
+    display: inline-block;
+}
+
+#restartgamebutton:hover {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}

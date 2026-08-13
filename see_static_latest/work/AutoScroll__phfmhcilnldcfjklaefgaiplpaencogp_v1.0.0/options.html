@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AutoScroll Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <h1>AutoScroll Options</h1>
+
+    <div class="section">
+      <h2>Basic</h2>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="stickyScroll">
+          Scroll without holding down the mouse button
+        </label>
+      </div>
+      <div class="option-group">
+        ...if moving less than <input type="number" id="dragThreshold" min="0"> pixels
+      </div>
+      <div class="option-group">
+        Scroll if moving more than <input type="number" id="moveThreshold" min="0"> pixels
+      </div>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="middleClick">
+          Scroll by using (Middle Click)
+        </label>
+      </div>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="ctrlClick">
+          Scroll by using (Ctrl/⌘ + Left Click)
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Speed</h2>
+      <div class="option-group">
+        Move speed: <input type="number" id="moveSpeed" min="1"> (lower is faster)
+      </div>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="sameSpeed">
+          Scroll at the same speed (ignore mouse movement)
+        </label>
+      </div>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="shouldCap">
+          Don't scroll faster than
+        </label>
+        <input type="number" id="capSpeed" min="1"> pixels
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Advanced</h2>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="innerScroll">
+          Scroll on inner elements
+        </label>
+      </div>
+      <div class="option-group">
+        <label>
+          <input type="checkbox" id="scrollOnLinks">
+          Scroll when clicking on a link or textarea
+        </label>
+      </div>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

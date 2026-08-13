@@ -1,0 +1,29 @@
+{
+  "appDesc": {
+    "message": "Migliora la tua scrittura con JustDone, il tuo strumento all-in-one per il controllo grammaticale, la parafrasi, la scrittura AI e molto altro ancora."
+  },
+  "appNameChrome": {
+    "message": "JustDone: Assistente di scrittura e correttore grammaticale GPT-4o AI"
+  },
+  "appNameFirefox": {
+    "message": "JustDone: Assistente di scrittura e correttore grammaticale GPT-4o AI"
+  },
+  "contextMenu_answer_this": {
+    "message": "Rispondi a questo ..."
+  },
+  "contextMenu_correct_all_mistakes": {
+    "message": "Correggi tutti gli errori"
+  },
+  "contextMenu_improve": {
+    "message": "Migliora"
+  },
+  "contextMenu_rewrite": {
+    "message": "Riscrivi"
+  },
+  "contextMenu_simplify": {
+    "message": "Semplifica"
+  },
+  "contextMenu_summarize": {
+    "message": "Riassumi"
+  }
+}

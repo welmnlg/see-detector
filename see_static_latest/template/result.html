@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hasil Analisis SEE</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+.header{background:linear-gradient(135deg,#1a1f2e,#0f1117);border-bottom:1px solid #2d3748;
+  padding:20px 40px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:24px;font-weight:800;color:#63b3ed}.logo span{color:#fc8181}
+.back-btn{padding:8px 18px;border-radius:8px;background:#1a1f2e;border:1px solid #2d3748;
+  color:#718096;text-decoration:none;font-size:13px;transition:all .2s}
+.back-btn:hover{color:#e2e8f0;border-color:#63b3ed}
+.container{max-width:980px;margin:32px auto;padding:0 20px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.sum-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:18px;text-align:center}
+.sum-card .num{font-size:34px;font-weight:800}.sum-card .lbl{color:#718096;font-size:12px;margin-top:3px}
+.sum-card.high .num{color:#fc8181}.sum-card.medium .num{color:#f6e05e}
+.sum-card.low .num{color:#68d391}.sum-card.total .num{color:#63b3ed}
+.result-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:14px;margin-bottom:22px;overflow:hidden}
+.rc-header{padding:18px 22px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #2d3748}
+.rc-badge{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:22px;flex-shrink:0}
+.rc-badge.high{background:#2d1515}.rc-badge.medium{background:#2d2415}.rc-badge.low{background:#142d14}
+.rc-info{flex:1}.rc-name{font-size:16px;font-weight:700}
+.rc-sub{font-size:11px;color:#718096;margin-top:2px}
+.level-tag{display:inline-block;padding:5px 13px;border-radius:18px;font-weight:700;font-size:12px}
+.level-tag.HIGH{background:#2d1515;color:#fc8181;border:1px solid #fc818155}
+.level-tag.MEDIUM{background:#2d2415;color:#f6e05e;border:1px solid #f6e05e55}
+.level-tag.LOW{background:#142d14;color:#68d391;border:1px solid #68d39155}
+.rc-body{padding:20px 22px}
+.section{margin-bottom:20px}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  color:#718096;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1e2d3d}
+.cats{display:flex;flex-wrap:wrap;gap:7px}
+.cat-tag{padding:5px 12px;border-radius:18px;font-size:12px;font-weight:700;
+  background:#2d1515;color:#fc8181;border:1px solid #fc818133}
+.cat-tag.ext{background:#142240;color:#63b3ed;border:1px solid #63b3ed33}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.info-block{background:#0f1117;border:1px solid #2d3748;border-radius:9px;padding:14px}
+.info-block h4{font-size:11px;color:#718096;font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:9px}
+.info-row{display:flex;justify-content:space-between;align-items:center;
+  padding:4px 0;border-bottom:1px solid #1a2233;font-size:12px}
+.info-row:last-child{border-bottom:none}
+.info-key{color:#718096}.info-val{color:#e2e8f0;font-weight:600;text-align:right;max-width:55%;word-break:break-all}
+.info-val.warn{color:#f6e05e}.info-val.danger{color:#fc8181}.info-val.ok{color:#68d391}
+.findings-table{width:100%;border-collapse:collapse;font-size:12px}
+.findings-table th{padding:7px 10px;text-align:left;color:#718096;border-bottom:1px solid #2d3748;font-weight:600}
+.findings-table td{padding:6px 10px;border-bottom:1px solid #1a2233;color:#a0aec0}
+.findings-table tr:last-child td{border-bottom:none}
+.findings-table tr:hover td{background:#0f1520}
+.cat-pill{padding:2px 7px;border-radius:9px;font-size:11px;font-weight:700;background:#2d1515;color:#fc8181}
+.cat-pill.obf{background:#2d2415;color:#f6e05e}
+.perm-tag{display:inline-block;padding:3px 9px;border-radius:10px;font-size:11px;font-weight:600;margin:2px}
+.collapsible{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
+.collapsible::after{content:'▼';font-size:10px;color:#718096;transition:.2s}
+.collapsible.open::after{transform:rotate(180deg)}
+.collapse-body{display:none}.collapse-body.open{display:block}
+.url-list{display:flex;flex-direction:column;gap:3px}
+.url-item{font-size:11px;color:#718096;word-break:break-all;padding:3px 7px;
+  background:#0f1117;border-radius:4px;border-left:2px solid #2d3748}
+.btn-sm{padding:3px 9px;border-radius:6px;background:#1a2233;border:1px solid #2d3748;
+  color:#63b3ed;font-size:11px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.btn-sm:hover{background:#1e2d4d;border-color:#63b3ed}
+.fetch-card{background:#0f1117;border:1px solid #2d3748;border-radius:7px;
+  padding:10px 12px;margin-bottom:7px}
+.domain-bar{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1a2233}
+.domain-bar:last-child{border-bottom:none}
+.domain-count{min-width:28px;text-align:center;font-weight:700;font-size:12px;
+  background:#1e2d3d;color:#63b3ed;padding:2px 6px;border-radius:6px}
+/* ── MODALS ─────────────────────────────────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:9998;
+  background:rgba(0,0,0,.78);backdrop-filter:blur(4px);padding:32px 20px;overflow:auto}
+.modal-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.modal-box{background:#1a1f2e;border:1px solid #2d3748;border-radius:14px;
+  overflow:hidden;width:100%;max-width:920px;flex-shrink:0}
+.modal-box.sm{max-width:540px}
+.modal-head{padding:14px 18px;border-bottom:1px solid #2d3748;display:flex;
+  align-items:center;justify-content:space-between}
+.modal-close{background:#2d3748;border:none;color:#e2e8f0;padding:5px 12px;
+  border-radius:7px;cursor:pointer;font-size:12px}
+.modal-close:hover{background:#3d4758}
+#file-pre{margin:0;padding:0;overflow:auto;max-height:72vh;background:#0a0d14;
+  font-size:12.5px;line-height:1.65;font-family:'Fira Code','Consolas',monospace}
+.code-line{display:flex;border-left:3px solid transparent;padding:0 10px}
+.code-line.mark{background:#2d1515;border-left-color:#fc8181}
+.line-num{width:40px;flex-shrink:0;color:#4a5568;user-select:none;
+  text-align:right;padding-right:10px;font-size:11px}
+.code-line.mark .line-num{color:#fc8181}
+.line-text{color:#a0aec0;white-space:pre}
+.code-line.mark .line-text{color:#fbd38d}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">SEE<span>Analyzer</span></div>
+  <a href="/" class="back-btn">← Analisis Baru</a>
+</div>
+
+<div class="container">
+  <div style="margin-bottom:18px">
+    <div style="font-size:20px;font-weight:800;margin-bottom:3px">Hasil Analisis SEE</div>
+    <div style="color:#718096;font-size:12px">{{ now }}</div>
+  </div>
+
+  {% if summary.total > 1 %}
+  <div class="summary">
+    <div class="sum-card total"><div class="num">{{ summary.total }}</div><div class="lbl">Total Dianalisis</div></div>
+    <div class="sum-card high"><div class="num">{{ summary.high }}</div><div class="lbl">🔴 RENTAN</div></div>
+    <div class="sum-card medium"><div class="num">{{ summary.medium }}</div><div class="lbl">🟡 MENENGAH</div></div>
+    <div class="sum-card low"><div class="num">{{ summary.low }}</div><div class="lbl">🟢 AMAN</div></div>
+  </div>
+  {% endif %}
+
+  {% for r in results %}
+  {% if 'error' in r %}
+  <div style="background:#2d1515;border:1px solid #fc818155;border-radius:10px;padding:16px;margin-bottom:16px;color:#fc8181">
+    <strong>Error:</strong> {{ r.error }}<br><small>{{ r.get('file','') }}</small>
+  </div>
+  {% else %}
+  {% set level = r.level %}
+  {% set bcls = 'high' if level=='HIGH' else ('medium' if level=='MEDIUM' else 'low') %}
+  {% set sym = '🔴' if level=='HIGH' else ('🟡' if level=='MEDIUM' else '🟢') %}
+
+  <div class="result-card">
+    <div class="rc-header">
+      <div class="rc-badge {{ bcls }}">{{ sym }}</div>
+      <div class="rc-info">
+        <div class="rc-name">{{ r.name or r.extension_id }}
+          {% if r.version %}<span style="color:#718096;font-weight:400;font-size:13px"> v{{ r.version }}</span>{% endif %}
+        </div>
+        <div class="rc-sub">ID: {{ r.extension_id }} | MV{{ r.features.manifest_version }}</div>
+      </div>
+      <div style="text-align:right">
+        <span class="level-tag {{ level }}">{{ r.level_id }}</span>
+        <div style="font-size:11px;color:#718096;margin-top:4px">Score: <b>{{ r.score }}</b></div>
+      </div>
+    </div>
+
+    <div class="rc-body">
+
+      <!-- SEE CATEGORIES -->
+      <div class="section">
+        <div class="section-title">Kategori SEE Terdeteksi</div>
+        {% if r.categories %}
+        <div class="cats">
+          {% for cat in r.categories %}
+          {% set is_ext = cat in ['CLE','HE','FH'] %}
+          <span class="cat-tag {% if is_ext %}ext{% endif %}">
+            {{ cat }} — {{ category_labels.get(cat, cat) }}
+          </span>
+          {% endfor %}
+        </div>
+        {% else %}
+        <span style="color:#68d391;font-size:13px">✓ Tidak ada kategori SEE terdeteksi</span>
+        {% endif %}
+      </div>
+
+      <!-- COMBO FLAGS -->
+      {% set active_combos = r.combo_flags.items()|selectattr('1')|list %}
+      {% if active_combos %}
+      <div class="section">
+        <div class="section-title">Pola Eksfiltrasi Terkonfirmasi</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          {% for k,v in active_combos %}
+          <span style="padding:4px 11px;border-radius:8px;font-size:12px;font-weight:600;
+            background:#1e2d3d;color:#63b3ed;border:1px solid #2b6cb033">✓ {{ k.replace('_',' ').title() }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- ①  MANIFEST JSON -->
+      <div class="section">
+        <div class="section-title collapsible open" onclick="toggle(this)">① Manifest JSON Analysis</div>
+        <div class="collapse-body open" style="margin-top:10px">
+          <div class="info-grid">
+
+            <!-- kiri: permissions -->
+            <div class="info-block">
+              <h4>Permissions</h4>
+              <div class="info-row"><span class="info-key">Total Permissions</span>
+                <span class="info-val">{{ r.features.permissions_count }}</span></div>
+              <div class="info-row"><span class="info-key">Sensitif</span>
+                <span class="info-val {% if r.features.sensitive_permissions_count>3 %}danger{% elif r.features.sensitive_permissions_count>0 %}warn{% else %}ok{% endif %}">
+                  {{ r.features.sensitive_permissions_count }}</span></div>
+              <div class="info-row"><span class="info-key">Host Permissions</span>
+                <span class="info-val {% if r.features.has_host_permissions %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_host_permissions %}{{ r.features.host_permissions_count }} domain{% else %}Tidak ada{% endif %}
+                </span></div>
+              <div style="margin-top:8px;display:flex;flex-wrap:wrap">
+                {% for p in r.features._permissions_list %}
+                {% set s = p in ['cookies','downloads','history','tabs','activeTab','webRequest',
+                  'webRequestBlocking','declarativeNetRequest','clipboardRead','clipboardWrite',
+                  'nativeMessaging','management','debugger','pageCapture','identity','storage'] %}
+                <span class="perm-tag" style="background:{% if s %}#2d1515{% else %}#1a2233{% endif %};
+                  color:{% if s %}#fc8181{% else %}#718096{% endif %};
+                  border:1px solid {% if s %}#fc818133{% else %}#2d374855{% endif %}">
+                  {{ p }}{% if s %} ⚠{% endif %}
+                </span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- kanan: struktur manifest -->
+            <div class="info-block">
+              <h4>Struktur Manifest</h4>
+              <div class="info-row"><span class="info-key">Manifest Version</span>
+                <span class="info-val">MV{{ r.features.manifest_version }}</span></div>
+              <div class="info-row"><span class="info-key">Service Worker</span>
+                <span class="info-val {% if r.features.has_service_worker %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_service_worker %}Ya{% else %}Tidak{% endif %}</span></div>
+              <div class="info-row"><span class="info-key">Background Page</span>
+                <span class="info-val {% if r.features.has_background_page %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_background_page %}Ya{% else %}Tidak{% endif %}</span></div>
+              <div class="info-row"><span class="info-key">DNR Rules</span>
+                <span class="info-val {% if r.features.has_redirect_rules %}danger{% elif r.features.has_dnr_rules_file %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_redirect_rules %}⚠ Ada Redirect!{% elif r.features.has_dnr_rules_file %}Ada ({{ r.features.dnr_rule_count }}){% else %}Tidak{% endif %}</span></div>
+              <div class="info-row"><span class="info-key">Web Accessible Res.</span>
+                <span class="info-val {% if r.features.has_web_accessible_resources %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_web_accessible_resources %}Ya{% else %}Tidak{% endif %}</span></div>
+              <div class="info-row"><span class="info-key">Externally Connectable</span>
+                <span class="info-val {% if r.features.has_externally_connectable %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_externally_connectable %}Ya{% else %}Tidak{% endif %}</span></div>
+              <div class="info-row"><span class="info-key">Custom CSP</span>
+                <span class="info-val {% if r.features.has_csp_declaration %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_csp_declaration %}Ya{% else %}Tidak{% endif %}</span></div>
+            </div>
+          </div>
+
+          <!-- Content Scripts -->
+          {% if r.content_scripts %}
+          <div style="margin-top:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#718096;margin-bottom:8px">
+              Content Scripts Match Patterns
+            </div>
+            {% for cs in r.content_scripts %}
+            <div style="background:#0f1117;border:1px solid #2d3748;border-radius:7px;padding:10px 12px;margin-bottom:6px;font-size:12px">
+              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px">
+                {% for match in cs.get('matches',[]) %}
+                {% set wild = match in ['<all_urls>','*://*/*','http://*/*','https://*/*'] or match.startswith('file://') %}
+                <span style="padding:2px 8px;border-radius:8px;font-family:monospace;font-size:11px;
+                  background:{% if wild %}#2d2415{% else %}#1a2233{% endif %};
+                  color:{% if wild %}#f6e05e{% else %}#63b3ed{% endif %}">{{ match }}</span>
+                {% endfor %}
+              </div>
+              <span style="color:#718096;font-size:11px">
+                run_at: <b style="color:#a0aec0">{{ cs.get('run_at','document_idle') }}</b>
+                {% if cs.get('all_frames') %} | <b style="color:#f6e05e">all_frames: true</b>{% endif %}
+                {% if cs.get('js') %} | JS: {{ cs.get('js')|join(', ') }}{% endif %}
+              </span>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- ②  JAVASCRIPT -->
+      <div class="section">
+        <div class="section-title collapsible open" onclick="toggle(this)">② JavaScript Analysis</div>
+        <div class="collapse-body open" style="margin-top:10px">
+          <div class="info-grid">
+            <div class="info-block">
+              <h4>Statistik JS</h4>
+              <div class="info-row"><span class="info-key">File JS</span>
+                <span class="info-val">{{ r.features.js_file_count }}</span></div>
+              <div class="info-row"><span class="info-key">Total Ukuran</span>
+                <span class="info-val">{{ "{:,}".format(r.features.total_js_size_bytes) }} bytes</span></div>
+              <div class="info-row"><span class="info-key">Sensitive APIs</span>
+                <span class="info-val {% if r.features.sensitive_api_count>2 %}danger{% elif r.features.sensitive_api_count>0 %}warn{% else %}ok{% endif %}">
+                  {{ r.features.sensitive_api_count }}</span></div>
+              <div class="info-row"><span class="info-key">Obfuscation</span>
+                <span class="info-val {% if r.features.has_eval_or_function or r.features.has_btoa %}danger{% else %}ok{% endif %}">
+                  {% if r.features.has_eval_or_function %}eval/new Function{% elif r.features.has_btoa %}btoa(){% else %}Tidak{% endif %}
+                </span></div>
+            </div>
+            <div class="info-block">
+              <h4>HTTP / Network</h4>
+              <div class="info-row"><span class="info-key">Total HTTP Calls</span>
+                <span class="info-val {% if r.features.http_api_total_count>0 %}warn{% else %}ok{% endif %}">
+                  {{ r.features.http_api_total_count }}</span></div>
+              <div class="info-row"><span class="info-key">fetch()</span>
+                <span class="info-val">{{ r.features.fetch_api_count }}</span></div>
+              <div class="info-row"><span class="info-key">XMLHttpRequest</span>
+                <span class="info-val">{{ r.features.xhr_api_count }}</span></div>
+              <div class="info-row"><span class="info-key">WebSocket</span>
+                <span class="info-val {% if r.features.has_websocket %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_websocket %}Ya{% else %}Tidak{% endif %}</span></div>
+              <div class="info-row"><span class="info-key">sendBeacon()</span>
+                <span class="info-val {% if r.features.has_sendBeacon %}warn{% else %}ok{% endif %}">
+                  {% if r.features.has_sendBeacon %}Ya{% else %}Tidak{% endif %}</span></div>
+              <div class="info-row">
+                <span class="info-key">Domain Eksternal</span>
+                <span class="info-val {% if r.features.external_domain_count>0 %}warn{% else %}ok{% endif %}">
+                  {{ r.features.external_domain_count }}
+                  {% if r.features.external_domain_count>0 %}
+                  <button class="btn-sm" style="margin-left:6px"
+                    onclick="openDomainPopup({{ loop.index0 }})">🌐 Lihat</button>
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fetch Calls Detail -->
+          {% if r.fetch_calls %}
+          <div style="margin-top:12px">
+            <div class="section-title collapsible" onclick="toggle(this)">
+              HTTP Calls Detail ({{ r.fetch_calls|length }} panggilan)
+            </div>
+            <div class="collapse-body" style="margin-top:8px">
+              {% for fc in r.fetch_calls %}
+              <div class="fetch-card">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+                  <span style="padding:1px 7px;border-radius:7px;font-size:10px;font-weight:700;
+                    background:#1e2d3d;color:#63b3ed">{{ fc.method }}</span>
+                  <span style="color:#a0aec0;font-size:11px">{{ fc.file }}</span>
+                  <span style="color:#718096;font-size:11px">baris {{ fc.line }}</span>
+                  <button class="btn-sm" style="margin-left:auto"
+                    onclick="openFileViewer('{{ r.ext_folder_id|e }}','{{ fc.file|e }}',{{ fc.line }})">📄 Lihat</button>
+                </div>
+                {% if fc.url_hint != '(URL tidak terdeteksi di context)' %}
+                <div style="font-size:11px;color:#fc8181;font-family:monospace;
+                  background:#2d1515;padding:3px 7px;border-radius:4px;word-break:break-all">
+                  → {{ fc.url_hint }}
+                </div>
+                {% else %}
+                <div style="font-size:11px;color:#718096;font-style:italic">URL tujuan tidak terdeteksi</div>
+                {% endif %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- ③  JS FINDINGS -->
+      {% if r.findings %}
+      <div class="section">
+        <div class="section-title collapsible" onclick="toggle(this)">
+          ③ Temuan di Kode JS ({{ r.findings|length }} temuan)
+        </div>
+        <div class="collapse-body" style="margin-top:8px">
+          <table class="findings-table">
+            <thead><tr><th>File</th><th>Baris</th><th>Kategori</th><th>Pattern</th><th>Aksi</th></tr></thead>
+            <tbody>
+            {% for fd in r.findings %}
+            <tr>
+              <td style="color:#63b3ed;font-size:11px">{{ fd.file }}</td>
+              <td style="color:#718096">{{ fd.line }}</td>
+              <td><span class="cat-pill {% if fd.category=='Obfuscation' %}obf{% endif %}">{{ fd.category }}</span></td>
+              <td style="font-family:monospace;font-size:11px">{{ fd.pattern }}</td>
+              <td>
+                <button class="btn-sm"
+                  onclick="openFileViewer('{{ r.ext_folder_id|e }}','{{ fd.file|e }}',{{ fd.line }})">
+                  📄 Lihat
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- External URLs -->
+      {% if r.external_urls %}
+      <div class="section">
+        <div class="section-title collapsible" onclick="toggle(this)">
+          URL Eksternal ({{ r.external_urls|length }})
+        </div>
+        <div class="collapse-body" style="margin-top:8px">
+          <div class="url-list">
+            {% for url in r.external_urls[:30] %}
+            <div class="url-item">{{ url }}</div>
+            {% endfor %}
+            {% if r.external_urls|length > 30 %}
+            <div style="color:#718096;font-size:11px;padding:3px 7px">... +{{ r.external_urls|length-30 }} lainnya</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div><!-- rc-body -->
+
+    <!-- hidden domain data for popup -->
+    <script>
+    window._domainData = window._domainData || [];
+    window._domainData[{{ loop.index0 }}] = {
+      name: {{ (r.name or r.extension_id)|tojson }},
+      domains: {{ r.external_urls|tojson }}
+    };
+    </script>
+
+  </div><!-- result-card -->
+  {% endif %}
+  {% endfor %}
+
+  <div style="text-align:center;margin:28px 0">
+    <a href="/" class="back-btn" style="display:inline-block;padding:10px 24px;font-size:13px">← Analisis Ekstensi Lain</a>
+  </div>
+</div>
+
+<!-- ── FILE VIEWER MODAL ─────────────────────────────────────────────────── -->
+<div id="file-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <span id="fv-filename" style="font-weight:700;color:#63b3ed;font-size:13px"></span>
+        <span id="fv-linebadge" style="margin-left:8px;padding:2px 7px;border-radius:7px;
+          background:#2d1515;color:#fc8181;font-size:11px"></span>
+      </div>
+      <button class="modal-close" onclick="closeModal('file-modal')">✕ Tutup</button>
+    </div>
+    <div id="fv-loading" style="padding:36px;text-align:center;color:#718096">Memuat file…</div>
+    <pre id="file-pre" style="display:none"></pre>
+  </div>
+</div>
+
+<!-- ── DOMAIN POPUP MODAL ────────────────────────────────────────────────── -->
+<div id="domain-modal" class="modal-overlay">
+  <div class="modal-box sm">
+    <div class="modal-head">
+      <div>
+        <span style="font-weight:700;color:#63b3ed;font-size:13px">🌐 Domain Eksternal</span>
+        <span id="dm-ext-name" style="color:#718096;font-size:12px;margin-left:6px"></span>
+      </div>
+      <button class="modal-close" onclick="closeModal('domain-modal')">✕ Tutup</button>
+    </div>
+    <div id="dm-body" style="padding:16px;max-height:70vh;overflow-y:auto"></div>
+  </div>
+</div>
+
+<script>
+// ── toggle collapsible ─────────────────────────────────────────────────────
+function toggle(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// ── modal helpers ──────────────────────────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open')
+      .forEach(m => m.classList.remove('open'));
+});
+
+// ── DOMAIN POPUP ───────────────────────────────────────────────────────────
+function openDomainPopup(idx) {
+  const data = (window._domainData || [])[idx];
+  if (!data) return;
+  document.getElementById('dm-ext-name').textContent = data.name;
+
+  // hitung frekuensi domain (hostname)
+  const freq = {};
+  (data.domains || []).forEach(url => {
+    try {
+      const host = new URL(url).hostname;
+      freq[host] = (freq[host] || 0) + 1;
+    } catch { freq[url] = (freq[url] || 0) + 1; }
+  });
+
+  const sorted = Object.entries(freq).sort((a,b) => b[1]-a[1]);
+  const maxCnt = sorted[0]?.[1] || 1;
+
+  let html = `<div style="font-size:11px;color:#718096;margin-bottom:10px">
+    ${sorted.length} domain unik ditemukan di kode JS</div>`;
+  sorted.forEach(([host, cnt]) => {
+    const pct = Math.round((cnt/maxCnt)*100);
+    html += `<div class="domain-bar">
+      <span class="domain-count">${cnt}×</span>
+      <div style="flex:1">
+        <div style="font-size:12px;color:#e2e8f0;margin-bottom:3px">${escHtml(host)}</div>
+        <div style="height:4px;background:#2d3748;border-radius:2px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:#63b3ed;border-radius:2px"></div>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('dm-body').innerHTML = html;
+  openModal('domain-modal');
+}
+
+// ── FILE VIEWER ────────────────────────────────────────────────────────────
+function openFileViewer(extDir, filePath, targetLine) {
+  document.getElementById('fv-filename').textContent  = filePath;
+  document.getElementById('fv-linebadge').textContent = 'Baris ' + targetLine;
+  document.getElementById('fv-loading').style.display = 'block';
+  document.getElementById('file-pre').style.display   = 'none';
+  document.getElementById('file-pre').innerHTML       = '';
+  openModal('file-modal');
+
+  const url = '/api/file-content?ext_folder_id=' + encodeURIComponent(extDir)
+            + '&path='    + encodeURIComponent(filePath);
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('fv-loading').style.display = 'none';
+      if (data.error) {
+        document.getElementById('fv-loading').textContent = '⚠ ' + data.error;
+        document.getElementById('fv-loading').style.display = 'block';
+        return;
+      }
+      const pre   = document.getElementById('file-pre');
+      const lines = data.content.split('\n');
+      pre.innerHTML = lines.map((txt, i) => {
+        const ln  = i + 1;
+        const esc = escHtml(txt);
+        const mk  = ln === targetLine ? ' mark' : '';
+        return `<div id="L${ln}" class="code-line${mk}">` +
+               `<span class="line-num">${ln}</span>` +
+               `<span class="line-text">${esc}</span></div>`;
+      }).join('');
+      pre.style.display = 'block';
+      setTimeout(() => {
+        const el = document.getElementById('L' + targetLine);
+        if (el) el.scrollIntoView({ block:'center', behavior:'smooth' });
+      }, 60);
+    })
+    .catch(err => {
+      document.getElementById('fv-loading').textContent = 'Gagal memuat: ' + err;
+      document.getElementById('fv-loading').style.display = 'block';
+    });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>

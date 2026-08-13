@@ -1,0 +1,12 @@
+2026/07/29-10:15:19.388 2e4c Reusing MANIFEST E:\Kuliah\Skripsi\Semhas\extension\see-detector\dynamic\test_browser_profile\Default\IndexedDB\https_accounts.binance.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/29-10:15:19.389 2e4c Recovering log #64
+2026/07/29-10:15:19.389 2e4c Reusing old log E:\Kuliah\Skripsi\Semhas\extension\see-detector\dynamic\test_browser_profile\Default\IndexedDB\https_accounts.binance.com_0.indexeddb.leveldb/000064.log 
+2026/07/29-10:15:20.811 2794 Compacting 1@0 + 1@1 files
+2026/07/29-10:15:20.818 2794 Generated table #67@0: 712 keys, 212210 bytes
+2026/07/29-10:15:20.818 2794 Compacted 1@0 + 1@1 files => 212210 bytes
+2026/07/29-10:15:20.819 2794 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/07/29-10:15:22.133 5e00 Level-0 table #69: started
+2026/07/29-10:15:22.152 5e00 Level-0 table #69: 2577799 bytes OK
+2026/07/29-10:15:22.156 5e00 Delete type=2 #63
+2026/07/29-10:15:22.156 5e00 Delete type=0 #64
+2026/07/29-10:15:22.156 5e00 Delete type=2 #65

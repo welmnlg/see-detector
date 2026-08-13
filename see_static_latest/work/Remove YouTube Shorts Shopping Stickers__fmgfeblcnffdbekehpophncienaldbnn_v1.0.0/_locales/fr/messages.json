@@ -1,0 +1,6 @@
+{
+  "extName": { "message": "Supprimer les Shopping Stickers YouTube Shorts" },
+  "extDescription": { "message": "Supprime automatiquement les Shopping Stickers des vidéos YouTube Shorts." },
+  "toggleLabel": { "message": "Supprimer les Shopping Stickers" },
+  "footerText": { "message": "Actif sur youtube.com" }
+}

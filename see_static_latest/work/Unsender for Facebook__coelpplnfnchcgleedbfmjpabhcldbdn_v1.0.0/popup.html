@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 340px;
+      padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #09090b;
+      color: #fafafa;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+    }
+
+    .title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #0084ff, #00c6ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .description {
+      font-size: 13px;
+      color: #71717a;
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 4px;
+    }
+
+    /* Card */
+    .card {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #a1a1aa;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .input-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .input-group label {
+      font-size: 11px;
+      color: #52525b;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      background: #09090b;
+      color: #fafafa;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-group input:focus {
+      border-color: #0084ff;
+      box-shadow: 0 0 0 3px rgba(0, 132, 255, 0.15);
+    }
+
+    .input-group input::placeholder {
+      color: #3f3f46;
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 11px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      letter-spacing: -0.01em;
+    }
+
+    #startBtn {
+      background: linear-gradient(135deg, #0084ff, #0070dd);
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 132, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    #startBtn:hover {
+      background: linear-gradient(135deg, #1a91ff, #0084ff);
+      box-shadow: 0 2px 8px rgba(0, 132, 255, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2);
+      transform: translateY(-1px);
+    }
+
+    #startBtn:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 2px rgba(0, 132, 255, 0.3);
+    }
+
+    #stopBtn {
+      background: #18181b;
+      color: #ef4444;
+      border: 1px solid #27272a;
+      display: none;
+    }
+
+    #stopBtn:hover {
+      background: #1c1c1f;
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    /* Status */
+    .status-area {
+      min-height: 20px;
+      margin-bottom: 14px;
+    }
+
+    #status {
+      font-size: 12px;
+      text-align: center;
+      color: #71717a;
+      line-height: 1.5;
+    }
+
+    /* Info */
+    .info {
+      font-size: 11px;
+      color: #52525b;
+      text-align: center;
+      line-height: 1.5;
+      padding: 12px 0 0;
+      border-top: 1px solid #27272a;
+    }
+
+    /* Version */
+    .version {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 10px;
+      color: #3f3f46;
+      letter-spacing: 0.03em;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <!-- Facebook F Logo SVG -->
+    <svg class="logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+      <rect width="48" height="48" rx="10" fill="#1877F2"/>
+      <path d="M33.5 31.2l1.2-7.6H27.6v-4.9c0-2.1 1-4.1 4.3-4.1h3.3V8.8s-3-.5-5.9-.5c-6 0-9.9 3.6-9.9 10.2v5.8H12.8v7.6h6.6v18.4c1.3.2 2.7.3 4.2.3s2.8-.1 4.2-.3V31.2h5.7z" fill="#ffffff"/>
+    </svg>
+    <span class="title">Unsender for Facebook</span>
+  </div>
+
+  <p class="description">Automatically unsend all your sent messages in any Messenger conversation.</p>
+
+  <div class="card">
+    <div class="card-title">Delay Between Unsends</div>
+    <div class="input-row">
+      <div class="input-group">
+        <label>Min (seconds)</label>
+        <input type="number" id="minDelay" value="3" min="1" placeholder="3">
+      </div>
+      <div class="input-group">
+        <label>Max (seconds)</label>
+        <input type="number" id="maxDelay" value="7" min="1" placeholder="7">
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <button id="startBtn">Start Unsending</button>
+    <button id="stopBtn">Stop</button>
+  </div>
+
+  <div class="status-area">
+    <div id="status"></div>
+  </div>
+
+  <div class="info">
+    Open a Facebook Messenger conversation first, then click Start.<br>
+    Only <strong style="color:#a1a1aa">your sent messages</strong> will be removed.
+  </div>
+
+  <div class="version">v1.0.0</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

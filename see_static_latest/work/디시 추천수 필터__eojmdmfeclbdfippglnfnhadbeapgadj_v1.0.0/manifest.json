@@ -1,0 +1,21 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "디시 추천수 필터",
+  "version": "1.0.0",
+  "description": "설정한 추천수 미만의 게시글을 자동으로 숨겨줍니다.",
+  "permissions": ["storage", "tabs"],
+  "icons": {
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://gall.dcinside.com/board/lists*"],
+      "js": ["content.js"]
+    }
+  ]
+}

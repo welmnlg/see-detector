@@ -1,0 +1,31 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "링크 사이 드래그",
+  "version": "2026.009",
+  "description": "텍스트 사이, 원하는 곳에서 드래그 할 수 있음",
+  "permissions": ["storage"],
+  "action": {
+    "default_icon": {
+      "16": "icon16 on.png",
+      "48": "icon48 on.png",
+      "128": "icon128 on.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icon16 on.png",
+    "48": "icon48 on.png",
+    "128": "icon128 on.png"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "Batch download Facebook videos and Reels from multiple posts. Efficient one-click exporter tool for HD, watermark-free video downloads."
+  },
+  "extensionName": {
+    "message": "FB Video and Reels Batch Exporter"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

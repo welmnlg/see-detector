@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEE Protector - Laporan Analisis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="report.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="glow-text">SEE Protector</h1>
+            <p>Sistem Deteksi Otomatis (Real-Time Protection)</p>
+        </header>
+
+        <main class="main-content">
+            <div id="loading-panel" class="panel">
+                <h2>Menahan Ekstensi...</h2>
+                <div class="spinner"></div>
+                <p id="loading-text">Sedang mengirim ekstensi <strong id="loading-ext-name"></strong> ke VMware untuk dianalisis...</p>
+                <p class="subtitle">(Analisis Statis & Sandbox Dinamis mungkin memakan waktu hingga 1-2 menit)</p>
+            </div>
+
+            <div id="result-panel" class="panel hidden">
+                <div id="status-card" class="status-card">
+                    <h2 id="final-status">AMAN</h2>
+                    <p>Skor ML Keyakinan: <strong id="confidence-score">0%</strong></p>
+                </div>
+
+                <div class="details">
+                    <h3>Hasil Analisis</h3>
+                    <ul id="insight-list"></ul>
+                </div>
+
+                <div class="actions">
+                    <p>Apakah Anda ingin melanjutkan pemasangan ekstensi ini?</p>
+                    <div class="btn-group">
+                        <button id="btn-uninstall" class="btn btn-danger">Hapus Ekstensi</button>
+                        <button id="btn-enable" class="btn btn-success">Tetap Izinkan & Aktifkan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="error-panel" class="panel hidden">
+                <h2 style="color: #ef4444;">Analisis Gagal</h2>
+                <p id="error-message"></p>
+                <div class="actions">
+                    <button id="btn-err-uninstall" class="btn btn-danger">Hapus Ekstensi (Aman)</button>
+                    <button id="btn-err-enable" class="btn btn-secondary">Aktifkan Tetap (Berisiko)</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="report.js"></script>
+</body>
+</html>

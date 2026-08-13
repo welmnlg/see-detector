@@ -1,0 +1,11 @@
+{
+  "appNameChrome": {
+    "message": "Justdone: GPT-4o AI 写作助手和语法检查器"
+  },
+  "appNameFirefox": {
+    "message": "Justdone: GPT-4o AI 写作助手和语法检查器"
+  },
+  "appDesc": {
+    "message": "使用 Justdone 提升你的写作水平 — 一站式工具，支持语法检查、改写、AI写作等多种功能。"
+  }
+}

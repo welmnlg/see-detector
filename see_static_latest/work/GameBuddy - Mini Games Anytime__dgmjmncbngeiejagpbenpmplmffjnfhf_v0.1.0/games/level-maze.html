@@ -1,0 +1,25 @@
+<link rel="stylesheet" type="text/css" href="/releases/css/level-maze.css"/>
+    <div id="gamebox">
+        <div id="topbar">
+            <div id="levelv">Level 1</div> 
+            <div id="remain">Time: <span id="timer">20s</span></div>
+        </div>
+        <div id="mainctn">
+            <div id="maze"><canvas id="gameCanvas"></canvas></div>
+            <div id="sidebar">
+                <p id="featTxt">Features</p>
+                <a id='pathBtn'>Solution</a>
+                <a id='timePauseBtn'>Pause</a>
+                <a id="rsetBtn">Reset</a>
+                <div id="howToHint"><span>Use Arrow Keys to Move</span></div>
+            </div>  
+        </div>
+        <div id="gameover">
+            <p id="overmsg"></p>
+            <p id="btns">
+                <a id='nextbtn'>Next Level</a>
+                <a id='resetbtn'>Reset</a>
+            </p>
+        </div>
+    </div>
+<script src="/releases/js/level-maze.js"></script>

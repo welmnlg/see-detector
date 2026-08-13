@@ -98,7 +98,7 @@ def process_extension_analysis(filepath):
             "Unauthorized Domains": features_dict.get("unauthorized_domain_count", 0),
             "Sensitive Permissions": features_dict.get("sensitive_permissions_count", 0),
             "Pola Pencocokan Holistik": "Ya" if features_dict.get("has_holistic_match_pattern") else "Tidak",
-            "Mengekstraksi Cookie": "Ya" if features_dict.get("cookies_stolen") else "Tidak"
+            "Mendeklarasikan Izin Host": "Ya" if features_dict.get("has_host_permissions") else "Tidak"
         }
         
         response_data = {

@@ -1,0 +1,112 @@
+/* Furigana Annotator Styles */
+
+/* Ruby container - minimal styling to not disrupt page layout */
+ruby.furigana-ruby {
+  ruby-align: center;
+}
+
+/* Ruby text (furigana) styling */
+ruby.furigana-ruby > rt {
+  font-size: 0.5em;
+  color: inherit;
+  opacity: 0.85;
+  font-weight: normal;
+  line-height: 1;
+  text-align: center;
+  user-select: text;
+}
+
+/* Ensure proper vertical spacing */
+ruby.furigana-ruby {
+  display: ruby;
+  ruby-position: over;
+}
+
+/* Fallback for browsers without ruby support */
+ruby.furigana-ruby > rp {
+  display: none;
+}
+
+/* Annotation marker for processed content */
+[data-furigana-processed="true"] {
+  /* No visible change, just a marker */
+}
+
+/* Loading indicator */
+.furigana-loading {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 999999;
+  font-family: sans-serif;
+}
+
+/* Optional: Hover effect to highlight furigana */
+ruby.furigana-ruby:hover > rt {
+  opacity: 1;
+}
+
+/* ========================================
+   词性颜色 (Part of Speech Colors)
+   只在 body.furigana-color-mode 时生效
+   ======================================== */
+
+/* 名詞 (Noun) - 蓝色 */
+body.furigana-color-mode ruby.furigana-pos-noun > rt {
+  color: #2196F3;
+}
+
+/* 動詞 (Verb) - 红色 */
+body.furigana-color-mode ruby.furigana-pos-verb > rt {
+  color: #F44336;
+}
+
+/* 形容詞 (Adjective) - 橙色 */
+body.furigana-color-mode ruby.furigana-pos-adjective > rt {
+  color: #FF9800;
+}
+
+/* 副詞 (Adverb) - 紫色 */
+body.furigana-color-mode ruby.furigana-pos-adverb > rt {
+  color: #9C27B0;
+}
+
+/* 助詞 (Particle) - 灰色 */
+body.furigana-color-mode ruby.furigana-pos-particle > rt {
+  color: #9E9E9E;
+}
+
+/* 助動詞 (Auxiliary verb) - 粉色 */
+body.furigana-color-mode ruby.furigana-pos-auxiliary > rt {
+  color: #E91E63;
+}
+
+/* 接続詞 (Conjunction) - 青色 */
+body.furigana-color-mode ruby.furigana-pos-conjunction > rt {
+  color: #00BCD4;
+}
+
+/* 感動詞 (Interjection) - 黄色 */
+body.furigana-color-mode ruby.furigana-pos-interjection > rt {
+  color: #FFEB3B;
+}
+
+/* 連体詞 (Prenominal) - 棕色 */
+body.furigana-color-mode ruby.furigana-pos-prenoun > rt {
+  color: #795548;
+}
+
+/* 記号 (Symbol) - 深灰 */
+body.furigana-color-mode ruby.furigana-pos-symbol > rt {
+  color: #607D8B;
+}
+
+/* その他 (Other) - 默认继承 */
+body.furigana-color-mode ruby.furigana-pos-other > rt {
+  color: inherit;
+}

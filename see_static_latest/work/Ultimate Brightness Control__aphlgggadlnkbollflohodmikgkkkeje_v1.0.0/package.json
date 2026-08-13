@@ -1,0 +1,7 @@
+{
+  "name": "ultimate-brightness-control",
+  "private": true,
+  "scripts": {
+    "test": "node tests/settings.test.js"
+  }
+}

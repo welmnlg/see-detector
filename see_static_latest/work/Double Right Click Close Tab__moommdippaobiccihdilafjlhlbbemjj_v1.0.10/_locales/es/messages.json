@@ -1,0 +1,26 @@
+{
+  "extName": {
+    "message": "Cerrar pestaña con doble clic derecho"
+  },
+  "extDescription": {
+    "message": "Cierra pestañas con doble clic derecho en páginas web. Ligero, rápido y sin seguimiento."
+  },
+  "optionsTitle": {
+    "message": "Double Right Click Options"
+  },
+  "modeSuppressFirst": {
+    "message": "Reliable close, delay single right-click menu"
+  },
+  "modeSuppressFirstHint": {
+    "message": "Best for double right-click closing."
+  },
+  "modePreserveMenu": {
+    "message": "Show single right-click menu immediately"
+  },
+  "modePreserveMenuHint": {
+    "message": "The browser menu is preserved; double right-click may depend on the page and system menu behavior."
+  },
+  "optionsSaved": {
+    "message": "Saved."
+  }
+}

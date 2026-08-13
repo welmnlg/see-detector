@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      width: 340px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #202124;
+      background: #fff;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    input {
+      margin-right: 8px;
+      vertical-align: -2px;
+    }
+    .hint {
+      display: block;
+      margin: 4px 0 0 24px;
+      color: #5f6368;
+      font-size: 12px;
+    }
+    .status {
+      min-height: 18px;
+      margin-top: 12px;
+      color: #137333;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1 data-i18n="optionsTitle">Double Right Click Options</h1>
+
+  <label>
+    <input type="radio" name="menuMode" value="suppressFirst">
+    <span data-i18n="modeSuppressFirst">Reliable close, delay single right-click menu</span>
+    <span class="hint" data-i18n="modeSuppressFirstHint">Best for double right-click closing.</span>
+  </label>
+
+  <label>
+    <input type="radio" name="menuMode" value="preserveMenu">
+    <span data-i18n="modePreserveMenu">Show single right-click menu immediately</span>
+    <span class="hint" data-i18n="modePreserveMenuHint">The browser menu is preserved; double right-click may depend on the page and system menu behavior.</span>
+  </label>
+
+  <div class="status" id="status" role="status"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>

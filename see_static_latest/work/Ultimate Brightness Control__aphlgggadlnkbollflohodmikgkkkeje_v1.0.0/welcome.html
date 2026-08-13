@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="welcomeTitle">Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sun: #FFD93D;
+      --amber: #FF9F1C;
+      --deep: #0D0D0D;
+      --card: #111827;
+      --border: rgba(255,217,61,0.15);
+      --border-subtle: rgba(255,255,255,0.07);
+      --text: #F0F0F0;
+      --muted: #7A8FA6;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--deep);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid; place-items: center;
+      padding: 2rem;
+      position: relative; overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,217,61,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; opacity: .35;
+    }
+
+    .page {
+      width: min(820px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.8rem 3rem;
+      position: relative; overflow: hidden;
+      animation: fadeUp .6s ease both;
+      z-index: 1;
+    }
+
+    .page::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--sun), transparent);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: .9rem; letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--sun), var(--amber));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 1.8rem; display: block;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1; letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      max-width: 14ch;
+    }
+
+    .intro {
+      color: var(--muted); font-size: 1rem; line-height: 1.75;
+      max-width: 520px; margin-bottom: 1.8rem;
+    }
+
+    .features {
+      list-style: none;
+      display: flex; flex-direction: column; gap: .6rem;
+      margin-bottom: 2rem;
+    }
+
+    .features li {
+      display: flex; align-items: flex-start; gap: .7rem;
+      font-size: .9rem; color: var(--text); line-height: 1.5;
+    }
+
+    .features li::before {
+      content: '✦';
+      color: var(--sun); font-size: .65rem;
+      margin-top: .3rem; flex-shrink: 0;
+    }
+
+    .actions {
+      display: flex; flex-wrap: wrap; gap: .75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .7rem 1.5rem; border-radius: 999px;
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: .875rem;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sun), var(--amber));
+      color: #0D0D0D;
+      box-shadow: 0 4px 18px rgba(255,159,28,.3);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 28px rgba(255,159,28,.45); }
+
+    .btn-ghost {
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-ghost:hover { color: var(--text); background: rgba(255,255,255,.08); }
+
+    .toolbar-hint {
+      display: flex; align-items: center; gap: .6rem;
+      background: rgba(255,217,61,.07);
+      border: 1px solid rgba(255,217,61,.2);
+      border-radius: 12px; padding: .75rem 1.1rem;
+      font-size: .85rem; color: var(--sun);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity .4s ease, transform .4s ease;
+      pointer-events: none;
+    }
+    .toolbar-hint.show { opacity: 1; transform: translateY(0); }
+    .toolbar-hint-icon { font-size: 1.1rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 560px) {
+      .page { padding: 1.8rem; }
+      .actions { flex-direction: column; }
+      .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <span class="logo">☀ Ultimate Brightness Control</span>
+
+    <h1 data-i18n="welcomeHeading">Your browser finally stays dim in fullscreen</h1>
+    <p class="intro" data-i18n="welcomeIntro">Most brightness extensions only dim the base page. This extension keeps the dimming overlay working when videos move into the browser's fullscreen top layer or live inside iframe players.</p>
+
+    <ul class="features">
+      <li data-i18n="welcomeFeatureOne">Use a single global brightness for every tab.</li>
+      <li data-i18n="welcomeFeatureTwo">Save a different brightness only for the current hostname.</li>
+      <li data-i18n="welcomeFeatureThree">Disable the effect for one site or everywhere with one click.</li>
+    </ul>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="openPopupLink" data-i18n="welcomePrimary">Open extension</button>
+      <a class="btn btn-ghost" href="https://basarogur.github.io/ultimate-brightness-control/privacy.html" target="_blank" data-i18n="welcomePrivacy">Privacy Policy</a>
+      <a class="btn btn-ghost" href="https://basarogur.github.io/ultimate-brightness-control/support.html" target="_blank" data-i18n="welcomeSupport">Support</a>
+      <a class="btn btn-ghost" href="https://basarogur.github.io/ultimate-brightness-control/terms.html" target="_blank" data-i18n="welcomeTerms">Terms</a>
+      <a class="btn btn-ghost" href="https://basarogur.github.io/ultimate-brightness-control/about.html" target="_blank">About</a>
+    </div>
+
+    <div class="toolbar-hint" id="toolbarHint">
+      <span class="toolbar-hint-icon">☀</span>
+      Click the extension icon in your toolbar to get started!
+    </div>
+
+  </main>
+
+  <script src="localize.js"></script>
+  <script>
+    document.getElementById('openPopupLink').addEventListener('click', function() {
+      document.getElementById('toolbarHint').classList.add('show');
+      setTimeout(() => window.close(), 1800);
+    });
+  </script>
+</body>
+</html>

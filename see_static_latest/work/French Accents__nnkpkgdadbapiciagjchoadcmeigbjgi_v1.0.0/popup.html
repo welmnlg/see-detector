@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>French Accents</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="popup-container">
+    <div class="header">
+      <div class="header-content">
+        <div class="header-text">
+          <h2>French Accents</h2>
+          <div class="typing-mode-indicator">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="typingModeStatus">Typing Mode: ON</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="content">
+      <p class="info-text">A floating overlay keyboard will appear when you click on any input field. Click any accent button to type it directly into the active field.</p>
+    </div>
+
+    <div class="footer">
+      <button id="toggleTypingMode" class="toggle-btn">
+        <span class="btn-text">Toggle Typing Mode</span>
+      </button>
+      <a href="options.html" target="_blank" class="options-link">
+        Options
+      </a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEE Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fa-solid"></i>
+                <h1>SEE Vulnerable Detector</h1>
+            </div>
+            <p class="subtitle">Stealth Extension Exfiltration Detector</p>
+        </header>
+
+        <main class="main-content">
+            <section class="input-section glass-panel">
+                <h2>Pindai Ekstensi</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-target="url-input"><i class="fa-solid fa-link"></i> Chrome Web Store</button>
+                    <button class="tab-btn" data-target="file-input"><i class="fa-solid fa-file-arrow-up"></i> Upload CRX/ZIP</button>
+                </div>
+
+                <div class="tab-content active" id="url-input">
+                    <form id="url-form">
+                        <div class="input-group">
+                            <input type="text" id="ext-url" placeholder="Masukkan URL Ekstensi atau ID (contoh: aaaaaabbbbbbccccccddddddeeeeee)" required>
+                            <button type="submit" class="btn-primary">
+                                <span>Pindai</span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-content" id="file-input">
+                    <form id="file-form">
+                        <div class="file-drop-area">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p>Seret & Lepas file .crx atau .zip di sini</p>
+                            <span>atau</span>
+                            <label for="ext-file" class="btn-outline">Pilih File</label>
+                            <input type="file" id="ext-file" accept=".crx,.zip" hidden>
+                        </div>
+                        <div class="file-info" id="file-info" style="display: none;">
+                            <span id="file-name"></span>
+                            <button type="submit" class="btn-primary">Mulai Analisis</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="loading-section glass-panel hidden" id="loading-panel">
+                <div class="loader"></div>
+                <h3>Menjalankan Analisis...</h3>
+                <p>Memuat ekstensi, menjalankan Playwright Sandbox, dan mengekstrak fitur perilaku dinamis...</p>
+                
+                <div class="terminal-container">
+                    <div class="terminal-header">
+                        <div class="term-btn term-red"></div>
+                        <div class="term-btn term-yellow"></div>
+                        <div class="term-btn term-green"></div>
+                        <span id="loading-ext-name">sandbox-runner.exe</span>
+                    </div>
+                    <div class="terminal-body" id="terminal-body">
+                        <!-- Simulated logs will appear here -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="result-section hidden" id="result-panel">
+                <div class="glass-panel result-header" id="status-card">
+                    <div class="status-icon">
+                        <i class="fa-solid fa-circle-check" id="status-icon"></i>
+                    </div>
+                    <div class="status-text">
+                        <h2 id="final-status">SAFE</h2>
+                        <p>Skor Keyakinan ML: <span id="confidence-score">98.5%</span></p>
+                    </div>
+                </div>
+
+                <!-- Result Tabs -->
+                <div class="result-tabs mt-2">
+                    <button class="res-tab-btn active" data-target="tab-overview"><i class="fa-solid fa-chart-pie"></i> Ikhtisar & ML</button>
+                    <button class="res-tab-btn" data-target="tab-static"><i class="fa-solid fa-code"></i> Analisis Statis</button>
+                    <button class="res-tab-btn" data-target="tab-dynamic"><i class="fa-solid fa-network-wired"></i> Analisis Dinamis</button>
+                </div>
+
+                <!-- TAB 1: OVERVIEW & ML -->
+                <div class="res-tab-content active" id="tab-overview">
+                    <div class="dashboard-grid mt-2">
+                        <div class="glass-panel dashboard-card">
+                            <h3><i class="fa-solid fa-bolt"></i> Insights Perilaku</h3>
+                            <ul class="insight-list" id="insight-list">
+                                <!-- Diisi oleh JS -->
+                            </ul>
+                        </div>
+                        <div class="glass-panel dashboard-card">
+                            <h3><i class="fa-solid fa-triangle-exclamation"></i> Indikator/kategori SEE (Rule-based)</h3>
+                            <div class="behavior-tags" id="behavior-tags">
+                                <!-- Diisi oleh JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: STATIC ANALYSIS -->
+                <div class="res-tab-content" id="tab-static">
+                    <div class="glass-panel full-width-card mt-2">
+                        <h3><i class="fa-solid fa-file-code"></i> Hasil AST & Manifest Analyzer</h3>
+                        <div class="static-grid mt-1">
+                            <div class="static-card">
+                                <h4>Informasi Dasar</h4>
+                                <ul id="static-basic"></ul>
+                            </div>
+                            <div class="static-card">
+                                <h4>Kategori Statis Ditemukan</h4>
+                                <div class="behavior-tags" id="static-categories"></div>
+                            </div>
+                        </div>
+                        <h4 class="mt-2 mb-1">Temuan Spesifik (Code Findings)</h4>
+                        <div class="terminal-body static-findings" id="static-findings">
+                            <!-- Diisi oleh JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: DYNAMIC ANALYSIS -->
+                <div class="res-tab-content" id="tab-dynamic">
+                    <div class="glass-panel full-width-card mt-2">
+                        <h3><i class="fa-solid fa-list-check"></i> Rekaman Lalu Lintas Dinamis Lengkap</h3>
+                        <p class="text-muted text-sm mb-1">Klik pada baris tabel untuk melihat rincian Payload dan Header dari setiap <b>request</b>.</p>
+                        <div class="table-responsive">
+                            <table class="data-table interactive-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metode</th>
+                                        <th>Domain Target</th>
+                                        <th>Sumber Eksekusi</th>
+                                        <th>Status Filter</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="logs-body">
+                                    <!-- Diisi oleh JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-outline mt-2" onclick="resetUI()"><i class="fa-solid fa-rotate-right"></i> Pindai Ekstensi Lain</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

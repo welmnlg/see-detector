@@ -1,0 +1,14 @@
+{
+  "extensionDescription": {
+    "description": "Extension description",
+    "message": "Download Facebook Videos and Reels in High Quality, No Watermark."
+  },
+  "extensionName": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook - Download FB Videos"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

@@ -1,0 +1,18 @@
+/* ── Epstein List Highlighter ─────────────────────────────────── */
+
+.epstein-highlight {
+  display: inline;
+  border: 2px solid #e53e3e !important;
+  border-radius: 3px;
+  padding: 1px 3px;
+  background-color: rgba(229, 62, 62, 0.12) !important;
+  color: inherit !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.epstein-highlight:hover {
+  background-color: rgba(229, 62, 62, 0.30) !important;
+}

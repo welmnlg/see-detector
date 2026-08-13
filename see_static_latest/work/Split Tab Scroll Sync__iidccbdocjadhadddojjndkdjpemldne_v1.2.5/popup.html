@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Split Tab Scroll Sync</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Split Tab Scroll Sync</h1>
+    </div>
+
+    <div class="content">
+      <div class="toggle-section">
+        <label class="switch">
+          <input type="checkbox" id="syncToggle">
+          <span class="slider"></span>
+        </label>
+        <span class="toggle-label" id="statusLabel">Sync Disabled</span>
+      </div>
+
+      <div class="mode-section">
+        <label class="mode-label">Sync Mode:</label>
+        <select id="syncMode" class="mode-select">
+          <option value="smart">Smart (Content-aware)</option>
+          <option value="viewport">Viewport-based</option>
+          <option value="percentage">Simple Percentage</option>
+        </select>
+      </div>
+
+      <div class="info-section">
+        <div class="info-item">
+          <span class="info-label">Active tabs in window:</span>
+          <span class="info-value" id="tabCount">-</span>
+        </div>
+      </div>
+
+      <div class="description">
+        <p><strong>Smart mode</strong>: Matches headings and sections for better alignment (best for translations).</p>
+        <p><strong>Viewport mode</strong>: Adjusts for different document heights.</p>
+        <p><strong>Percentage mode</strong>: Simple scroll position matching.</p>
+        <p class="note">Works best with Chrome's tab split feature (drag tab to side).</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

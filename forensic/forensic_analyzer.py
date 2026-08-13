@@ -683,10 +683,16 @@ def _save_network_traffic(evidence, output_dir):
     ext_id = evidence["extension_id"]
     requests = evidence.get("extension_requests", [])
     
+    file_exists = os.path.isfile(csv_path)
+    if not file_exists:
+        with traffic_lock:
+            with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(["extension_id", "timestamp", "source", "method", "url", "domain", "post_data_preview", "is_unauthorized", "is_cookie_theft", "is_exfiltration"])
+        file_exists = True
+
     if not requests:
         return
-        
-    file_exists = os.path.isfile(csv_path)
     
     with traffic_lock:
         with open(csv_path, 'a', newline='', encoding='utf-8') as f:
@@ -746,6 +752,19 @@ def _analyze_single_task(ext_path, output_dir):
     except Exception as e:
         print(f"Error pada {ext_path}: {e}")
         return None
+
+def _save_summary_csv(all_results, output_dir):
+    if not all_results:
+        return
+    csv_path = os.path.join(output_dir, "forensic_summary.csv")
+    file_exists = os.path.isfile(csv_path)
+    with traffic_lock:
+        with open(csv_path, 'a' if file_exists else 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=all_results[0].keys())
+            if not file_exists:
+                writer.writeheader()
+            writer.writerows(all_results)
+    return csv_path
 
 def run_batch_forensics(vulnerable_dir, output_dir, workers=1):
     """Menjalankan batch forensik pada semua ekstensi vulnerable secara konkuren dengan progress bar."""
@@ -823,15 +842,9 @@ def run_batch_forensics(vulnerable_dir, output_dir, workers=1):
     print("\n") # New line after progress bar finishes
 
     # Tambahkan hasil baru ke CSV existing atau buat CSV baru
-    csv_path = os.path.join(output_dir, "forensic_summary.csv")
-    if all_results:
-        file_exists = os.path.isfile(csv_path)
-        with open(csv_path, 'a' if file_exists else 'w', newline='', encoding='utf-8') as f:
-            writer = csv.DictWriter(f, fieldnames=all_results[0].keys())
-            if not file_exists:
-                writer.writeheader()
-            writer.writerows(all_results)
+    csv_path = _save_summary_csv(all_results, output_dir)
             
+    if all_results:
         proven = [r for r in all_results if "TERBUKTI" in r["verdict"]]
         print(f"\n{'='*70}")
         print(f"  SESI INI SELESAI — Terbukti rentan (sesi ini): {len(proven)}/{len(all_results)}")
@@ -865,6 +878,22 @@ if __name__ == "__main__":
         os.makedirs(args.outdir, exist_ok=True)
         report_path = os.path.join(args.outdir, f"{evidence['extension_id']}_forensic.md")
         generate_markdown_report(evidence, report_path)
+        _save_network_traffic(evidence, args.outdir)
+        
+        # Simpan ke summary CSV juga
+        res = {
+            "extension_id": evidence["extension_id"],
+            "verdict": evidence["verdict"],
+            "categories_proven": ", ".join(evidence["see_categories_proven"]),
+            "total_ext_requests": len(evidence.get("extension_requests", [])),
+            "unauthorized_count": len(evidence.get("unauthorized_requests", [])),
+            "cookie_theft": len(evidence.get("cookie_theft_evidence", [])),
+            "user_data_exfil": len(evidence.get("user_data_exfil_evidence", [])),
+            "redirect": len(evidence.get("redirect_evidence", [])),
+            "download_hijack": len(evidence.get("download_hijack_evidence", [])),
+        }
+        _save_summary_csv([res], args.outdir)
+        
         print(f"\nLaporan: {report_path}")
     else:
         # Cek apakah direktori ini punya sub-direktori

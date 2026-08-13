@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "Extract and save videos from Facebook posts and Reels with ease. One-click HD downloader for watermark-free offline video access."
+  },
+  "extensionName": {
+    "message": "Facebook Video Extractor - FB Saver"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

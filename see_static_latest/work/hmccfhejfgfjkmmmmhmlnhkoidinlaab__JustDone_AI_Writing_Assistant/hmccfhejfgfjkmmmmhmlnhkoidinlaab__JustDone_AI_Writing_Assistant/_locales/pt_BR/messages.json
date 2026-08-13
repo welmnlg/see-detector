@@ -1,0 +1,29 @@
+{
+  "appDesc": {
+    "message": "Melhore sua redação com o JustDone - sua ferramenta completa para verificação gramatical, parafraseamento, redação com IA e muito mais."
+  },
+  "appNameChrome": {
+    "message": "JustDone: GPT-4o AI Writing Assistant &amp; Grammar Checker"
+  },
+  "appNameFirefox": {
+    "message": "JustDone: GPT-4o AI Writing Assistant &amp; Grammar Checker"
+  },
+  "contextMenu_answer_this": {
+    "message": "Responder a isso"
+  },
+  "contextMenu_correct_all_mistakes": {
+    "message": "Corrigir os erros"
+  },
+  "contextMenu_improve": {
+    "message": "Melhorar"
+  },
+  "contextMenu_rewrite": {
+    "message": "Reescrever"
+  },
+  "contextMenu_simplify": {
+    "message": "Simplificar"
+  },
+  "contextMenu_summarize": {
+    "message": "Resumir"
+  }
+}

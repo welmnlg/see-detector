@@ -1,0 +1,203 @@
+:root {
+  --primary-color: #E60023;
+  --bg-glass: rgba(20, 20, 20, 0.75);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --text-main: #FFFFFF;
+  --text-sub: rgba(255, 255, 255, 0.6);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 380px;
+  min-height: 500px;
+  font-family: 'Inter', sans-serif;
+  background: transparent;
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+.glass-container {
+  background: var(--bg-glass);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--border-glass);
+  padding: 24px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+h1 span {
+  color: var(--primary-color);
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-top: 4px;
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(230, 0, 35, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(230, 0, 35, 0.4);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.btn-download {
+  padding: 8px 16px;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-download:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.image-grid {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.image-grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.image-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.img-item {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 비율 고정 */
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.img-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-item input[type="checkbox"] {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.empty-msg {
+  grid-column: span 3;
+  text-align: center;
+  color: var(--text-sub);
+  font-size: 13px;
+  margin-top: 40px;
+}
+
+.status-bar {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-glass);
+}
+
+.progress-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+#status-text {
+  font-size: 11px;
+  color: var(--text-sub);
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Checkbox Styling */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-main);
+  cursor: pointer;
+  gap: 8px;
+}

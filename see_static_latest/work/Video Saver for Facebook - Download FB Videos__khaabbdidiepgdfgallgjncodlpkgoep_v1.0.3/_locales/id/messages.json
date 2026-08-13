@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "A professional extension for downloading Facebook videos and Reels. Save high quality content with one click, always watermark-free."
+  },
+  "extensionName": {
+    "message": "Facebook Video Saver Extension"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

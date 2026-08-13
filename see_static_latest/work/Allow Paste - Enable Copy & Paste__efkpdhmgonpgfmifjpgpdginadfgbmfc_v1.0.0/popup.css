@@ -1,0 +1,124 @@
+:root {
+  color-scheme: light;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  --bg-top: #f8f3ea;
+  --bg-bottom: #eceff5;
+  --ink: #1a2233;
+  --muted: #586273;
+  --accent: #006b5f;
+  --accent-soft: rgba(0, 107, 95, 0.18);
+  --panel: rgba(255, 255, 255, 0.82);
+  --border: rgba(26, 34, 51, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 220px;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(0, 107, 95, 0.18),
+      transparent 45%
+    ),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  color: var(--ink);
+}
+
+.panel {
+  margin: 14px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 45px rgba(26, 34, 51, 0.12);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.description {
+  margin: 10px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(26, 34, 51, 0.06);
+}
+
+.toggle span:first-child {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.track {
+  position: relative;
+  width: 54px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(88, 98, 115, 0.25);
+  transition: background 140ms ease;
+}
+
+.track::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(26, 34, 51, 0.18);
+  transition: transform 140ms ease;
+}
+
+.toggle input:checked + .track {
+  background: var(--accent-soft);
+}
+
+.toggle input:checked + .track::after {
+  transform: translateX(24px);
+  background: var(--accent);
+}
+
+.hint {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}

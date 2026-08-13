@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: sans-serif; width: 340px; padding: 12px; margin: 0; }
+    h2 { margin: 0 0 10px; font-size: 16px; text-align: center; border-bottom: 1px solid #000; margin-bottom: 1rem; padding-bottom: .3rem; }
+    #preview {
+      word-break: break-all; font-size: 11px; color: #374151;
+      background: #f3f4f6; padding: 8px; border-radius: 4px;
+      margin-bottom: 10px; min-height: 18px;
+    }
+    #preview.error { color: #991b1b; background: #fee2e2; }
+    button {
+      display: block; width: 100%; padding: 7px; margin-bottom: 5px;
+      border: none; border-radius: 4px; cursor: pointer;
+      font-size: 13px; background: #2563eb; color: white;
+    }
+    button:last-child { margin-bottom: 0; }
+    button:hover:not(:disabled) { background: #1d4ed8; }
+    button:disabled { background: #93c5fd; cursor: default; }
+    #incognito { background: #1f2937; }
+    #incognito:hover:not(:disabled) { background: #111827; }
+    #incognito:disabled { background: #6b7280; }
+    #settings { display: block; margin-top: 8px; font-size: 11px; color: #6b7280; text-align: right; text-decoration: none; }
+    #settings:hover { color: #374151; }
+  </style>
+</head>
+<body>
+  <h2 id="title">Paste Clear URL And Go</h2>
+  <div id="preview"></div>
+  <button id="current" disabled>Paste in current tab</button>
+  <button id="new" disabled>Paste in new tab</button>
+  <button id="incognito" disabled>Paste in new incognito tab</button>
+  <a href="#" id="settings">Settings</a>
+  <script src="strip-url.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

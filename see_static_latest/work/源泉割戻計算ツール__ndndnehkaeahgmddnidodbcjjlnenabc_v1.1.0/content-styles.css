@@ -1,0 +1,12 @@
+.warimodo-highlight {
+  background: #2563eb;
+  color: white;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  pointer-events: none;
+  transition: opacity 0.3s;
+  opacity: 1;
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome Extension Icon Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+            font-size: 32px;
+        }
+        .subtitle {
+            color: #666;
+            margin: 0 0 30px 0;
+        }
+        .icons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        .icon-card {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .icon-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .icon-card h3 {
+            margin: 0 0 16px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        .canvas-wrapper {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        canvas {
+            display: block;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        button {
+            background: #F15A22;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background: #d14a12;
+            transform: scale(1.02);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        .download-all-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .download-all-section button {
+            font-size: 16px;
+            padding: 16px 32px;
+        }
+        .instructions {
+            background: #e7f3ff;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .instructions h3 {
+            margin: 0 0 12px 0;
+            color: #1976D2;
+        }
+        .instructions p {
+            margin: 8px 0;
+            color: #555;
+            line-height: 1.6;
+        }
+        .instructions pre {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0 0 0;
+        }
+        .instructions code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: #c7254e;
+        }
+        .badge {
+            display: inline-block;
+            background: #F15A22;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Chrome Extension Icon Generator <span class="badge">Cube Design</span></h1>
+        <p class="subtitle">Generate all required icon sizes for your Chrome extension</p>
+
+        <div class="instructions">
+            <h3>📋 How to Use</h3>
+            <p><strong>Step 1:</strong> Click "Download All Icons" below to save all four icon sizes</p>
+            <p><strong>Step 2:</strong> Create an "icons" folder in your extension directory</p>
+            <p><strong>Step 3:</strong> Add this to your manifest.json:</p>
+            <pre><code>{
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}</code></pre>
+        </div>
+
+        <div class="icons-grid">
+            <div class="icon-card">
+                <h3>16×16 px</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="canvas16" width="16" height="16"></canvas>
+                </div>
+                <button onclick="downloadIcon(16)">⬇️ Download</button>
+                <p style="margin: 12px 0 0 0; font-size: 12px; color: #666;">Toolbar icon</p>
+            </div>
+            <div class="icon-card">
+                <h3>32×32 px</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="canvas32" width="32" height="32"></canvas>
+                </div>
+                <button onclick="downloadIcon(32)">⬇️ Download</button>
+                <p style="margin: 12px 0 0 0; font-size: 12px; color: #666;">High-res toolbar</p>
+            </div>
+            <div class="icon-card">
+                <h3>48×48 px</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="canvas48" width="48" height="48"></canvas>
+                </div>
+                <button onclick="downloadIcon(48)">⬇️ Download</button>
+                <p style="margin: 12px 0 0 0; font-size: 12px; color: #666;">Extension management</p>
+            </div>
+            <div class="icon-card">
+                <h3>128×128 px</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="canvas128" width="128" height="128"></canvas>
+                </div>
+                <button onclick="downloadIcon(128)">⬇️ Download</button>
+                <p style="margin: 12px 0 0 0; font-size: 12px; color: #666;">Chrome Web Store</p>
+            </div>
+        </div>
+
+        <div class="download-all-section">
+            <h3 style="margin: 0 0 16px 0; color: #333;">Ready to go?</h3>
+            <button onclick="downloadAllIcons()">📦 Download All Icons</button>
+            <p style="margin: 16px 0 0 0; color: #666; font-size: 14px;">Downloads all four sizes automatically</p>
+        </div>
+    </div>
+
+    <script>
+        const sizes = [16, 32, 48, 128];
+        const ORANGE_BG = '#F15A22';
+        const WHITE = '#FFFFFF';
+
+     function drawCubeIcon(canvas, size) {
+         const ctx = canvas.getContext('2d');
+
+         ctx.fillStyle = ORANGE_BG;
+         ctx.fillRect(0, 0, size, size);
+
+         ctx.strokeStyle = '#000';
+         ctx.lineWidth = size / 16;
+         ctx.lineCap = 'butt';
+         ctx.lineJoin = 'round';
+
+         const scale = size / 128;
+         const cx = size / 2;
+         const cy = size / 2 - size / 8;
+
+         const width = 45 * scale;
+         const height = 26 * scale;
+         const depth = 26 * scale;
+
+         const top         = { x: cx,           y: cy - height - depth / 2 };
+         const left        = { x: cx - width,   y: cy - depth / 2 };
+         const right       = { x: cx + width,   y: cy - depth / 2 };
+         const center      = { x: cx,           y: cy + depth / 2 };
+
+         const bottomLeft  = { x: cx - width,   y: cy + depth * 1.5 };
+         const bottomRight = { x: cx + width,   y: cy + depth * 1.5 };
+         const bottomFront = { x: cx,           y: cy + height + depth * 1.5 };
+
+         ctx.beginPath();
+
+         // Top face (continuous)
+         ctx.moveTo(top.x, top.y);
+         ctx.lineTo(right.x, right.y);
+         ctx.lineTo(center.x, center.y);
+         ctx.lineTo(left.x, left.y);
+         ctx.closePath();
+
+         // Left side + bottom (continuous path — key change)
+         ctx.moveTo(left.x, left.y);
+         ctx.lineTo(bottomLeft.x, bottomLeft.y);
+         ctx.lineTo(bottomFront.x, bottomFront.y);
+         ctx.lineTo(bottomRight.x, bottomRight.y);
+
+         // Right vertical edge
+         ctx.moveTo(right.x, right.y);
+         ctx.lineTo(bottomRight.x, bottomRight.y);
+         ctx.lineTo(bottomFront.x, bottomFront.y);
+
+         // Center vertical edge
+         ctx.moveTo(center.x, center.y);
+         ctx.lineTo(bottomFront.x, bottomFront.y);
+
+         ctx.stroke();
+     }
+
+        // Generate all icons on page load
+        function initializeIcons() {
+            sizes.forEach(size => {
+                const canvas = document.getElementById(`canvas${size}`);
+                if (canvas) {
+                    drawCubeIcon(canvas, size);
+                }
+            });
+        }
+
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            if (!canvas) return;
+
+            const link = document.createElement('a');
+            link.download = `icon${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function downloadAllIcons() {
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    downloadIcon(size);
+                }, index * 300); // Stagger downloads to avoid browser blocking
+            });
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', initializeIcons);
+    </script>
+</body>
+</html>

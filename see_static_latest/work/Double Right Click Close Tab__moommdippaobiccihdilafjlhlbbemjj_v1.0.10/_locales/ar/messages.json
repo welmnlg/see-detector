@@ -1,0 +1,26 @@
+{
+  "extName": {
+    "message": "إغلاق التبويب بالنقر المزدوج بالزر الأيمن"
+  },
+  "extDescription": {
+    "message": "أغلق علامات التبويب بالنقر المزدوج بالزر الأيمن داخل صفحات الويب. خفيف وسريع وبدون تتبع."
+  },
+  "optionsTitle": {
+    "message": "Double Right Click Options"
+  },
+  "modeSuppressFirst": {
+    "message": "Reliable close, delay single right-click menu"
+  },
+  "modeSuppressFirstHint": {
+    "message": "Best for double right-click closing."
+  },
+  "modePreserveMenu": {
+    "message": "Show single right-click menu immediately"
+  },
+  "modePreserveMenuHint": {
+    "message": "The browser menu is preserved; double right-click may depend on the page and system menu behavior."
+  },
+  "optionsSaved": {
+    "message": "Saved."
+  }
+}

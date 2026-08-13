@@ -1,0 +1,36 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "JAL Flight Auto Search",
+  "version": "1.9.1",
+  "description": "ツールからデータを受け取りJALで検索する",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.powerplatformnikki.com/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*",
+        "file:///*"
+      ],
+      "js": ["content-receiver.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.jal.co.jp/*"
+      ],
+      "js": ["content-jal-dom.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

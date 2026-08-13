@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEE Detector - Wireframe Prototype</title>
+    <style>
+        /* CSS Reset & Variables */
+        :root {
+            --bg-color: #F7F7F7;
+            --container-bg: #FFFFFF;
+            --text-main: #000000;
+            --text-muted: #666666;
+            --border-color: #D9D9D9;
+            --accent-color: #333333;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            color: var(--text-main);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            scroll-behavior: smooth;
+        }
+
+        /* Nav & Headers */
+        .section {
+            min-height: 100vh;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 2px dashed var(--border-color);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--text-main);
+            border-bottom-color: var(--text-main);
+        }
+
+        /* Container Card */
+        .card {
+            background: var(--container-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .icon-placeholder {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--text-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        /* Inputs & Buttons */
+        .input-box {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-color);
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            padding: 15px;
+            background: var(--text-main);
+            color: var(--container-bg);
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .btn-outline {
+            background: var(--container-bg);
+            color: var(--text-main);
+            border: 2px solid var(--text-main);
+            display: inline-block;
+            width: auto;
+            padding: 10px 30px;
+        }
+
+        .btn-disabled {
+            background: var(--border-color);
+            color: var(--text-muted);
+            border: none;
+        }
+
+        /* Section 3: Process */
+        .process-list {
+            text-align: left;
+            margin-top: 30px;
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .process-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .process-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-done { color: #555; font-weight: bold; }
+        .status-loading { color: var(--text-main); font-weight: bold; }
+        .status-wait { color: var(--text-muted); }
+
+        /* Section 4: Results */
+        .verdict-card {
+            padding: 40px;
+            margin-bottom: 20px;
+        }
+
+        .verdict-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background-color: #000000;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .score-circle h3 { font-size: 2.5rem; }
+        .score-circle span { font-size: 0.9rem; color: var(--text-muted); }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .detail-box {
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .detail-box h4 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .insight-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 0.9rem;
+        }
+        
+        .insight-row:last-child { border-bottom: none; }
+        .insight-value { font-weight: bold; }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .log-table th, .log-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+            word-break: break-all;
+        }
+        .log-table th { background: var(--bg-color); }
+
+        /* Floating Nav for preview purposes */
+        .floating-nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .floating-nav a {
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .floating-nav a:hover { color: var(--text-main); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+   
+
+    <!-- BAGIAN 1: UPLOAD URL -->
+    <div id="sec1" class="section">
+        <div class="header">
+            <h1>⬡ Stealth Extension Exfiltration (SEE) Detector</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab">FILE</div>
+            <div class="tab active">URL</div>
+        </div>
+
+        <div class="card">
+            <h2>Analisis Tautan Ekstensi</h2>
+            <p>Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="input-box">https://lorem.ipsum/dolor/sit/amet/...</div>
+        </div>
+        <div class="btn">Analisis Tautan</div>
+    </div>
+
+    <!-- BAGIAN 2: UPLOAD FILE -->
+    <div id="sec2" class="section">
+        <div class="header">
+            <h1>⬡ Stealth Extension Exfiltration (SEE) Detector</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active">FILE</div>
+            <div class="tab">URL</div>
+        </div>
+
+        <div class="card">
+            <h2>Pilih file, lalu analisis</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div class="btn btn-outline">Pilih File</div>
+        </div>
+        <div class="btn btn-disabled">Analisis File</div>
+    </div>
+
+    <!-- BAGIAN 3: PROSES ANALISIS -->
+    <div id="sec3" class="section">
+        <div class="header">
+            <h1>⬡ Stealth Extension Exfiltration (SEE) Detector</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</p>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center; width: 100%; max-width: 600px;">
+            <h2 style="margin-bottom: 10px;">Sedang Menganalisis...</h2>
+            <p style="color: var(--text-muted);">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+            <div class="process-list">
+                <div class="process-item">
+                    <span>Lorem ipsum dolor sit amet</span>
+                    <span class="status-done">[Selesai]</span>
+                </div>
+                <div class="process-item">
+                    <span>Lorem ipsum consectetur adipiscing</span>
+                    <span class="status-done">[Selesai]</span>
+                </div>
+                <div class="process-item">
+                    <span>Lorem ipsum dolor sit consectetur</span>
+                    <span class="status-done">[Selesai]</span>
+                </div>
+                <div class="process-item" style="background: rgba(0,0,0,0.05); padding: 15px 10px; margin: 0 -10px;">
+                    <span style="font-weight: bold;">Lorem ipsum amet consectetur adipiscing</span>
+                    <span class="status-loading">[Proses]</span>
+                </div>
+                <div class="process-item">
+                    <span>Lorem ipsum dolor sit amet consectetur</span>
+                    <span class="status-wait">[Menunggu]</span>
+                </div>
+                <div class="process-item">
+                    <span>Lorem ipsum sit consectetur adipiscing</span>
+                    <span class="status-wait">[Menunggu]</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BAGIAN 4: HASIL ANALISIS -->
+    <div id="sec4" class="section">
+        <div class="header">
+            <h1>⬡ Stealth Extension Exfiltration (SEE) Detector</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</p>
+        </div>
+
+        <div class="card verdict-card">
+            <div class="verdict-title">HASIL ANALISIS</div>
+            <div class="score-circle">
+            </div>
+            <p style="margin:0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+
+        <div class="details-grid">
+            <!-- Insights -->
+            <div class="detail-box">
+                <h4>Insights Temuan:</h4>
+                <div class="insight-row">
+                    <span>Lorem ipsum dolor</span>
+                    <span class="insight-value">-</span>
+                </div>
+                <div class="insight-row">
+                    <span>Lorem ipsum consectetur</span>
+                    <span class="insight-value">-</span>
+                </div>
+                <div class="insight-row">
+                    <span>Lorem ipsum adipiscing</span>
+                    <span class="insight-value">-</span>
+                </div>
+                <div class="insight-row">
+                    <span>Lorem ipsum dolor sit</span>
+                    <span class="insight-value">-</span>
+                </div>
+                <div class="insight-row">
+                    <span>Lorem ipsum consectetur elit</span>
+                    <span class="insight-value">-</span>
+                </div>
+            </div>
+
+            <!-- Network Logs -->
+            <div class="detail-box">
+                <h4>Log Jaringan (Sandbox):</h4>
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>URL Tujuan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Lorem ipsum dolor sit amet consectetur</td></tr>
+                        <tr><td>Lorem ipsum adipiscing elit dolor sit</td></tr>
+                        <tr><td>Lorem ipsum consectetur amet dolor</td></tr>
+                        <tr><td>Lorem ipsum sit amet adipiscing consectetur</td></tr>
+                        <tr><td>Lorem ipsum dolor consectetur adipiscing</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

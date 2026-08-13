@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FuriNews - Japanese Furigana Reader</title>
+  <meta name="description" content="Add furigana to Japanese news articles automatically. For Japanese learners.">
+  <link rel="icon" type="image/png" href="icons/icon48.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      color: white;
+    }
+
+    .logo {
+      width: 128px;
+      height: 128px;
+      margin-bottom: 20px;
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      margin: 20px 0;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .feature {
+      background: #f8f9fa;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .feature h3 {
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .example {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 12px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .example-text {
+      font-size: 1.8rem;
+      line-height: 2.5;
+    }
+
+    ruby {
+      ruby-position: over;
+    }
+
+    ruby rt {
+      font-size: 0.5em;
+      color: #667eea;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 20px 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+
+    .cta-button.secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      box-shadow: none;
+    }
+
+    .supported-sites {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .site-tag {
+      background: #e8eaf6;
+      color: #3f51b5;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .privacy-note {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .privacy-note h3 {
+      color: #2e7d32;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    footer a {
+      color: white;
+      opacity: 0.8;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    footer a:hover {
+      opacity: 1;
+    }
+
+    .lang-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .lang-switch a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .lang-switch a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 24px;
+      }
+      .example-text {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-switch">
+    <a href="#english">English</a>
+  </div>
+
+  <header>
+    <img src="icons/icon128.png" alt="FuriNews" class="logo">
+    <h1>FuriNews</h1>
+    <p class="subtitle">Japanese Furigana Reader - 漢字にふりがなを自動表示</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>ニュース記事の漢字が読めるようになる</h2>
+      <p>日本語のニュースサイトで記事を閲覧する際、漢字の上にふりがな（読み仮名）を自動的に表示します。日本語学習者のための便利なツールです。</p>
+
+      <div class="example">
+        <p class="example-text">
+          <ruby>日本語<rt>にほんご</rt></ruby>の<ruby>新聞<rt>しんぶん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>むのが<ruby>楽<rt>たの</rt></ruby>しくなる！
+        </p>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="#" class="cta-button">Chrome に追加</a>
+        <a href="#" class="cta-button secondary">Edge に追加</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>主な機能</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">📖</div>
+          <h3>自動ふりがな表示</h3>
+          <p>記事の漢字に自動的にふりがなを表示します</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎨</div>
+          <h3>品詞カラー表示</h3>
+          <p>名詞・動詞・形容詞など品詞ごとに色分け表示</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <h3>完全オフライン</h3>
+          <p>すべての処理はローカルで完結。データ送信なし</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>簡単操作</h3>
+          <p>ワンクリックでオン/オフ切り替え</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>対応サイト</h2>
+      <p>以下の日本語ニュースサイトに対応しています：</p>
+      <div class="supported-sites">
+        <span class="site-tag">NHK</span>
+        <span class="site-tag">朝日新聞</span>
+        <span class="site-tag">読売新聞</span>
+        <span class="site-tag">毎日新聞</span>
+        <span class="site-tag">日経新聞</span>
+        <span class="site-tag">産経新聞</span>
+        <span class="site-tag">Yahoo!ニュース</span>
+        <span class="site-tag">Japan Times</span>
+        <span class="site-tag">共同通信</span>
+        <span class="site-tag">時事通信</span>
+        <span class="site-tag">ITmedia</span>
+        <span class="site-tag">Gigazine</span>
+        <span class="site-tag">Wikipedia日本語</span>
+      </div>
+    </div>
+
+    <div class="card" id="english">
+      <h2>For Japanese Learners</h2>
+      <p>Struggling to read kanji in Japanese news articles? This extension automatically displays furigana (reading guides) above kanji characters, making it easier to read and learn Japanese.</p>
+
+      <div class="privacy-note">
+        <h3>🔒 Privacy First</h3>
+        <p>All text processing happens locally on your device using the bundled kuromoji.js library. <strong>No data is ever sent to external servers.</strong></p>
+      </div>
+
+      <p><a href="privacy.html">Read our Privacy Policy →</a></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 FuriNews</p>
+    <p style="margin-top: 15px;">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="https://github.com">GitHub</a>
+      <a href="mailto:support@example.com">Contact</a>
+    </p>
+  </footer>
+</body>
+</html>

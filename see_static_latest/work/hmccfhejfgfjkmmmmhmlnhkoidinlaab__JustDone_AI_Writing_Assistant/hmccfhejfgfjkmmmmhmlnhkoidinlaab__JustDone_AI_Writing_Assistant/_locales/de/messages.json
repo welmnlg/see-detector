@@ -1,0 +1,29 @@
+{
+  "appDesc": {
+    "message": "Verbessere dein Schreiben mit JustDone - deinem All-in-One-Tool für Grammatikprüfung, Paraphrasierung, KI-Schreiben und mehr."
+  },
+  "appNameChrome": {
+    "message": "JustDone: GPT-4o KI-Schreibassistent &amp; Grammatikkontrolleur"
+  },
+  "appNameFirefox": {
+    "message": "JustDone: GPT-4o KI-Schreibassistent &amp; Grammatikkontrolleur"
+  },
+  "contextMenu_answer_this": {
+    "message": "Beantworten diese ..."
+  },
+  "contextMenu_correct_all_mistakes": {
+    "message": "Alle Fehler korrigieren"
+  },
+  "contextMenu_improve": {
+    "message": "Verbessern"
+  },
+  "contextMenu_rewrite": {
+    "message": "Umschreiben"
+  },
+  "contextMenu_simplify": {
+    "message": "Vereinfachen"
+  },
+  "contextMenu_summarize": {
+    "message": "Zusammenfassen"
+  }
+}

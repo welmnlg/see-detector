@@ -1,0 +1,33 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CyberCampus Due Date Tracker",
+  "version": "1.7",
+  "description": "사이버캠퍼스 과제 및 영상 마감일을 화면 최상단에 표시합니다.",
+  "permissions": [
+    "storage",
+    "downloads"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://cyber.gachon.ac.kr/",
+        "https://cyber.gachon.ac.kr/course/*",
+        "https://cyber.gachon.ac.kr/local/ubion/user/",
+        "https://cyber.gachon.ac.kr/mod/vod/viewer.php*"
+      ],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["https://cyber.gachon.ac.kr/*"]
+    }
+  ]
+}

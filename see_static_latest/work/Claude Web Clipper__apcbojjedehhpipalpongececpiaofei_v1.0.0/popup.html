@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=420" />
+    <title>Claude Web Clipper</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg-primary: #1a1a2e;
+        --bg-secondary: #16213e;
+        --bg-card: #1e2a4a;
+        --bg-card-hover: #243356;
+        --accent: #7c4dff;
+        --accent-light: #b388ff;
+        --accent-dim: #5c35cc;
+        --text-primary: #e8e8f0;
+        --text-secondary: #a0a0b8;
+        --text-muted: #6a6a82;
+        --border: #2a2a4a;
+        --danger: #ff4757;
+        --success: #2ed573;
+        --warning: #ffa502;
+        --code-bg: #0d1117;
+      }
+
+      body {
+        width: 420px;
+        height: 550px;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      /* Header */
+      .header {
+        padding: 14px 16px 10px;
+        background: linear-gradient(135deg, var(--bg-primary) 0%, #2d1b4e 100%);
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .logo-icon {
+        width: 24px;
+        height: 24px;
+        background: var(--accent);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 700;
+        color: white;
+      }
+
+      .logo-text {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .logo-text span {
+        color: var(--accent-light);
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 6px;
+      }
+
+      .header-btn {
+        background: rgba(124, 77, 255, 0.15);
+        border: 1px solid rgba(124, 77, 255, 0.3);
+        color: var(--accent-light);
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .header-btn:hover {
+        background: rgba(124, 77, 255, 0.3);
+        border-color: var(--accent);
+      }
+
+      /* Token counter */
+      .token-bar {
+        margin-bottom: 8px;
+      }
+
+      .token-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+
+      .token-count {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .token-count strong {
+        color: var(--accent-light);
+        font-size: 14px;
+      }
+
+      .token-limit {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .context-bar-wrapper {
+        background: var(--bg-secondary);
+        border-radius: 6px;
+        height: 8px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .context-bar-fill {
+        height: 100%;
+        border-radius: 6px;
+        background: linear-gradient(
+          90deg,
+          var(--accent) 0%,
+          var(--accent-light) 100%
+        );
+        transition: width 0.5s ease;
+        min-width: 0;
+      }
+
+      .context-bar-fill.warning {
+        background: linear-gradient(90deg, var(--warning) 0%, #ff6348 100%);
+      }
+
+      .context-bar-fill.danger {
+        background: linear-gradient(90deg, var(--danger) 0%, #ff6b81 100%);
+      }
+
+      /* Session bar */
+      .session-bar {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .session-select {
+        flex: 1;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 11px;
+        cursor: pointer;
+        outline: none;
+      }
+
+      .session-select:focus {
+        border-color: var(--accent);
+      }
+
+      .session-btn {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        border-radius: 6px;
+        padding: 4px 6px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+
+      .session-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent-light);
+      }
+
+      /* Clip list */
+      .clip-list-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px 10px;
+      }
+
+      .clip-list-container::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      .clip-list-container::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .clip-list-container::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+      }
+
+      .clip-list-container::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-dim);
+      }
+
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 20px;
+      }
+
+      .empty-state-icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+        opacity: 0.5;
+      }
+
+      .empty-state h3 {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+
+      .empty-state p {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .shortcut-hint {
+        display: inline-block;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-family: monospace;
+        font-size: 11px;
+        color: var(--accent-light);
+        margin-top: 8px;
+      }
+
+      /* Clip card */
+      .clip-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin-bottom: 6px;
+        cursor: grab;
+        transition: all 0.2s;
+        position: relative;
+      }
+
+      .clip-card:hover {
+        background: var(--bg-card-hover);
+        border-color: rgba(124, 77, 255, 0.3);
+      }
+
+      .clip-card.dragging {
+        opacity: 0.5;
+        border-color: var(--accent);
+      }
+
+      .clip-card.drag-over {
+        border-top: 2px solid var(--accent);
+      }
+
+      .clip-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 6px;
+        gap: 8px;
+      }
+
+      .clip-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+      }
+
+      .clip-actions {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
+      }
+
+      .clip-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s;
+      }
+
+      .clip-badge.code {
+        background: rgba(46, 213, 115, 0.15);
+        color: var(--success);
+      }
+
+      .clip-badge.docs {
+        background: rgba(30, 144, 255, 0.15);
+        color: #1e90ff;
+      }
+
+      .clip-badge.reference {
+        background: rgba(255, 165, 0, 0.15);
+        color: var(--warning);
+      }
+
+      .clip-badge.example {
+        background: rgba(179, 136, 255, 0.15);
+        color: var(--accent-light);
+      }
+
+      .delete-btn {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 14px;
+        padding: 0 2px;
+        transition: color 0.2s;
+        line-height: 1;
+      }
+
+      .delete-btn:hover {
+        color: var(--danger);
+      }
+
+      .clip-source {
+        font-size: 11px;
+        color: var(--text-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 6px;
+      }
+
+      .clip-preview {
+        font-size: 11px;
+        color: var(--text-secondary);
+        line-height: 1.4;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        word-break: break-word;
+      }
+
+      .clip-preview.code-preview {
+        font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+        background: var(--code-bg);
+        padding: 6px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        white-space: pre;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 4;
+      }
+
+      .clip-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 6px;
+        font-size: 10px;
+        color: var(--text-muted);
+      }
+
+      /* Footer */
+      .footer {
+        flex-shrink: 0;
+        border-top: 1px solid var(--border);
+        background: var(--bg-secondary);
+      }
+
+      .export-bar {
+        display: flex;
+        gap: 6px;
+        padding: 10px 12px 6px;
+      }
+
+      .export-btn {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg-card);
+        color: var(--text-primary);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+      }
+
+      .export-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      .export-btn.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      .export-btn.primary:hover {
+        background: var(--accent-dim);
+      }
+
+      .export-btn.copied {
+        background: var(--success) !important;
+        border-color: var(--success) !important;
+        color: white !important;
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 12px 10px;
+      }
+
+      .footer-link {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .footer-link:hover {
+        color: var(--accent-light);
+      }
+
+      .donate-btn {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .donate-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(238, 90, 36, 0.4);
+      }
+
+      /* Modal */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal {
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        width: 320px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal h3 {
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        font-size: 15px;
+      }
+
+      .modal input {
+        width: 100%;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 13px;
+        outline: none;
+        margin-bottom: 12px;
+      }
+
+      .modal input:focus {
+        border-color: var(--accent);
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      .modal-btn {
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        transition: all 0.2s;
+      }
+
+      .modal-btn.cancel {
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+      }
+
+      .modal-btn.confirm {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      .modal-btn:hover {
+        opacity: 0.85;
+      }
+
+      /* Category dropdown */
+      .category-dropdown {
+        display: none;
+        position: absolute;
+        top: 28px;
+        right: 30px;
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+        z-index: 50;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .category-dropdown.active {
+        display: block;
+      }
+
+      .category-option {
+        padding: 6px 12px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: background 0.15s;
+        color: var(--text-primary);
+      }
+
+      .category-option:hover {
+        background: var(--bg-card-hover);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="logo">
+          <div class="logo-icon">C</div>
+          <div class="logo-text">Claude <span>Web Clipper</span></div>
+        </div>
+        <div class="header-actions">
+          <button class="header-btn" id="clearAllBtn" title="Clear all clips">
+            Clear All
+          </button>
+        </div>
+      </div>
+
+      <!-- Token counter + context bar -->
+      <div class="token-bar">
+        <div class="token-info">
+          <div class="token-count">
+            <strong id="tokenCount">0</strong> tokens
+          </div>
+          <div class="token-limit">
+            <span id="tokenPercent">0</span>% of 200K context
+          </div>
+        </div>
+        <div class="context-bar-wrapper">
+          <div class="context-bar-fill" id="contextBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Session management -->
+      <div class="session-bar">
+        <select class="session-select" id="sessionSelect">
+          <option value="__default__">Default Session</option>
+        </select>
+        <button class="session-btn" id="saveSessionBtn">Save</button>
+        <button class="session-btn" id="newSessionBtn">New</button>
+        <button class="session-btn" id="deleteSessionBtn">Del</button>
+      </div>
+    </div>
+
+    <!-- Clip list -->
+    <div class="clip-list-container" id="clipList">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-state-icon">&#128203;</div>
+        <h3>No clips yet</h3>
+        <p>
+          Select text on any webpage, right-click and choose<br />"Clip to
+          Claude Context"
+        </p>
+        <div class="shortcut-hint">&#8984;+Shift+C</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="export-bar">
+        <button class="export-btn primary" id="copyMdBtn">Copy MD</button>
+        <button class="export-btn" id="copyXmlBtn">Copy XML</button>
+        <button class="export-btn" id="copyTextBtn">Copy Text</button>
+      </div>
+      <div class="footer-bottom">
+        <a href="https://toolforte.com" target="_blank" class="footer-link"
+          >Made by ToolForte</a
+        >
+        <a
+          href="https://buy.stripe.com/bJe28qfQQ4BF0c7c374sE04"
+          target="_blank"
+          class="donate-btn"
+          >&#9749; Buy me a coffee &mdash; &euro;5</a
+        >
+      </div>
+    </div>
+
+    <!-- Save Session Modal -->
+    <div class="modal-overlay" id="saveModal">
+      <div class="modal">
+        <h3>Save Session</h3>
+        <input
+          type="text"
+          id="sessionNameInput"
+          placeholder="e.g., React migration project"
+          autocomplete="off"
+        />
+        <div class="modal-actions">
+          <button class="modal-btn cancel" id="saveModalCancel">Cancel</button>
+          <button class="modal-btn confirm" id="saveModalConfirm">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FuriNews</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 280px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+      background: #ffffff;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #4CAF50;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .status {
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .status.active {
+      color: #4CAF50;
+    }
+
+    .status.inactive {
+      color: #999;
+    }
+
+    .info {
+      font-size: 11px;
+      color: #888;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .lookup-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .lookup-section h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .lookup-input-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lookup-input {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .lookup-input:focus {
+      border-color: #4CAF50;
+    }
+
+    .lookup-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .lookup-btn:hover {
+      background: #45a049;
+    }
+
+    .lookup-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .lookup-result {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      min-height: 40px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .lookup-result.show {
+      display: block;
+    }
+
+    .lookup-result ruby {
+      font-size: 16px;
+    }
+
+    .lookup-result ruby rt {
+      font-size: 10px;
+      color: #666;
+    }
+
+    .lookup-result .token {
+      display: inline-block;
+      margin: 2px;
+    }
+
+    .lookup-result .loading {
+      color: #999;
+      font-style: italic;
+    }
+
+    .lookup-result .error {
+      color: #f44336;
+    }
+
+    .lookup-result .kanji-item {
+      display: inline-block;
+      margin: 3px;
+      padding: 4px 8px;
+      background: #e8f5e9;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+
+    .lookup-result .no-result {
+      color: #999;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>FuriNews</h1>
+  </div>
+
+  <div class="toggle-container">
+    <span class="toggle-label">このページで有効化</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="enableToggle">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <div class="toggle-container">
+    <span class="toggle-label">品詞カラー表示</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="colorModeToggle">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <div class="status" id="status">
+    読み込み中...
+  </div>
+
+  <div class="info">
+    記事のテキストに振り仮名を自動的に付けます。
+    <br>
+    Automatically adds furigana to article text.
+  </div>
+
+  <div class="lookup-section">
+    <h3>読み方検索</h3>
+    <div class="lookup-input-container">
+      <input type="text" id="lookupInput" class="lookup-input" placeholder="漢字を入力...">
+      <button id="lookupBtn" class="lookup-btn">検索</button>
+    </div>
+    <div id="lookupResult" class="lookup-result"></div>
+  </div>
+
+  <div class="lookup-section">
+    <h3>逆引き検索</h3>
+    <div class="lookup-input-container">
+      <input type="text" id="reverseInput" class="lookup-input" placeholder="読み(ひらがな)を入力...">
+      <button id="reverseBtn" class="lookup-btn">検索</button>
+    </div>
+    <div id="reverseResult" class="lookup-result"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

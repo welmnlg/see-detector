@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { width: 150px; padding: 10px; font-family: sans-serif; }
+    input { width: 100%; margin-bottom: 10px; padding: 5px; box-sizing: border-box; }
+    button { width: 100%; padding: 8px; cursor: pointer; border: none; margin-bottom: 5px; border-radius: 4px; }
+    #saveBtn { background: #3b4890; color: white; }
+    #resetBtn { background: #e0e0e0; color: #333; }
+    #saveBtn:hover { background: #2d3770; }
+    #resetBtn:hover { background: #d0d0d0; }
+  </style>
+</head>
+<body>
+  <input type="number" id="minRecommend" placeholder="최소 추천수">
+  <button id="saveBtn">적용하기</button>
+  <button id="resetBtn">필터 해제 (0)</button>
+  <script src="popup.js"></script>
+</body>
+</html>

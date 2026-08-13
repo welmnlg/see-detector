@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ad Blocker & Pop Up Blocker Free</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      width: 240px;
+      background: linear-gradient(135deg, #0f0c29, #1a1a4e);
+      color: #fff;
+      padding: 18px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 12px;
+    }
+    .logo { font-size: 26px; }
+    .title-block h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #a78bfa;
+      line-height: 1.2;
+    }
+    .title-block span {
+      font-size: 10px;
+      color: #6ee7b7;
+      letter-spacing: 0.5px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .count {
+      font-size: 38px;
+      font-weight: 900;
+      color: #a78bfa;
+      line-height: 1;
+    }
+    .label {
+      font-size: 10px;
+      color: #aaa;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    #toggle {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #7c3aed, #4f46e5);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    #toggle:hover { opacity: 0.85; }
+    #toggle.off { background: linear-gradient(90deg, #374151, #4b5563); }
+    .status {
+      text-align: center;
+      font-size: 11px;
+      margin-top: 10px;
+      color: #6ee7b7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #6ee7b7;
+      display: inline-block;
+    }
+    .dot.off { background: #f87171; }
+    .status.off { color: #f87171; }
+    .footer {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 9px;
+      color: rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🛡️</div>
+    <div class="title-block">
+      <h3>Ad Blocker &<br>Pop Up Blocker</h3>
+      <span>FREE • ALWAYS ON</span>
+    </div>
+  </div>
+
+  <div class="stat-box">
+    <div class="count" id="counter">0</div>
+    <div class="label">Ads Blocked This Session</div>
+  </div>
+
+  <button id="toggle">⏸ Pause Protection</button>
+
+  <div class="status" id="statusBar">
+    <span class="dot" id="dot"></span>
+    <span id="statusText">Protection Active</span>
+  </div>
+
+  <div class="footer">Ad Blocker & Pop Up Blocker Free v1.0</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "extName": {
+    "message": "Fechar aba com clique direito duplo"
+  },
+  "extDescription": {
+    "message": "Feche abas com clique direito duplo em páginas da web. Leve, rápido e sem rastreamento."
+  },
+  "optionsTitle": {
+    "message": "Double Right Click Options"
+  },
+  "modeSuppressFirst": {
+    "message": "Reliable close, delay single right-click menu"
+  },
+  "modeSuppressFirstHint": {
+    "message": "Best for double right-click closing."
+  },
+  "modePreserveMenu": {
+    "message": "Show single right-click menu immediately"
+  },
+  "modePreserveMenuHint": {
+    "message": "The browser menu is preserved; double right-click may depend on the page and system menu behavior."
+  },
+  "optionsSaved": {
+    "message": "Saved."
+  }
+}

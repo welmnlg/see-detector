@@ -1,0 +1,29 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Chzzk VOD Highlighter - 치지직 다시보기 하이라이터",
+  "version": "1.0.0",
+  "description": "치지직 다시보기 재생바에 그래프를 띄워, 채팅과 후원이 폭발한 '하이라이트 구간'을 한눈에 찾아줍니다.",
+  "permissions": [
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chzzk.naver.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  }
+}

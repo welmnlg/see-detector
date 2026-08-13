@@ -1,0 +1,1 @@
+(()=>{"use strict";var r={},e={};function t(s){var n=e[s];if(void 0!==n)return n.exports;var a=e[s]={exports:{}};return r[s](a,a.exports,t),a.exports}t.rv=()=>"1.7.1",t.ruid="bundler=rspack@1.7.1",chrome.runtime.onInstalled.addListener(r=>{"install"===r.reason&&chrome.tabs.create({url:"https://playlistshuffle.net/"})})})();

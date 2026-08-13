@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Prompt Capsule</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar" aria-label="AI Prompt Capsule">
+      <div class="brand-mark" aria-hidden="true"><span></span></div>
+      <div class="brand-copy">
+        <strong>AI Prompt Capsule</strong>
+        <span>local prompt context</span>
+      </div>
+      <button id="openPalette" class="shortcut" type="button" aria-label="Open in-page palette">⌘K</button>
+    </header>
+
+    <section class="hero-card" aria-label="Paste context">
+      <p class="eyebrow">Focus a text field first</p>
+      <h1>Paste the right context into the page.</h1>
+      <p id="status" class="status-line" aria-live="polite">Checking the current page.</p>
+      <button id="useFolder" class="primary-action" type="button">
+        <span id="useFolderText">Paste folder context</span>
+        <small id="useFolderLabel">Folder</small>
+      </button>
+    </section>
+
+    <section class="control-card" aria-label="Choose prompt context">
+      <label class="field folder-field">
+        <span>Folder</span>
+        <select id="folderFilter" aria-label="Folder"></select>
+      </label>
+      <label class="field search-field">
+        <span>Find</span>
+        <input id="search" type="search" placeholder="Search title, text, tags" autocomplete="off" aria-label="Search capsules" />
+      </label>
+    </section>
+
+    <section class="list-card" aria-label="Capsules">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Saved context</p>
+          <h2>Choose one capsule</h2>
+        </div>
+        <span id="count" class="count-pill">0</span>
+      </div>
+      <div id="folderList" class="capsule-list"></div>
+    </section>
+
+    <details id="composePanel" class="compose-card">
+      <summary><span>Add or edit capsule</span><strong>＋</strong></summary>
+      <div class="compose-body">
+        <div class="section-head slim">
+          <h2 id="formTitle">New capsule</h2>
+          <button id="resetForm" class="mini-button" type="button">Clear</button>
+        </div>
+        <label class="field">
+          <span>Folder</span>
+          <input id="capsuleFolder" type="text" placeholder="e.g. Product" list="folderOptions" />
+        </label>
+        <datalist id="folderOptions"></datalist>
+        <label class="field">
+          <span>Name</span>
+          <input id="capsuleTitle" type="text" placeholder="Short reusable prompt name" />
+        </label>
+        <label class="field">
+          <span>Context text</span>
+          <textarea id="capsuleBody" rows="5" placeholder="Paste or clip the context you reuse often."></textarea>
+        </label>
+        <label class="field">
+          <span>Tags</span>
+          <input id="capsuleTags" type="text" placeholder="product, style, rules" />
+        </label>
+        <div class="form-actions">
+          <button id="useSelection" class="secondary-action" type="button">Clip selection</button>
+          <button id="saveCapsule" class="primary-action compact" type="button">Save capsule</button>
+        </div>
+      </div>
+    </details>
+  </main>
+
+  <script src="capsules.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

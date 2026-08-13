@@ -1,0 +1,99 @@
+div#body {
+  padding: 6px 10px;
+  width: 240px;
+
+  height: 260px;
+  min-height: 260px;
+  font-family: sans-serif;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+}
+
+h4 {
+  font-weight: bold;
+  font-size: 12px;
+  margin: 12px 0 6px 0;
+}
+
+#body .center {
+  text-align: center;
+}
+
+#overlay .label {
+  float: left;
+  width: 200px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #686868;
+  padding: 3px 0px 0px 0px;
+}
+
+#overlay {
+  border-bottom: 2px solid #ddd;
+}
+
+#overlay .status {
+  float: left;
+}
+
+input[type='checkbox'] {
+  display: none;
+}
+
+input[type='checkbox']:checked~.toggle {
+  background: rgba(66, 133, 244, 1);
+  left: 15.6px;
+}
+
+input[type='checkbox']:checked~.switch {
+  background: #2FCCFF;
+  background: rgba(66, 133, 244, 0.4);
+}
+
+p.status {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  color: green;
+  border: 1px solid ddd;
+  background: #f1f1f1;
+}
+
+.switch {
+  display: block;
+  width: 30px;
+  height: 12px;
+  background: #939393;
+  border-radius: 6px;
+  position: absolute;
+  top: 0;
+}
+
+.toggle {
+  height: 16.8px;
+  width: 16.8px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: -2.4px;
+  left: -2.4px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  ;
+}
+
+.card {
+  display: inline-block;
+  margin: 6px auto;
+
+  width: 30px;
+  height: 12px;
+  text-align: center;
+  position: relative;
+}
+

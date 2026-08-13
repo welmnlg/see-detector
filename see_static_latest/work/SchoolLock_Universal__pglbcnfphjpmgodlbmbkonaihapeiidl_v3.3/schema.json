@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "gasUrl": {
+      "type": "string",
+      "description": "GASのウェブアプリURL"
+    }
+  }
+}

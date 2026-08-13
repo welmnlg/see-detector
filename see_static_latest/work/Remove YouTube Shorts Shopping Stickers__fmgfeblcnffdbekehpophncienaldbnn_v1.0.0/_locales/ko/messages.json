@@ -1,0 +1,6 @@
+{
+  "extName": { "message": "유튜브 쇼츠 쇼핑 스티커 제거" },
+  "extDescription": { "message": "유튜브 쇼츠 영상에 표시되는 쇼핑 스티커 광고를 자동으로 제거합니다." },
+  "toggleLabel": { "message": "쇼핑 스티커 제거" },
+  "footerText": { "message": "youtube.com에서 활성화됨" }
+}

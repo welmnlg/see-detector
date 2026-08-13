@@ -1,0 +1,26 @@
+{
+  "extName": {
+    "message": "Tab sluiten met dubbel rechtermuisklik"
+  },
+  "extDescription": {
+    "message": "Sluit tabbladen door dubbel rechts te klikken op webpagina's. Licht, snel en zonder tracking."
+  },
+  "optionsTitle": {
+    "message": "Double Right Click Options"
+  },
+  "modeSuppressFirst": {
+    "message": "Reliable close, delay single right-click menu"
+  },
+  "modeSuppressFirstHint": {
+    "message": "Best for double right-click closing."
+  },
+  "modePreserveMenu": {
+    "message": "Show single right-click menu immediately"
+  },
+  "modePreserveMenuHint": {
+    "message": "The browser menu is preserved; double right-click may depend on the page and system menu behavior."
+  },
+  "optionsSaved": {
+    "message": "Saved."
+  }
+}

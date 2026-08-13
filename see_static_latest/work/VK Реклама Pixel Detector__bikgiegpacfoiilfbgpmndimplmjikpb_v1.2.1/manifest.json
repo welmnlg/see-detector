@@ -1,0 +1,44 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VK Реклама Pixel Detector",
+  "version": "1.2.1",
+  "description": "Определяет пиксель VK Рекламы (Top.Mail.Ru) на веб-страницах. Показывает ID пикселей, историю проверок и экспорт в CSV.",
+  "homepage_url": "https://barakaev.ru/",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["injected.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "world": "ISOLATED"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16_gray.png",
+      "48": "icons/icon48_gray.png",
+      "128": "icons/icon128_gray.png"
+    },
+    "default_title": "VK Реклама Pixel Detector"
+  },
+  "icons": {
+    "16": "icons/icon16_gray.png",
+    "48": "icons/icon48_gray.png",
+    "128": "icons/icon128_gray.png"
+  }
+}

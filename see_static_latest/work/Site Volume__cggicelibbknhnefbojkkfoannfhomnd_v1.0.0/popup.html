@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- ── main popup ── -->
+  <div id="popup">
+    <div class="site-row">
+      <img id="favicon" class="favicon" alt="" />
+      <span id="hostname" class="hostname"></span>
+    </div>
+
+    <div class="volume-row">
+      <span id="vol-icon" class="vol-icon">🔊</span>
+      <input type="range" id="slider" min="0" max="100" value="100"
+             aria-label="Volume" style="--pct:100%" />
+      <span id="vol-pct" class="vol-pct">100%</span>
+    </div>
+
+    <button id="reset-btn" class="reset-btn">Reset to 100%</button>
+
+    <!-- subdomain toggle (hidden for localhost / IPs) -->
+    <div id="subdomain-row" class="subdomain-row">
+      <label class="subdomain-label">
+        <input type="checkbox" id="subdomain-toggle" checked />
+        <span>Include subdomains</span>
+      </label>
+    </div>
+
+    <!-- saved-sites list (hidden until there is data) -->
+    <div id="saved-section" style="display:none;">
+      <div class="divider"></div>
+      <div class="saved-header">Other Sites</div>
+      <div id="saved-list" class="saved-list"></div>
+    </div>
+  </div>
+
+  <!-- ── fallback for chrome:// / about:// pages ── -->
+  <div id="unsupported" class="unsupported" style="display:none;">
+    <span class="unsupported-icon">🔇</span>
+    <p>Volume control isn't available on this page.</p>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

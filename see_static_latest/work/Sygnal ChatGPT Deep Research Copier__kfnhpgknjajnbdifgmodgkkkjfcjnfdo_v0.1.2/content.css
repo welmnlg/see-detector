@@ -1,0 +1,239 @@
+/* Deep Research Copy Button Styles */
+
+/* Copy Article Button */
+.dr-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #10a37f 0%, #0d8a6f 100%);
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+}
+
+.dr-copy-btn:hover {
+  background: linear-gradient(135deg, #0d8a6f 0%, #0a7560 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 163, 127, 0.3);
+}
+
+.dr-copy-btn:active {
+  transform: translateY(0);
+}
+
+.dr-copy-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Iframe mode button */
+.dr-copy-btn-iframe {
+  position: sticky;
+  top: 8px;
+  z-index: 1000;
+  margin-bottom: 12px;
+}
+
+/* Modal Overlay */
+.dr-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: dr-fade-in 0.15s ease;
+}
+
+@keyframes dr-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Container */
+.dr-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  min-width: 320px;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: dr-slide-up 0.2s ease;
+}
+
+@keyframes dr-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .dr-modal {
+    background: #2d2d2d;
+    color: #e5e5e5;
+  }
+}
+
+/* Also detect ChatGPT's dark mode class */
+.dark .dr-modal,
+[data-theme="dark"] .dr-modal {
+  background: #2d2d2d;
+  color: #e5e5e5;
+}
+
+.dr-modal h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Format Options */
+.dr-format-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.dr-format-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dark .dr-format-btn,
+[data-theme="dark"] .dr-format-btn {
+  border-color: #444;
+  background: #3a3a3a;
+  color: #e5e5e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dr-format-btn {
+    border-color: #444;
+    background: #3a3a3a;
+    color: #e5e5e5;
+  }
+}
+
+.dr-format-btn:hover {
+  border-color: #10a37f;
+  background: rgba(16, 163, 127, 0.08);
+}
+
+.dr-format-btn.recommended {
+  border-color: #10a37f;
+  background: rgba(16, 163, 127, 0.1);
+}
+
+.dr-format-btn .badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #10a37f;
+  color: white;
+}
+
+/* Hint text */
+.dr-hint {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  margin: 0 0 16px 0;
+}
+
+/* Cancel button */
+.dr-cancel-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dr-cancel-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.dark .dr-cancel-btn,
+[data-theme="dark"] .dr-cancel-btn {
+  color: #999;
+}
+
+.dark .dr-cancel-btn:hover,
+[data-theme="dark"] .dr-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dr-cancel-btn {
+    color: #999;
+  }
+  .dr-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Success state */
+.dr-modal.success {
+  text-align: center;
+}
+
+.dr-modal.success .dr-success-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  color: #10a37f;
+}
+
+.dr-modal.success h3 {
+  color: #10a37f;
+}
+
+/* Button success state */
+.dr-copy-btn.success {
+  background: #10a37f;
+}
+
+.dr-copy-btn.success svg {
+  animation: dr-check-pop 0.3s ease;
+}
+
+@keyframes dr-check-pop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

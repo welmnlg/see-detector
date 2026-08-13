@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 400px;
+      padding: 0;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    /* Guide section */
+    .guide-section {
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .guide-section p {
+      margin: 0 0 8px 0;
+      color: #555;
+    }
+    .guide-section p:last-child {
+      margin-bottom: 0;
+      font-size: 11px;
+      color: #999;
+      font-style: italic;
+      padding-top: 8px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .guide-section strong {
+      color: #333;
+      font-weight: 600;
+    }
+    .highlight-text {
+      color: #ee4d2d;
+      font-weight: 600;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ee4d2d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    button:hover {
+      background: #d73211;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    #status {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      text-align: center;
+    }
+    .loading {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    #result {
+      margin-top: 20px;
+    }
+    
+    /* Statistics Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      text-align: center;
+      border: 1px solid #e0e0e0;
+    }
+    .stat-card.highlight {
+      grid-column: 1 / -1;
+      background: #fff3e0;
+      border: 1px solid #ffb74d;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .stat-card.highlight .stat-value {
+      font-size: 22px;
+      color: #ee4d2d;
+    }
+    
+    /* Price List */
+    .price-list-container {
+      margin-top: 20px;
+    }
+    .price-list-header {
+      background: #f8f9fa;
+      color: #333;
+      padding: 10px 15px;
+      border: 1px solid #e0e0e0;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price-list {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 0 0 4px 4px;
+      background: white;
+    }
+    .price-item {
+      padding: 10px 15px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price-item:hover {
+      background-color: #f8f9fa;
+    }
+    .price-item:last-child {
+      border-bottom: none;
+    }
+    .price-index {
+      background: #666;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    .price-value {
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+    .price-item.highest {
+      background-color: #fff8e1;
+    }
+    .price-item.lowest {
+      background-color: #e3f2fd;
+    }
+    .price-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .badge-highest {
+      background-color: #ffa726;
+      color: white;
+    }
+    .badge-lowest {
+      background-color: #42a5f5;
+      color: white;
+    }
+    
+    /* Scrollbar styling */
+    .price-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .price-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .price-list::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+    .price-list::-webkit-scrollbar-thumb:hover {
+      background: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🧮 Công cụ thống kê Shopee</h2>
+    
+    <div class="guide-section">
+      <p><strong>📋 Hướng dẫn:</strong> Truy cập vào <span class="highlight-text">Đơn mua → Hoàn thành</span> và nhấn "Bắt đầu tính toán" để hệ thống tự động quét.</p>
+      <p><strong>⚠️ Chú ý:</strong> Chắc chắn là bạn đang ở <span class="highlight-text">Hoàn thành</span> để số liệu mua sắm được thống kê chính xác.</p>
+      <p>Bản quyền: Công cụ thống kê mua sắm trên Shopee bởi Dung Chan</p>
+    </div>
+    
+    <button id="startBtn">Bắt đầu tính toán</button>
+    <div id="status" style="display:none;"></div>
+    <div id="result"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

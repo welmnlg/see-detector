@@ -8,17 +8,48 @@ __pycache__/
 *.egg-info/
 
 # Data — raw extensions & extracted CRX are too large for GitHub
-data/raw/
-data/extracted/
-data/models/*.pkl
-# Forensic reports are generated at runtime (reproduced by re-running forensic)
+data/
+dataset/
+Live_Demo_Testing/
+Testing/
+New/
+
+# Forensic reports & Dynamic Logs are generated at runtime
 data/forensic_reports/
+dynamic_reports/
+results/
+output/
+
+# Heavy Dynamic Files
+dynamic/browsers/
+dynamic/chrome_stats_profile/
+dynamic/*.json
+dynamic/*.csv
+dynamic/*.xlsx
+dynamic/*.png
+dynamic/*.log
 
 # Web uploads (temporary runtime files)
 web/uploads/
 web/extracted/
-web_v2/uploads/
-web_v2/extracted/
+web_v2/
+web-viewer/
+web_v3_premium/uploads/
+web_v3_premium/extracted/
+
+# Old Zips and Folders
+*.zip
+*.crx
+*.log
+*.stackdump
+see_tool_v3d/
+see_tool_v3f_tooltips_http/
+see_tool_v3g_combo_proof/
+see_analyzer_ast_upgrade/
+see_static_analyzer_latest/
+
+# Models (Hanya abaikan yang di luar Thesis_Pipeline)
+data/models/*.pkl
 
 # IDE
 .vscode/
@@ -28,11 +59,6 @@ web_v2/extracted/
 # OS
 Thumbs.db
 .DS_Store
-*.stackdump
 
 # Jupyter checkpoints
 .ipynb_checkpoints/
-
-# Output reports (generated at runtime, can be reproduced)
-output/
-

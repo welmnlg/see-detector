@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Speed Increaser</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 16px;
+      width: 220px;
+      background-color: #0f0f0f;
+      color: #ffffff;
+      user-select: none;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    h2 { 
+      font-size: 13px; 
+      margin: 0; 
+      font-weight: 700; 
+      color: #3ea6ff; 
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .status {
+      font-size: 10px;
+      color: #aaaaaa;
+      font-weight: 400;
+    }
+    
+    .control-panel {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid #333;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      background: #000;
+      border: 1px solid #444;
+      border-radius: 8px;
+      height: 40px;
+      margin-bottom: 12px;
+    }
+    .btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: 300;
+      transition: all 0.2s;
+      height: 100%;
+    }
+    .btn:hover { background: #222; color: #3ea6ff; }
+    .display {
+      flex: 1.5;
+      border-left: 1px solid #333;
+      border-right: 1px solid #333;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .quick-speeds {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .q-btn {
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      color: #efefef;
+      border-radius: 6px;
+      padding: 8px 0;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .q-btn:hover { 
+      background: #3ea6ff; 
+      color: #000; 
+      border-color: #3ea6ff;
+    }
+    
+    .info-box {
+      border-top: 1px solid #333;
+      padding-top: 12px;
+    }
+    .info-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .shortcut-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+    .key {
+      background: #333;
+      color: #fff;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 10px;
+      border-bottom: 2px solid #000;
+    }
+    .desc { color: #ccc; }
+    
+    .footer-note {
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+      margin-top: 5px;
+    }
+    .footer-note a {
+      color: #3ea6ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Speed Increaser</h2>
+      <div class="status" style="font-size: 13px;text-align: center; color: tomato;">Works only while playing any video</div>
+    </div>
+    
+    <div class="control-panel">
+      <div class="pill">
+        <button class="btn" id="decrease" title="Decrease speed">−</button>
+        <div class="display" id="currentSpeed">1.00</div>
+        <button class="btn" id="increase" title="Increase speed">+</button>
+      </div>
+
+      <div class="quick-speeds">
+        <button class="q-btn" data-speed="1.0">1.0x</button>
+        <button class="q-btn" data-speed="1.5">1.5x</button>
+        <button class="q-btn" data-speed="2.0">2.0x</button>
+        <button class="q-btn" data-speed="2.5">2.5x</button>
+        <button class="q-btn" data-speed="3.0">3.0x</button>
+        <button class="q-btn" data-speed="4.0">4.0x</button>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-title">Keyboard Shortcuts</div>
+      <div class="shortcut-row">
+        <span class="desc">Speed Down</span>
+        <span class="key">Z</span>
+      </div>
+      <div class="shortcut-row">
+        <span class="desc">Speed Up</span>
+        <span class="key">X</span>
+      </div>
+      <div class="shortcut-row">
+        <span class="desc">Reset (1.0x)</span>
+        <span class="key">Shift + Z</span>
+      </div>
+      <div class="shortcut-row">
+        <span class="desc">Turbo (+5.0)</span>
+        <span class="key">Shift + X</span>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      By <a href="https://github.com/t4sn33m-s4h4t/" target="_blank">Tasneem Sahat</a>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

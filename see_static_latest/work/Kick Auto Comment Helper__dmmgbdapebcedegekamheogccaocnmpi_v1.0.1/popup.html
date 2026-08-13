@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kick Auto Comment</title>
+
+  <style>
+    /* Chrome拡張ポップアップは body の幅指定が一番確実 */
+    body {
+      margin: 0;
+      font-size: 16px;
+      min-width: 360px;
+      max-width: 360px;
+      background: transparent;
+    }
+
+    #app {
+      font-family: system-ui;
+      padding: 14px;
+      box-sizing: border-box;
+    }
+
+    button,
+    input,
+    textarea {
+      font-size: 16px !important;
+    }
+
+    /* ===== ダークモード用スライド ===== */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #9ca3af;
+      transition: 0.3s;
+      border-radius: 999px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #22c55e;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- ヘッダー -->
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <div style="font-weight:700; font-size:17px;">
+        Kick Auto Comment
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:13px; opacity:0.8;">Dark</span>
+        <label class="switch">
+          <input type="checkbox" id="themeToggle">
+          <span class="slider"></span>
+        </label>
+
+        <button
+          id="toggle"
+          style="
+            padding:8px 14px;
+            font-weight:700;
+            border-radius:12px;
+          "
+        >
+          Start
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-top:12px; opacity:0.85; font-size:14px;">
+      間隔（ミリ秒） レート制限の為2秒以上を推奨
+    </div>
+    <input
+      id="intervalMs"
+      type="number"
+      min="200"
+      step="100"
+      style="
+        width:100%;
+        padding:8px;
+        box-sizing:border-box;
+        border:1px solid;
+        border-radius:10px;
+      "
+    />
+
+    <div style="margin-top:12px; opacity:0.85; font-size:14px;">
+      コメント（1行＝1コメント）
+    </div>
+    <textarea
+      id="commentsText"
+      rows="10"
+      style="
+        width:100%;
+        margin-top:6px;
+        box-sizing:border-box;
+        padding:8px;
+        border:1px solid;
+        border-radius:10px;
+        resize:vertical;
+      "
+    ></textarea>
+
+    <div style="display:flex; gap:10px; align-items:center; margin-top:12px;">
+      <button
+        id="save"
+        style="padding:8px 16px; font-weight:700;"
+      >
+        保存
+      </button>
+      <div id="status" style="font-size:13px; opacity:0.85;"></div>
+    </div>
+
+    <div style="margin-top:12px; font-size:12px; opacity:0.75; line-height:1.4;">
+      Kickページを前面にして使ってください。送れない時はKickをF5。
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

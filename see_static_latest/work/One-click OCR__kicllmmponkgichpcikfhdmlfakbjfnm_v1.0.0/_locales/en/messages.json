@@ -1,0 +1,184 @@
+{
+  "extName": {
+    "message": "One-click OCR",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Select a region on the page to capture; recognize text in an on-page modal. Supports multiple languages and saves your OCR language preference locally.",
+    "description": "Extension description"
+  },
+  "cmdScreenshot": {
+    "message": "Screenshot selection",
+    "description": "Command: screenshot"
+  },
+  "popupTitle": {
+    "message": "One-click OCR",
+    "description": "Popup title"
+  },
+  "popupTagline": {
+    "message": "Select a region on the page to recognize text on the current page",
+    "description": "Popup tagline"
+  },
+  "popupScreenshot": {
+    "message": "Screenshot selection",
+    "description": "Screenshot button"
+  },
+  "popupScreenshotDesc": {
+    "message": "Drag to select a region; OCR runs automatically, and you can copy the result inside the page",
+    "description": "Screenshot description"
+  },
+  "popupFooterInfo": {
+    "message": "Region capture · On-page OCR · Local OCR",
+    "description": "Footer info"
+  },
+  "popupSettingsShortcut": {
+    "message": "Set shortcut",
+    "description": "Settings button title"
+  },
+  "popupStatusNoTab": {
+    "message": "Cannot get current tab",
+    "description": "Status: no tab"
+  },
+  "popupStatusScreenshot": {
+    "message": "Please select a screenshot area on the page",
+    "description": "Status: screenshot area"
+  },
+  "popupStatusSent": {
+    "message": "Sent",
+    "description": "Status: sent"
+  },
+  "popupStatusError": {
+    "message": "Operation failed",
+    "description": "Status: error"
+  },
+  "overlayScreenshot": {
+    "message": "Drag to select a screenshot area",
+    "description": "Overlay: screenshot hint"
+  },
+  "overlayPressEsc": {
+    "message": "Press ESC to cancel",
+    "description": "Overlay: ESC hint"
+  },
+  "pipScreenshotFailed": {
+    "message": "Screenshot failed",
+    "description": "Screenshot failed message"
+  },
+  "pipScreenshotInvalidResponse": {
+    "message": "Screenshot failed: invalid response",
+    "description": "Screenshot invalid response"
+  },
+  "ocrRecognizeBtn": {
+    "message": "Recognize text",
+    "description": "OCR recognize button"
+  },
+  "ocrLangLabel": {
+    "message": "Text language",
+    "description": "Language label"
+  },
+  "ocrLangTriggerTitle": {
+    "message": "Recognition language (multi-select)",
+    "description": "Language dropdown title"
+  },
+  "ocrLangTriggerLabel": {
+    "message": "Language",
+    "description": "Language button default text"
+  },
+  "ocrLangPanelTitle": {
+    "message": "Select language",
+    "description": "Language panel title"
+  },
+  "ocrLangToggleAll": {
+    "message": "Select all / None",
+    "description": "Select all button"
+  },
+  "ocrResultFormatTitle": {
+    "message": "Format (remove spaces, keep line breaks)",
+    "description": "Format button title"
+  },
+  "ocrResultCopyTitle": {
+    "message": "Copy",
+    "description": "Copy button title"
+  },
+  "ocrStatusInit": {
+    "message": "Initializing OCR engine...",
+    "description": "OCR status: init"
+  },
+  "ocrStatusLoadLang": {
+    "message": "Loading language pack... (first time may be slower)",
+    "description": "OCR status: load lang"
+  },
+  "ocrStatusPreparing": {
+    "message": "Preparing...",
+    "description": "OCR status: preparing"
+  },
+  "ocrStatusRecognizing": {
+    "message": "Recognizing... $progress$%",
+    "description": "OCR status: recognizing",
+    "placeholders": {
+      "progress": { "content": "$1" }
+    }
+  },
+  "ocrStatusDone": {
+    "message": "✓ Done! Recognized $count$ characters. Confidence $pct$%",
+    "description": "OCR status: done",
+    "placeholders": {
+      "count": { "content": "$1" },
+      "pct": { "content": "$2" }
+    }
+  },
+  "ocrStatusNoText": {
+    "message": "No text recognized",
+    "description": "OCR status: no text"
+  },
+  "ocrStatusError": {
+    "message": "✗ Recognition failed: $error$",
+    "description": "OCR status: error",
+    "placeholders": {
+      "error": { "content": "$1" }
+    }
+  },
+  "ocrStatusCopyOk": {
+    "message": "✓ Text copied to clipboard",
+    "description": "Copy success"
+  },
+  "ocrStatusCopyFail": {
+    "message": "✗ Copy failed",
+    "description": "Copy failed"
+  },
+  "bgOcrJustification": {
+    "message": "OCR runs Tesseract.js in a Worker-capable environment",
+    "description": "Offscreen justification"
+  },
+  "bgOcrNoResponse": {
+    "message": "No response",
+    "description": "OCR no response error"
+  },
+  "inPageOcrTitle": {
+    "message": "Screenshot OCR result",
+    "description": "In-page OCR modal title"
+  },
+  "inPageOcrClose": {
+    "message": "Close",
+    "description": "In-page OCR modal close button"
+  },
+  "inPageOcrRescreenshot": {
+    "message": "Screenshot again",
+    "description": "In-page OCR modal: close and select area again"
+  },
+  "inPageOcrCopyEmpty": {
+    "message": "No text to copy",
+    "description": "In-page OCR empty copy hint"
+  },
+  "inPageOcrPreviewAlt": {
+    "message": "Screenshot preview",
+    "description": "In-page OCR preview alt"
+  },
+  "inPageOcrTextareaPlaceholder": {
+    "message": "Recognized text will appear here…",
+    "description": "In-page OCR textarea placeholder"
+  },
+  "inPageOcrStatusLoadCore": {
+    "message": "Loading OCR core...",
+    "description": "In-page OCR status: loading core"
+  }
+}

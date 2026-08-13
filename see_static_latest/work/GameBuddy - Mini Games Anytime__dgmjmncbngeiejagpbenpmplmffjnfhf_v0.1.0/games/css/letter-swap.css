@@ -1,0 +1,99 @@
+/* Letter Swap - Modern Dark Theme */
+@media screen and (max-height: 640px) {
+    .container.container-single{
+        padding-top: 3px !important;
+    }
+}
+#gamebox {
+    text-align: center;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    width: 600px;
+    background-color: #0f1419;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 56px);
+    gap: 6px;
+    margin: 12px auto;
+    padding: 0;
+    justify-content: center;
+}
+.cell {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    background-color: #1e293b;
+    cursor: pointer;
+    color: #e2e8f0;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: all 0.15s ease;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.cell:hover {
+    background-color: #334155;
+    transform: scale(1.02);
+}
+.highlighted {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+    color: #0f1419 !important;
+    border-color: transparent;
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.3);
+}
+#gamebox #header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    font-size: 20px;
+    font-weight: 600;
+}
+#gameover {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 15, 20, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#gameover h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #e2e8f0;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+#restart-button {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    padding: 10px 28px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #0f1419;
+    font-weight: 700;
+    border-radius: 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+}
+#restart-button:hover {
+    background: linear-gradient(135deg, #fcd34d, #fbbf24);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}

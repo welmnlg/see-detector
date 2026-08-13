@@ -1,0 +1,186 @@
+/* Drag Maze - Modern Dark Theme */
+.margin-0{
+    margin: 0px !important;
+}
+.gamearea{
+    width: 100%;
+    overflow: auto;
+}
+.gameplay{
+    float: left;
+}
+#gamebox {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    background: #0f1419;
+}
+
+#gamebox #topbar {
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+    font-weight: 600;
+    color: #94a3b8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+#gamebox #timer {
+    color: #f87171;
+    font-weight: 700;
+    padding-left: 6px;
+    text-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
+}
+#restart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 0px 12px 0px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.25);
+    letter-spacing: 0.3px;
+}
+#restart:hover {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}
+#mainctn {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+#gamebox #sidebar {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 4px;
+}
+#gamebox #sidebar p {
+    color: #64748b;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+#trynew {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+    letter-spacing: 0.3px;
+    z-index: 10;
+}
+#trynew:hover {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    transform: translateX(-50%) translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+#howToHint {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, rgba(15, 20, 35, 0.7), rgba(20, 28, 50, 0.65));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 11px;
+    font-weight: 500;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    text-align: center;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+#howToHint .arrow-icon {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+#gamebox #main {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+#gamebox #dot {
+    position: absolute;
+    background: #ef4444;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+#gamebox #overmsg {
+    position: absolute;
+    top: 80px;
+    text-align: center;
+    font-style: normal;
+    line-height: 50px;
+    font-weight: 700;
+    color: #e2e8f0;
+    padding: 20px 0px 0px 0px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 28px;
+}
+
+#gamebox #overmsg.full {
+    opacity: 1;
+}
+#gamebox #overmsg.success {
+    color: #fff;
+    background: rgba(34, 197, 94, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    height: 145px;
+    border-radius: 8px;
+}
+#overmsg.success span.next{
+    font-style: normal;
+    color: #60a5fa;
+    cursor: pointer;
+}
+#gamebox #overmsg.fail {
+    color: #fff;
+    background: rgba(239, 68, 68, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    height: 145px;
+    border-radius: 8px;
+}

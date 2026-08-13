@@ -1,0 +1,266 @@
+#cyber-tracker-board {
+    background-color: #ffffff;
+    border: 1px solid #c2d0df;
+    border-top: 4px solid #0055a5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-family: 'Pretendard', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#cyber-tracker-board .header-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+#cyber-tracker-board h3 {
+    margin: 0;
+    color: #0055a5;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.tracker-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: bold;
+}
+
+.tracker-btn:hover { background: #e9ecef; }
+
+.tracker-table-wrapper {
+    max-height: 295px;
+    overflow-y: auto;
+    border: 1px solid #e1e4e8;
+    border-radius: 5px;
+}
+
+#cyber-tracker-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: center;
+    font-size: 13px;
+}
+
+#cyber-tracker-table th,
+#cyber-tracker-table td {
+    padding: 10px;
+    border: 1px solid #e1e4e8; 
+    vertical-align: middle;
+    text-align: center;
+    word-break: keep-all; 
+}
+
+#cyber-tracker-table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.type-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff;
+    display: inline-block;
+    white-space: nowrap;
+}
+.type-영상 { background-color: #2196f3; }
+.type-과제 { background-color: #ff9800; }
+.type-퀴즈 { background-color: #9c27b0; }
+
+.tracker-due-date { color: #e53935; font-weight: bold; }
+
+.btn-shortcut {
+    padding: 4px 10px;
+    background-color: #f1f3f5;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    transition: 0.2s;
+    display: inline-block;
+    white-space: nowrap;
+}
+.btn-shortcut:hover { background-color: #e2e6ea; text-decoration: none; color: #000; }
+
+.tracker-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.tracker-row.hidden-task {
+    opacity: 0.4;
+    background: #f1f3f5;
+    display: none;
+}
+
+.show-hidden .tracker-row.hidden-task {
+    display: table-row;
+}
+
+/* 💡 추가된 광고 배너 영역 디자인 */
+#tracker-ad-banner {
+    margin-top: 15px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    display: none; 
+}
+
+#tracker-ad-banner a {
+    display: block;
+}
+
+#tracker-ad-banner img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+.ad-label {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+.ad-source {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #333;
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    pointer-events: none;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tracker-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); z-index: 10000;
+    display: flex; justify-content: center; align-items: center;
+}
+.tracker-modal-content {
+    background: white; padding: 20px; border-radius: 8px; width: 320px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.tracker-modal-content h4 {
+    margin-top: 0; margin-bottom: 15px; color: #0055a5; font-size: 16px;
+}
+.tracker-input {
+    width: 100%; box-sizing: border-box; margin-bottom: 10px;
+    padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit;
+}
+textarea.tracker-input {
+    resize: none; height: 80px;
+}
+.tracker-modal-btns {
+    display: flex; justify-content: flex-end; gap: 8px; margin-top: 5px;
+}
+.btn-memo {
+    background-color: #6c757d; color: white;
+}
+.btn-memo:hover { background-color: #5a6268; color: white; }
+
+.ad-close-btn {
+    position: absolute; top: 5px; right: 5px;
+    background: rgba(0,0,0,0.6); color: white; border: none;
+    padding: 4px 8px; font-size: 11px; border-radius: 4px;
+    cursor: pointer; z-index: 10;
+}
+.ad-close-btn:hover { background: rgba(0,0,0,0.8); }
+
+/* 💡 예정항목 토글 스위치 및 컨테이너 디자인 */
+.toggle-container {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 12px;
+    vertical-align: middle;
+}
+
+.toggle-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 6px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    margin: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #13b5b1; /* 청록색 */
+}
+
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+.tracker-row.future-task {
+    opacity: 0.7;
+    background-color: #f8f9fa;
+}

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - FuriNews</title>
+  <meta name="description" content="Privacy Policy for FuriNews browser extension">
+  <link rel="icon" type="image/png" href="icons/icon48.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background: #f5f5f5;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      color: #667eea;
+      margin: 30px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #333;
+      margin: 20px 0 10px 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    ul {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .highlight {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .highlight strong {
+      color: #2e7d32;
+    }
+
+    .warning {
+      background: #fff3e0;
+      border-left: 4px solid #ff9800;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f8f9fa;
+      color: #667eea;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .lang-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .lang-tab {
+      padding: 10px 20px;
+      background: #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .lang-tab.active {
+      background: #667eea;
+      color: white;
+    }
+
+    .section-ja {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 24px;
+      }
+      .header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Privacy Policy</h1>
+    <p>プライバシーポリシー</p>
+  </div>
+
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <div class="lang-tabs">
+      <a href="#" class="lang-tab active" onclick="showLang('en')">English</a>
+      <a href="#" class="lang-tab" onclick="showLang('ja')">日本語</a>
+    </div>
+
+    <!-- English Version -->
+    <div class="card section-en" id="section-en">
+      <p><strong>Last updated:</strong> January 2025</p>
+
+      <h2>Overview</h2>
+      <p>"FuriNews" is a browser extension that adds furigana (reading guides) to Japanese text on news websites. This extension is designed for Japanese language learners.</p>
+
+      <div class="highlight">
+        <strong>Key Point:</strong> We do not collect, store, or transmit any personal data. All processing happens locally on your device.
+      </div>
+
+      <h2>Data Collection</h2>
+      <p><strong>We do not collect any data.</strong> Specifically:</p>
+      <ul>
+        <li><strong>No user data is collected:</strong> We do not collect names, emails, or any personal information.</li>
+        <li><strong>No browsing history is tracked:</strong> We do not track which pages you visit.</li>
+        <li><strong>No data is sent to external servers:</strong> All text processing is done locally on your device.</li>
+        <li><strong>No analytics or tracking:</strong> We do not use any analytics services.</li>
+      </ul>
+
+      <h2>How the Extension Works</h2>
+      <ol>
+        <li>The extension reads text content from Japanese news article pages.</li>
+        <li>All Japanese text analysis (tokenization) is performed <strong>locally</strong> using the kuromoji.js library bundled with the extension.</li>
+        <li>Furigana annotations are added directly to the page DOM.</li>
+        <li>Your settings are stored locally in Chrome's storage API and never transmitted.</li>
+      </ol>
+
+      <h2>Permissions Explained</h2>
+      <table>
+        <tr>
+          <th>Permission</th>
+          <th>Purpose</th>
+        </tr>
+        <tr>
+          <td><code>activeTab</code></td>
+          <td>Required to access and modify the current page content to add furigana.</td>
+        </tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>Required to save your preferences (on/off state, color mode) locally.</td>
+        </tr>
+      </table>
+
+      <h2>Third-Party Services</h2>
+      <p>This extension does <strong>not</strong> use any third-party services, APIs, or analytics.</p>
+
+      <h2>Data Storage</h2>
+      <p>The only data stored is your local preferences:</p>
+      <ul>
+        <li>Whether the extension is enabled for specific pages</li>
+        <li>Color mode setting (on/off)</li>
+      </ul>
+      <p>This data is stored locally using Chrome's <code>storage.local</code> API and is <strong>never transmitted</strong>.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>If we make changes to this privacy policy, we will update the "Last updated" date at the top of this page.</p>
+
+      <h2>Contact</h2>
+      <p>If you have questions about this privacy policy, please create an issue on our GitHub repository.</p>
+    </div>
+
+    <!-- Japanese Version -->
+    <div class="card section-ja" id="section-ja" style="display: none;">
+      <p><strong>最終更新日:</strong> 2025年1月</p>
+
+      <h2>概要</h2>
+      <p>「FuriNews」は、日本語ニュースサイトの漢字にふりがな（読み仮名）を自動的に付けるブラウザ拡張機能です。日本語学習者向けに設計されています。</p>
+
+      <div class="highlight">
+        <strong>重要:</strong> 本拡張機能は、個人データを一切収集、保存、送信しません。すべての処理はお使いのデバイス上でローカルに行われます。
+      </div>
+
+      <h2>データ収集について</h2>
+      <p><strong>データは一切収集しません。</strong> 具体的には：</p>
+      <ul>
+        <li><strong>ユーザーデータの収集なし：</strong>名前、メールアドレス、その他の個人情報を収集しません。</li>
+        <li><strong>閲覧履歴の追跡なし：</strong>どのページを訪問したかを追跡しません。</li>
+        <li><strong>外部サーバーへのデータ送信なし：</strong>すべてのテキスト処理はお使いのデバイス上でローカルに行われます。</li>
+        <li><strong>分析やトラッキングなし：</strong>分析サービスを使用していません。</li>
+      </ul>
+
+      <h2>拡張機能の動作</h2>
+      <ol>
+        <li>拡張機能は日本語ニュース記事ページのテキストコンテンツを読み取ります。</li>
+        <li>すべての日本語テキスト分析（形態素解析）は、拡張機能に同梱されているkuromoji.jsライブラリを使用して<strong>ローカル</strong>で実行されます。</li>
+        <li>ふりがな注釈はページのDOMに直接追加されます。</li>
+        <li>設定はChromeのストレージAPIを使用してローカルに保存され、送信されることはありません。</li>
+      </ol>
+
+      <h2>権限の説明</h2>
+      <table>
+        <tr>
+          <th>権限</th>
+          <th>目的</th>
+        </tr>
+        <tr>
+          <td><code>activeTab</code></td>
+          <td>ふりがなを追加するために現在のページコンテンツにアクセスして変更するために必要です。</td>
+        </tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>設定（オン/オフ状態、カラーモード）をローカルに保存するために必要です。</td>
+        </tr>
+      </table>
+
+      <h2>サードパーティサービス</h2>
+      <p>本拡張機能は、サードパーティのサービス、API、分析ツールを<strong>使用していません</strong>。</p>
+
+      <h2>データの保存</h2>
+      <p>保存されるデータはローカル設定のみです：</p>
+      <ul>
+        <li>特定のページで拡張機能が有効かどうか</li>
+        <li>カラーモード設定（オン/オフ）</li>
+      </ul>
+      <p>このデータはChromeの<code>storage.local</code> APIを使用してローカルに保存され、<strong>送信されることはありません</strong>。</p>
+
+      <h2>ポリシーの変更</h2>
+      <p>このプライバシーポリシーに変更を加える場合は、ページ上部の「最終更新日」を更新します。</p>
+
+      <h2>お問い合わせ</h2>
+      <p>このプライバシーポリシーについてご質問がある場合は、GitHubリポジトリでissueを作成してください。</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 FuriNews</p>
+    <p><a href="index.html">Home</a></p>
+  </footer>
+
+  <script>
+    function showLang(lang) {
+      document.getElementById('section-en').style.display = lang === 'en' ? 'block' : 'none';
+      document.getElementById('section-ja').style.display = lang === 'ja' ? 'block' : 'none';
+
+      document.querySelectorAll('.lang-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      event.preventDefault();
+    }
+  </script>
+</body>
+</html>

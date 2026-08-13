@@ -1,0 +1,144 @@
+/* ── Reset & Base ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 300px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  background: #1a1a2e;
+  color: #e0e0e0;
+}
+
+#app {
+  padding: 12px;
+}
+
+/* ── Info Bar ── */
+.info-bar {
+  background: #16213e;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #0f3460;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.info-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #008060;
+  min-width: 44px;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 12px;
+  color: #c0c0c0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  user-select: text;
+}
+
+/* ── Error State ── */
+.error-state {
+  text-align: center;
+  padding: 24px 12px;
+  color: #ff6b6b;
+}
+
+.error-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.error-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.divider {
+  height: 1px;
+  background: #0f3460;
+  margin: 4px 0;
+}
+
+/* ── Button ── */
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #16213e;
+  color: #e0e0e0;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  text-align: left;
+  position: relative;
+}
+
+.btn:hover {
+  background: #1a3a5c;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.btn-label {
+  flex: 1;
+}
+
+.btn-feedback {
+  color: #2ecc71;
+  font-weight: bold;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* ── Success flash ── */
+.btn.success {
+  background: #1b4332 !important;
+  transition: background 0s;
+}
+
+/* ── Disabled ── */
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

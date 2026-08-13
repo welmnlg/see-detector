@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "IME Enter Guard",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "防止在使用輸入法確認文字時因按下Enter鍵而意外提交表單",
+    "description": "Extension description"
+  }
+}

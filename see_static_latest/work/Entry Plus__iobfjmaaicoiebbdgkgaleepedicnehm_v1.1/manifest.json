@@ -1,0 +1,45 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Entry Plus",
+  "description": "엔트리를 위한 다양한 기능을 제공하는 확장 프로그램입니다.",
+  "version": "1.1",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject/value_changer.js", "entryfhd.js", "euid.js"],
+      "matches": ["https://playentry.org/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://playentry.org/*"],
+      "js": ["content.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://playentry.org/*"],
+      "js": ["inject/injector.js"],
+      "all_frames": true
+    }
+  ]
+}

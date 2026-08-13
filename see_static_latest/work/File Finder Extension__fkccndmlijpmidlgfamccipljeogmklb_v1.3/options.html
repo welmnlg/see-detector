@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Finder - Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 40px 20px;
+      color: #2c3e50;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.95;
+      margin-bottom: 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card h2::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 2px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    #extensions {
+      width: 100%;
+      height: 280px;
+      padding: 14px;
+      border: 2px solid #e8ecf1;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      transition: all 0.3s ease;
+      background: #fafbfc;
+      color: #2c3e50;
+    }
+
+    #extensions:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      background: white;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #save {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    #save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    #save:active {
+      transform: translateY(0);
+    }
+
+    #reset {
+      background: #ecf0f1;
+      color: #7f8c8d;
+    }
+
+    #reset:hover {
+      background: #d5dbdb;
+      transform: translateY(-2px);
+    }
+
+    #reset:active {
+      transform: translateY(0);
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      color: #27ae60;
+      padding: 14px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      border-left: 4px solid #27ae60;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .notification.show {
+      opacity: 1;
+    }
+
+    .info-box {
+      background: #f0f4ff;
+      border-left: 4px solid #667eea;
+      padding: 12px 14px;
+      border-radius: 6px;
+      margin-top: 15px;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .info-box strong {
+      color: #667eea;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #95a5a6;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e8ecf1;
+    }
+
+    .footer a {
+      color: #667eea;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📁 File Finder</h1>
+      <p>Customize file type detection</p>
+    </div>
+
+    <div class="card">
+      <h2>File Extensions</h2>
+      <label for="extensions">Tracked Extensions (one per line)</label>
+      <textarea id="extensions" spellcheck="false"></textarea>
+      <div class="info-box">
+        <strong>💡 Tip:</strong> Enter the file extensions you want to track. The extension will find all links matching these types on any webpage.
+      </div>
+      <div class="button-group">
+        <button id="save">✓ Save Settings</button>
+        <button id="reset">↻ Reset Default</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Developed by <strong>Bicodev</strong>
+    </div>
+  </div>
+
+  <div class="notification" id="notification">✓ Settings saved successfully!</div>
+
+  <script src="options.js"></script>
+</body>
+</html>

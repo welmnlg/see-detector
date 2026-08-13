@@ -1,0 +1,233 @@
+/* ── Reset & Base ─────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #e0e0e0;
+  background: #1e1e2e;
+  width: 420px;
+  min-height: 120px;
+  max-height: 560px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Container ───────────────────────────────────── */
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+  gap: 10px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── Header ──────────────────────────────────────── */
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #cba6f7;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: #6c7086;
+  margin-top: 2px;
+}
+
+/* ── Status ──────────────────────────────────────── */
+.status {
+  text-align: center;
+  color: #a6adc8;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+/* ── Controls ────────────────────────────────────── */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge {
+  background: #313244;
+  color: #cba6f7;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.btn {
+  background: #313244;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:hover {
+  background: #45475a;
+  border-color: #585b70;
+}
+
+.btn-sm {
+  padding: 3px 8px;
+  font-size: 11px;
+}
+
+.btn-primary {
+  background: #cba6f7;
+  color: #1e1e2e;
+  border-color: #cba6f7;
+  font-weight: 600;
+  width: 100%;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.btn-primary:hover {
+  background: #b48ef0;
+  border-color: #b48ef0;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* ── Magnet List ─────────────────────────────────── */
+.magnet-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+  max-height: 340px;
+}
+
+.magnet-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.magnet-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.magnet-list::-webkit-scrollbar-thumb {
+  background: #45475a;
+  border-radius: 4px;
+}
+
+.magnet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #181825;
+  border: 1px solid #313244;
+  border-radius: 8px;
+  padding: 8px 10px;
+  transition: border-color 0.15s;
+}
+
+.magnet-item:hover {
+  border-color: #585b70;
+}
+
+.magnet-item input[type="checkbox"] {
+  accent-color: #cba6f7;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+
+.magnet-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.magnet-name {
+  font-weight: 600;
+  font-size: 12px;
+  color: #cdd6f4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.magnet-hash {
+  font-size: 10px;
+  color: #6c7086;
+  font-family: "SF Mono", "Fira Code", monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Empty state ─────────────────────────────────── */
+.empty {
+  text-align: center;
+  padding: 24px 0;
+  color: #6c7086;
+  font-size: 13px;
+}
+
+/* ── Toast ────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #a6e3a1;
+  color: #1e1e2e;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 6px 18px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Utilities ────────────────────────────────────── */
+.hidden {
+  display: none !important;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 220px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+    }
+
+    .header {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 4px;
+    }
+
+    .toggle-label {
+      font-size: 13px;
+      color: #b0b0c0;
+      transition: color 0.2s;
+    }
+
+    .toggle-label.active {
+      color: #ffffff;
+    }
+
+    /* Toggle switch */
+    .switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #3a3a50;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: #888;
+      border-radius: 50%;
+      transition: transform 0.25s, background 0.25s;
+    }
+
+    input:checked + .slider {
+      background: #2d6a4f;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(20px);
+      background: #52b788;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #2a2a40;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Double Click Close Tab</div>
+
+  <div class="toggle-row">
+    <span class="toggle-label" id="label">Enabled</span>
+    <label class="switch">
+      <input type="checkbox" id="toggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="status" id="status">Double-click empty space to close tab</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+window.JD_ENABLED=!1,window.addEventListener("message",d=>{d.source===window&&d.data.type&&"SET_JD_ENABLED"===d.data.type&&(window.JD_ENABLED=d.data.enabled)});

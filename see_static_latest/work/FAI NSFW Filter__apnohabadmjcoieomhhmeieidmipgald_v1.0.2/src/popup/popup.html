@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAI NSFW Filter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <span class="logo-icon"></span>
+        <span class="logo-text">FAI NSFW Filter</span>
+      </div>
+      <div class="version">v1.0.0</div>
+    </div>
+
+    <!-- Main Toggle -->
+    <div class="main-toggle">
+      <label class="toggle-switch">
+        <input type="checkbox" id="enabledToggle">
+        <span class="toggle-slider"></span>
+      </label>
+      <div class="toggle-info">
+        <div class="toggle-label">Protection Status</div>
+        <div class="toggle-status" id="statusText">Active</div>
+      </div>
+    </div>
+
+    <!-- AI Model Info -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">AI Detection</span>
+        <span class="section-subtitle">Binary classification model</span>
+      </div>
+      <div class="model-info">
+        <div class="model-detail">
+          <span class="detail-label">Model Type:</span>
+          <span class="detail-value">Normal / NSFW</span>
+        </div>
+        <div class="model-detail">
+          <span class="detail-label">Processing:</span>
+          <span class="detail-value">Real-time AI analysis</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Protection Analytics</span>
+        <span class="section-subtitle">Real-time insights</span>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" id="blockedCount">0</div>
+          <div class="stat-label">Blocked This Page</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="scannedCount">0</div>
+          <div class="stat-label">Images Scanned</div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" id="totalBlocked">0</div>
+          <div class="stat-label">Total Protected</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="protectionRate">0%</div>
+          <div class="stat-label">Detection Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-links">
+        <a href="https://falcons.ai/" id="helpLink">Help</a>
+        <span class="separator">•</span>
+        <a href="https://falcons.ai/" id="feedbackLink">Feedback</a>
+        <span class="separator">•</span>
+        <a href="https://falcons.ai/" id="privacyLink">Privacy</a>
+      </div>
+      <div class="footer-text">
+        Powered by AI • Protecting your browsing
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

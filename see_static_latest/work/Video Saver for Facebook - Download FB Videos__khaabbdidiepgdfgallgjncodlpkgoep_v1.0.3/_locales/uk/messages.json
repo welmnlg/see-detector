@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "Professional video exporter for Facebook posts and Reels. Save HD video content with one click, watermark-free for offline viewing."
+  },
+  "extensionName": {
+    "message": "Facebook Reels and Video Exporter"
+  },
+  "extensionNameInExt": {
+    "description": "Extension name",
+    "message": "Video Saver for Facebook"
+  }
+}

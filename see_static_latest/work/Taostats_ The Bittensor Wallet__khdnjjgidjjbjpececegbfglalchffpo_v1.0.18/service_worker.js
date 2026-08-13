@@ -1,0 +1,1 @@
+const document=self;if(self.process={env:{TXWRAPPER_METADATA_CACHE_MAX:void 0}},"undefined"!=typeof self&&self instanceof ServiceWorkerGlobalScope)try{importScripts("./vendor-background.js","./background.js")}catch(e){console.error(e)}
