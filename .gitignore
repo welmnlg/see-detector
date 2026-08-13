@@ -37,16 +37,22 @@ web-viewer/
 web_v3_premium/uploads/
 web_v3_premium/extracted/
 
-# Old Zips and Folders
-*.zip
-*.crx
-*.log
-*.stackdump
+# Unused/Scratch Pipelines (Sampah/Eksperimen)
+Perplexity-Pipeline/
+crawler/
+extractor/
+analyzer/
 see_tool_v3d/
 see_tool_v3f_tooltips_http/
 see_tool_v3g_combo_proof/
 see_analyzer_ast_upgrade/
 see_static_analyzer_latest/
+
+# Old Zips and Archives
+*.zip
+*.crx
+*.log
+*.stackdump
 
 # Models (Hanya abaikan yang di luar Thesis_Pipeline)
 data/models/*.pkl
