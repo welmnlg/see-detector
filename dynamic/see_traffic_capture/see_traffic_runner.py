@@ -59,6 +59,8 @@ INFRASTRUCTURE_DOMAINS = {
     "highlightthis.net", "cookieyes.com", "3lift.com", "teads.tv", "rubiconproject.com",
     "stickyadstv.com", "33across.com", "bing.com", "doubleclick.net", "adnxs.com",
     "demdex.net", "trkn.us", "google.co.id", "criteo.com",
+    "arkoselabs.com", "office.com", "sheerid.com", "doubleclick.com", 
+    "id5-sync.com", "omtrdc.net", "qualaroo.com", "scorecardresearch.com", "yahoo.com",
     "127.0.0.1", "localhost",
     # Scenario test domains
     "neverssl.com", "the-internet.herokuapp.com", "http.cat",
