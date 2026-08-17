@@ -10,11 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    chrome.storage.local.get(["pending_analysis_id", "pending_analysis_name", "apiUrl"], async (data) => {
+    chrome.storage.local.get(["pending_analysis_id", "pending_analysis_name"], async (data) => {
         const extId = data.pending_analysis_id;
         const extName = data.pending_analysis_name;
-        const baseUrl = data.apiUrl || "http://127.0.0.1:5002";
-        const BACKEND_URL = baseUrl + "/api/analyze_url";
 
         if (!extId) {
             showError("Tidak ada ekstensi yang sedang dianalisis.");
@@ -25,19 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Mulai simulasi log
         const simInterval = simulateRealtimeLogs();
+        
+        // Coba Port 5003 (VM) terlebih dahulu, jika gagal coba Port 5002 (Host)
+        const SERVERS = ["http://127.0.0.1:5003/api/analyze_url", "http://127.0.0.1:5002/api/analyze_url"];
+        let response = null;
+        let result = null;
+        let connected = false;
 
         try {
-            const response = await fetch(BACKEND_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url: extId })
-            });
+            for (const url of SERVERS) {
+                try {
+                    response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url: extId })
+                    });
+                    if (response.ok) {
+                        result = await response.json();
+                        connected = true;
+                        break; // Berhasil terhubung, hentikan loop
+                    }
+                } catch (e) {
+                    console.warn(`Gagal menghubungi ${url}, mencoba server lain...`);
+                    // Lanjut ke URL berikutnya di dalam array
+                }
+            }
 
-            const result = await response.json();
             clearInterval(simInterval);
 
-            if (!response.ok) {
-                throw new Error(result.error || "Gagal melakukan analisis.");
+            if (!connected || !result) {
+                throw new Error("Gagal menghubungi peladen. Pastikan server Flask berjalan di Port 5003 atau 5002.");
+            }
+            
+            if (result.error) {
+                throw new Error(result.error);
             }
 
             displayResult(extId, extName, result);
