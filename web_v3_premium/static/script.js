@@ -256,7 +256,7 @@ function showResult(data) {
     // Insights
     const insightList = document.getElementById('insight-list');
     let insightHtml = '';
-    if (isMalicious) {
+    if (Object.keys(data.insights).length > 0) {
         for(const [key, val] of Object.entries(data.insights)) {
             let displayKey = key;
             if (key === "Danger Multiplier Score") {
@@ -350,12 +350,12 @@ function showResult(data) {
         
         const catDiv = document.getElementById('static-categories');
         let catHtml = '';
-        if(isMalicious && stat.categories && stat.categories.length > 0) {
+        if(stat.categories && stat.categories.length > 0) {
             stat.categories.forEach(c => {
                 catHtml += `<span class="tag" style="cursor:pointer;" onclick="showTagInfo('${c}', 'static-cat-info')"><i class="fa-solid fa-tag"></i> ${c}</span>`;
             });
         } else {
-            catHtml += `<span class="tag safe">Tidak Ada Kategori (atau Dianulir oleh ML karena Aman)</span>`;
+            catHtml += `<span class="tag safe">Tidak Ada Kategori Ditemukan</span>`;
         }
         // Tambahkan peringatan beda statis dan dinamis
         catHtml += `<div id="static-cat-info" style="display:none; width: 100%; animation: fadeIn 0.3s;"></div>`;
@@ -366,8 +366,21 @@ function showResult(data) {
         let findingsHtml = '';
         if(stat.findings && stat.findings.length > 0) {
             stat.findings.forEach(f => {
+                // Mapping label kategori
+                const p = f.pattern.toLowerCase();
+                const cats = [];
+                if (p.includes('fetch') || p.includes('xmlhttprequest') || p.includes('axios') || p.includes('$.ajax') || p.includes('sendbeacon') || p.includes('websocket')) cats.push('UReq / LF');
+                if (p.includes('addeventlistener') || p.includes('keydown') || p.includes('keypress')) cats.push('UProf');
+                if (p.includes('cookie')) cats.push('CE');
+                if (p.includes('download')) cats.push('UDown');
+                if (p.includes('clipboard') || p.includes('execcommand(\\'copy\\')')) cats.push('CLE');
+                if (p.includes('history')) cats.push('HE');
+                if (p.includes('submit') || p.includes('password')) cats.push('FH');
+                
+                const labelHtml = cats.length > 0 ? cats.map(c => `<span style="display:inline-block; margin-left:10px; padding:2px 6px; background:rgba(56, 189, 248, 0.2); color:#38bdf8; border: 1px solid #38bdf8; border-radius:4px; font-size:0.7rem; font-weight:bold;">Mendukung Kategori: ${c}</span>`).join('') : '';
+
                 let fHtml = `<div class="term-line warn" style="margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
-                    <strong>[AST] Pola '${escapeHTML(f.pattern)}'</strong> pada file <code>${escapeHTML(f.file)}</code> (Baris ${f.line})
+                    <strong>[AST] Pola '${escapeHTML(f.pattern)}'</strong> pada file <code>${escapeHTML(f.file)}</code> (Baris ${f.line}) ${labelHtml}
                 `;
                 if (f.matched_text) {
                     fHtml += `<br><span style="color:#cbd5e1; font-family:monospace; margin-left: 15px;">&gt; ${escapeHTML(f.matched_text)}</span>`;
