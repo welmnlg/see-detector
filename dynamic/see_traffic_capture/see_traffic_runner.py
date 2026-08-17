@@ -56,6 +56,9 @@ INFRASTRUCTURE_DOMAINS = {
     "microsoft.com", "msftauth.net", "live.com",
     "apple.com", "amazon.com", "amazonaws.com",
     "optimizely.com", "protechts.net",
+    "highlightthis.net", "cookieyes.com", "3lift.com", "teads.tv", "rubiconproject.com",
+    "stickyadstv.com", "33across.com", "bing.com", "doubleclick.net", "adnxs.com",
+    "demdex.net", "trkn.us", "google.co.id", "criteo.com",
     "127.0.0.1", "localhost",
     # Scenario test domains
     "neverssl.com", "the-internet.herokuapp.com", "http.cat",
