@@ -1,7 +1,0 @@
-2026/08/13-13:57:41.230 2260 Reusing MANIFEST E:\Kuliah\Skripsi\Semhas\extension\see-detector\dynamic\test_browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/08/13-13:57:41.237 2260 Recovering log #103
-2026/08/13-13:57:41.237 2260 Level-0 table #107: started
-2026/08/13-13:57:41.245 2260 Level-0 table #107: 14135 bytes OK
-2026/08/13-13:57:41.246 2260 Recovering log #107
-2026/08/13-13:57:41.248 2260 Reusing old log E:\Kuliah\Skripsi\Semhas\extension\see-detector\dynamic\test_browser_profile\Default\Local Storage\leveldb/000107.log 
-2026/08/13-13:57:41.250 2260 Delete type=0 #103

@@ -1,7 +1,0 @@
-2026/08/13-12:59:32.006 619c Reusing MANIFEST E:\Kuliah\Skripsi\Semhas\extension\see-detector\dynamic\test_browser_profile\Default\IndexedDB\https_www.facebook.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/08/13-12:59:32.007 619c Recovering log #3
-2026/08/13-12:59:32.033 619c Reusing old log E:\Kuliah\Skripsi\Semhas\extension\see-detector\dynamic\test_browser_profile\Default\IndexedDB\https_www.facebook.com_0.indexeddb.leveldb/000003.log 
-2026/08/13-13:44:21.928 4f98 Level-0 table #5: started
-2026/08/13-13:44:21.977 4f98 Level-0 table #5: 443914 bytes OK
-2026/08/13-13:44:21.985 4f98 Delete type=0 #3
-2026/08/13-13:44:21.996 4f98 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
