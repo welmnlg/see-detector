@@ -8,6 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // Setting Server API
+    const serverSelect = document.getElementById('server-select');
+    chrome.storage.local.get(['apiUrl'], function(res) {
+        if (res.apiUrl) {
+            serverSelect.value = res.apiUrl;
+        }
+    });
+
+    serverSelect.addEventListener('change', function() {
+        chrome.storage.local.set({ apiUrl: serverSelect.value });
+    });
 });
 
 function renderHistory() {

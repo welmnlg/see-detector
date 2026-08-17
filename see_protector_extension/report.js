@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BACKEND_URL = "http://127.0.0.1:5002/api/analyze_url";
-
     // Tab Switching Logic
     const tabBtns = document.querySelectorAll('.tab-btn');
     tabBtns.forEach(btn => {
@@ -12,9 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    chrome.storage.local.get(["pending_analysis_id", "pending_analysis_name"], async (data) => {
+    chrome.storage.local.get(["pending_analysis_id", "pending_analysis_name", "apiUrl"], async (data) => {
         const extId = data.pending_analysis_id;
         const extName = data.pending_analysis_name;
+        const baseUrl = data.apiUrl || "http://127.0.0.1:5002";
+        const BACKEND_URL = baseUrl + "/api/analyze_url";
 
         if (!extId) {
             showError("Tidak ada ekstensi yang sedang dianalisis.");
