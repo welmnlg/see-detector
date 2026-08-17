@@ -373,7 +373,7 @@ function showResult(data) {
                 if (p.includes('addeventlistener') || p.includes('keydown') || p.includes('keypress')) cats.push('UProf');
                 if (p.includes('cookie')) cats.push('CE');
                 if (p.includes('download')) cats.push('UDown');
-                if (p.includes('clipboard') || p.includes('execcommand(\\'copy\\')')) cats.push('CLE');
+                if (p.includes('clipboard') || p.includes("execcommand('copy')")) cats.push('CLE');
                 if (p.includes('history')) cats.push('HE');
                 if (p.includes('submit') || p.includes('password')) cats.push('FH');
                 
