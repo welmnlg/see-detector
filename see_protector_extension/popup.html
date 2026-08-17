@@ -16,16 +16,19 @@
     </div>
     
     <div class="content">
-        <p class="description">SEE Protector aktif memantau dan melindungi peramban Anda dari ancaman eksfiltrasi ekstensi jahat secara *real-time*.</p>
+        <p class="description">SEE Protector aktif melindungi peramban Anda dari ancaman eksfiltrasi ekstensi jahat secara <b>real-time</b>.</p>
         
-        <div class="info-card">
-            <h3><span class="icon">🛡️</span> Perlindungan Otomatis</h3>
-            <p>Setiap kali ekstensi baru terpasang, kami akan menahannya dan menjalankan analisis ML tingkat lanjut.</p>
+        <div class="history-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h3 style="font-size: 0.95rem; color:#f8fafc;">Riwayat Analisis</h3>
+                <button id="btn-clear-history" class="btn-text">Bersihkan</button>
+            </div>
+            
+            <div id="history-list" class="history-list">
+                <!-- Data riwayat akan dirender di sini via popup.js -->
+                <p style="font-size:0.8rem; color:#64748b; text-align:center; margin-top:20px;">Belum ada riwayat analisis.</p>
+            </div>
         </div>
-    </div>
-
-    <div class="footer">
-        <button id="btn-test" class="btn">Buka Laporan Terakhir</button>
     </div>
     <script src="popup.js"></script>
 </body>

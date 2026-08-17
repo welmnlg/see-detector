@@ -9,48 +9,81 @@
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1 class="glow-text">SEE Protector</h1>
+        <div class="header">
+            <h2 class="glow-text">SEE Protector</h2>
             <p>Sistem Deteksi Otomatis (Real-Time Protection)</p>
-        </header>
+        </div>
 
-        <main class="main-content">
-            <div id="loading-panel" class="panel">
-                <h2>Menahan Ekstensi...</h2>
-                <div class="spinner"></div>
-                <p id="loading-text">Sedang mengirim ekstensi <strong id="loading-ext-name"></strong> ke VMware untuk dianalisis...</p>
-                <p class="subtitle">(Analisis Statis & Sandbox Dinamis mungkin memakan waktu hingga 1-2 menit)</p>
+        <!-- Panel Loading / Analisis -->
+        <div id="loading-panel" class="panel">
+            <h2>Menahan Ekstensi...</h2>
+            <div class="spinner"></div>
+            <p id="loading-text" style="margin-top: 15px;">Sedang mengirim ekstensi <strong id="loading-ext-name" style="color: #38bdf8;"></strong> ke SEE Engine...</p>
+            <p style="font-size: 0.8rem; color:#94a3b8; margin-top:5px;">(Analisis Statis & Sandbox Dinamis memakan waktu hingga 1-2 menit)</p>
+            <p style="font-size: 0.8rem; color:#f59e0b; margin-top:5px; font-weight:bold;">TOLONG JANGAN TUTUP JENDELA INI SELAMA PROSES BERJALAN!</p>
+            <div class="terminal-container">
+                <div id="terminal-body" class="terminal-body"></div>
+            </div>
+        </div>
+
+        <!-- Panel Hasil Analisis -->
+        <div id="result-panel" class="panel hidden">
+            <div id="status-card" class="status-card">
+                <h2 id="final-status">AMAN</h2>
+                <p style="font-size: 0.9rem; margin-top: 5px;">Tingkat Keyakinan (AI): <strong id="confidence-score">0%</strong></p>
             </div>
 
-            <div id="result-panel" class="panel hidden">
-                <div id="status-card" class="status-card">
-                    <h2 id="final-status">AMAN</h2>
-                    <p>Skor ML Keyakinan: <strong id="confidence-score">0%</strong></p>
-                </div>
+            <!-- Tab Buttons -->
+            <div class="tab-header">
+                <button class="tab-btn active" data-target="tab-ringkasan">Ringkasan</button>
+                <button class="tab-btn" data-target="tab-statis">Statis</button>
+                <button class="tab-btn" data-target="tab-dinamis">Dinamis</button>
+            </div>
 
-                <div class="details">
-                    <h3>Hasil Analisis</h3>
-                    <ul id="insight-list"></ul>
-                </div>
-
-                <div class="actions">
-                    <p>Apakah Anda ingin melanjutkan pemasangan ekstensi ini?</p>
-                    <div class="btn-group">
-                        <button id="btn-uninstall" class="btn btn-danger">Hapus Ekstensi</button>
-                        <button id="btn-enable" class="btn btn-success">Tetap Izinkan & Aktifkan</button>
-                    </div>
+            <!-- Tab Content: Ringkasan -->
+            <div id="tab-ringkasan" class="tab-content active details">
+                <h3>Skor & Indikator Utama</h3>
+                <ul id="insight-list"></ul>
+                
+                <div id="mitigation-box" class="hidden mitigation-box">
+                    <h4>Saran Mitigasi:</h4>
+                    <p id="mitigation-text"></p>
                 </div>
             </div>
-            
-            <div id="error-panel" class="panel hidden">
-                <h2 style="color: #ef4444;">Analisis Gagal</h2>
-                <p id="error-message"></p>
-                <div class="actions">
-                    <button id="btn-err-uninstall" class="btn btn-danger">Hapus Ekstensi (Aman)</button>
-                    <button id="btn-err-enable" class="btn btn-secondary">Aktifkan Tetap (Berisiko)</button>
+
+            <!-- Tab Content: Statis -->
+            <div id="tab-statis" class="tab-content details">
+                <h3>Temuan Analisis Statis (Kode)</h3>
+                <ul id="static-list"></ul>
+            </div>
+
+            <!-- Tab Content: Dinamis -->
+            <div id="tab-dinamis" class="tab-content details">
+                <h3>Aktivitas Jaringan Terekam</h3>
+                <ul id="dynamic-list"></ul>
+                <div id="dynamic-behaviors" style="margin-top: 10px;"></div>
+                
+                <h3 style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">Detail HTTP Request</h3>
+                <div id="dynamic-logs-container" style="margin-top: 10px;">
+                    <!-- Log jaringan akan dimuat di sini -->
                 </div>
             </div>
-        </main>
+
+            <div class="actions">
+                <button id="btn-uninstall" class="btn btn-danger" style="margin-bottom: 10px;">Hapus Ekstensi (Aman)</button>
+                <button id="btn-enable" class="btn btn-secondary">Izinkan Ekstensi (Berisiko)</button>
+            </div>
+        </div>
+
+        <!-- Panel Error -->
+        <div id="error-panel" class="panel hidden">
+            <h2 style="color: #ef4444; margin-bottom:10px;">Analisis Gagal</h2>
+            <p id="error-message"></p>
+            <div class="actions" style="margin-top: 20px;">
+                <button id="btn-err-uninstall" class="btn btn-danger" style="margin-bottom: 10px;">Hapus Ekstensi Saja</button>
+                <button id="btn-err-retry" class="btn btn-secondary">Tutup & Abaikan</button>
+            </div>
+        </div>
     </div>
     <script src="report.js"></script>
 </body>

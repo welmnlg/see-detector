@@ -5,8 +5,10 @@ import joblib
 import pandas as pd
 import re
 import html
+import time
 import urllib.request
 import urllib.error
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify, render_template
 
@@ -19,6 +21,7 @@ from see_static_latest.see_engine import analyze_extension_dir as analyze_extens
 from dynamic.see_traffic_capture.see_traffic_runner import SEETrafficRunner as DynamicSandbox
 
 app = Flask(__name__)
+CORS(app)
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['EXTRACT_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'extracted')
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB max limit
@@ -224,10 +227,13 @@ def process_extension_analysis(filepath):
             "dynamic_logs": full_dynamic_logs, # Send all logs to UI
             "static_analysis": {
                 "permissions_count": s.get('permissions_count', 0),
+                "permissions_list": s.get('_permissions_list', []),
                 "sensitive_perms_count": s.get('sensitive_permissions_count', 0),
-                "has_content_scripts": s.get('has_content_scripts', False),
                 "host_permissions_count": s.get('host_permissions_count', 0),
+                "host_permissions_list": s.get('_host_permissions_list', []),
                 "content_script_count": s.get('content_script_count', 0),
+                "has_holistic_match_pattern": s.get('has_holistic_match_pattern', False),
+                "has_wildcard_cs_match": s.get('has_wildcard_cs_match', False),
                 "dnr_rule_count": s.get('dnr_rule_count', 0),
                 "categories": categories_list,
                 "findings": static_result.get('findings', [])
@@ -340,5 +346,13 @@ def analyze_url():
 
 
 if __name__ == '__main__':
-    print("Mulai server Web V3 Premium di http://0.0.0.0:5001 (Bisa diakses dari jaringan lokal/Host)")
-    app.run(host='0.0.0.0', debug=True, use_reloader=False, port=5001)
+    import sys
+    port = 5002
+    if len(sys.argv) > 1:
+        try:
+            port = int(sys.argv[1])
+        except ValueError:
+            pass
+            
+    print(f"Mulai server Web V3 Premium di http://0.0.0.0:{port} (Bisa diakses dari jaringan lokal/Host)")
+    app.run(host='0.0.0.0', debug=True, use_reloader=False, port=port)

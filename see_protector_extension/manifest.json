@@ -5,13 +5,29 @@
   "description": "Ekstensi pendeteksi keamanan (Real-Time Protection) terhadap serangan Stealth Extension Exfiltration.",
   "permissions": [
     "management",
-    "storage"
+    "storage",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*",
+    "http://10.0.2.132/*"
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Buka Dashboard SEE Protector"
+    "default_title": "Buka Dashboard SEE Protector",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
 }

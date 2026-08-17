@@ -213,23 +213,70 @@ function showResult(data) {
     }
     scoreText.textContent = `${data.score}%`;
     
+    // Mapping Tooltip untuk Insights
+    const tooltipMap = {
+        "Skor Risiko Obfuscation": "Skor tambahan jika ekstensi mencoba menyembunyikan kode jahatnya (misal: pakai eval atau btoa).",
+        "Domain Tak Dikenal": "Jumlah koneksi internet ke server yang tidak didaftarkan secara resmi di manifest ekstensi.",
+        "Indikasi Leakage (URL/Data)": "Percobaan membocorkan data sensitif (seperti riwayat atau cookie) melalui URL atau Body HTTP.",
+        "Izin Sensitif": "Jumlah akses krusial yang diminta (seperti akses ke tab, cookie, atau unduhan).",
+        "Total HTTP Request": "Jumlah total tembakan jaringan yang dilakukan ekstensi saat diuji."
+    };
+
+    // Mapping Info untuk Behavior Categories
+    const catTooltipMap = {
+        "UReq": "Unauthorized HTTP Request: Ekstensi diam-diam mengirim data ke internet tanpa izin jaringan yang sah.",
+        "UProf": "User Profiling: Ekstensi ketahuan merekam aktivitas ketikan, klik, atau gulir layar (Keylogging/Tracking).",
+        "LF": "Local File Access: Ekstensi mengakses, membaca, atau mengemas file lokal Anda.",
+        "CE": "Cookie Exfiltration: Ekstensi terbukti mencuri sesi login (Cookies) Anda.",
+        "HH": "HTTP Hijacking: Ekstensi membelokkan atau membajak arah situs web yang Anda kunjungi.",
+        "UDown": "Unauthorized Download: Ekstensi mengunduh file berbahaya secara paksa ke komputer Anda.",
+        "CLE": "Clipboard Exfiltration: Ekstensi membaca teks yang baru saja Anda Copy/Salin.",
+        "HE": "History Exfiltration: Ekstensi mencuri daftar riwayat penjelajahan browser Anda.",
+        "FH": "Form Harvesting: Ekstensi menyadap kolom password atau formulir yang Anda ketik.",
+        "URL": "URL Profiling Detected: Ekstensi ketahuan mengirimkan informasi situs yang sedang Anda kunjungi ke server pelacak.",
+        "DOM": "DOM Scraping Detected: Ekstensi menyedot dan mencuri isi konten halaman web Anda.",
+        "Sensitive": "Sensitive Data Leak: Ekstensi ketahuan membocorkan data rahasia (seperti kata sandi/cookie) lewat jaringan.",
+        "Data": "Data sent to Telemetry/Tracker: Data aktivitas Anda dikirimkan ke server analitik/pelacakan.",
+        "Base64": "Base64 Payload Obfuscation: Ekstensi menyembunyikan data curiannya dengan sandi rahasia sebelum dikirim."
+    };
+
+    // Fungsi global pembantu untuk menampilkan kotak info Behavior/Kategori
+    window.showTagInfo = function(code, containerId) {
+        const box = document.getElementById(containerId);
+        const text = catTooltipMap[code] || "Informasi mendetail mengenai perilaku ini.";
+        box.innerHTML = `<div class="term-line info" style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.3); border-left: 3px solid #38bdf8;">${text}</div>`;
+        box.style.display = 'block';
+    };
+
     // Insights
     const insightList = document.getElementById('insight-list');
-    insightList.innerHTML = '';
+    let insightHtml = '';
     for(const [key, val] of Object.entries(data.insights)) {
-        insightList.innerHTML += `<li><span>${key}</span> <strong>${val}</strong></li>`;
+        let displayKey = key;
+        if (key === "Danger Multiplier Score") {
+            displayKey = "Skor Risiko Obfuscation";
+        }
+        
+        const tooltipText = tooltipMap[displayKey] || "Indikator fitur Machine Learning.";
+        const tooltipHtml = `<span class="info-tooltip">?<span class="tooltip-text">${tooltipText}</span></span>`;
+        
+        insightHtml += `<li><span>${displayKey} ${tooltipHtml}</span> <strong>${val}</strong></li>`;
     }
+    insightList.innerHTML = insightHtml;
     
-    // Behavior Tags
+    // Behavior Tags (Dynamic)
     const tagsDiv = document.getElementById('behavior-tags');
-    tagsDiv.innerHTML = '';
+    let tagsHtml = '';
     if(data.behaviors && data.behaviors.length > 0) {
         data.behaviors.forEach(b => {
-            tagsDiv.innerHTML += `<span class="tag"><i class="fa-solid fa-bug"></i> ${b}</span>`;
+            const shortCode = b.split(' ')[0]; // Ambil kode depan seperti "URL", "Sensitive"
+            tagsHtml += `<span class="tag" style="cursor:pointer;" onclick="showTagInfo('${shortCode}', 'behavior-info-box')"><i class="fa-solid fa-bug"></i> ${b}</span>`;
         });
     } else {
-        tagsDiv.innerHTML += `<span class="tag safe"><i class="fa-solid fa-check"></i> Tidak Ada Aktivitas SEE Ditemukan</span>`;
+        tagsHtml += `<span class="tag safe"><i class="fa-solid fa-check"></i> Tidak Ada Aktivitas SEE Ditemukan</span>`;
     }
+    tagsHtml += `<div id="behavior-info-box" style="display:none; width: 100%; animation: fadeIn 0.3s;"></div>`;
+    tagsDiv.innerHTML = tagsHtml;
     
     // ML Features - DIHAPUS SESUAI PERMINTAAN USER
     const mlBody = document.getElementById('ml-features-body');
@@ -238,46 +285,96 @@ function showResult(data) {
     // Static Analysis Tab
     if (data.static_analysis) {
         const stat = data.static_analysis;
+        
+        const perms = stat.permissions_list || [];
+        let permsHtml = perms.length > 0 ? 
+            perms.map(p => `<span>${p}</span>`).join('') : '<span style="color:#64748b;">(Kosong)</span>';
+        
+        const hostPerms = stat.host_permissions_list || [];
+        let hostPermsHtml = hostPerms.length > 0 ? 
+            hostPerms.map(p => `<span>${escapeHTML(p)}</span>`).join('') : '<span style="color:#64748b;">(Tidak ada akses host/URL)</span>';
+            
+        let csDetail = '';
+        if (stat.content_script_count > 0) {
+            if (stat.has_wildcard_cs_match) {
+                csDetail = '<span style="color:#ef4444;">(Holistik: Menyadap SEMUA situs web secara membabi buta)</span>';
+            } else {
+                csDetail = '<span style="color:#4ade80;">(Spesifik: Hanya menyadap situs tertentu)</span>';
+            }
+        } else {
+            csDetail = '<span style="color:#64748b;">(Tidak ada)</span>';
+        }
+        
+        let dnrDetail = stat.dnr_rule_count > 0 ? `<span style="color:#fbbf24;">(Mengandung aturan pemblokiran/pengalihan jaringan)</span>` : '<span style="color:#64748b;">(Kosong)</span>';
+
+        // Sensitive permissions logic
+        const SENSITIVE_PERMISSIONS = ["cookies", "downloads", "history", "bookmarks", "tabs", "activeTab", "topSites", "webRequest", "webRequestBlocking", "declarativeNetRequest", "declarativeNetRequestWithHostAccess", "clipboardRead", "clipboardWrite", "nativeMessaging", "management", "debugger", "pageCapture", "tabCapture", "desktopCapture", "storage", "identity"];
+        const sensPermsList = perms.filter(p => SENSITIVE_PERMISSIONS.includes(p));
+        let sensPermsHtml = sensPermsList.length > 0 ? 
+            sensPermsList.map(p => `<span>${p}</span>`).join('') : '<span style="color:#64748b;">(Kosong)</span>';
+
         document.getElementById('static-basic').innerHTML = `
-            <li>Total Permissions: <span>${stat.permissions_count}</span></li>
-            <li>Sensitive Permissions: <span>${stat.sensitive_perms_count}</span></li>
-            <li>Host Permissions: <span>${stat.host_permissions_count}</span></li>
-            <li>Content Scripts: <span>${stat.content_script_count}</span></li>
-            <li>DNR Rules: <span>${stat.dnr_rule_count}</span></li>
+            <li>
+                Total Permissions: <span>${stat.permissions_count}</span>
+                <button class="btn-detail" onclick="document.getElementById('det-perm').classList.toggle('open')">Lihat Detail</button>
+                <div id="det-perm" class="static-detail-box">${permsHtml}</div>
+            </li>
+            <li>
+                Sensitive Permissions: <span>${stat.sensitive_perms_count}</span>
+                <button class="btn-detail" onclick="document.getElementById('det-sens').classList.toggle('open')">Lihat Detail</button>
+                <div id="det-sens" class="static-detail-box">${sensPermsHtml}</div>
+            </li>
+            <li>
+                Host Permissions: <span>${stat.host_permissions_count}</span>
+                <button class="btn-detail" onclick="document.getElementById('det-host').classList.toggle('open')">Lihat Detail</button>
+                <div id="det-host" class="static-detail-box">${hostPermsHtml}</div>
+            </li>
+            <li>
+                Content Scripts: <span>${stat.content_script_count}</span>
+                <div class="static-detail-box open" style="background:transparent; padding:0; margin-top:2px;">${csDetail}</div>
+            </li>
+            <li>
+                DNR Rules: <span>${stat.dnr_rule_count}</span>
+                <div class="static-detail-box open" style="background:transparent; padding:0; margin-top:2px;">${dnrDetail}</div>
+            </li>
         `;
         
         const catDiv = document.getElementById('static-categories');
-        catDiv.innerHTML = '';
+        let catHtml = '';
         if(stat.categories && stat.categories.length > 0) {
             stat.categories.forEach(c => {
-                catDiv.innerHTML += `<span class="tag"><i class="fa-solid fa-tag"></i> ${c}</span>`;
+                catHtml += `<span class="tag" style="cursor:pointer;" onclick="showTagInfo('${c}', 'static-cat-info')"><i class="fa-solid fa-tag"></i> ${c}</span>`;
             });
         } else {
-            catDiv.innerHTML = `<span class="tag safe">Tidak Ada Kategori Terdeteksi</span>`;
+            catHtml += `<span class="tag safe">Tidak Ada Kategori Terdeteksi</span>`;
         }
+        // Tambahkan peringatan beda statis dan dinamis
+        catHtml += `<div id="static-cat-info" style="display:none; width: 100%; animation: fadeIn 0.3s;"></div>`;
+        catHtml += `<p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-style: italic;">*Kategori Statis adalah niat kode yang terbaca sebelum dijalankan (Berbeda dengan Ikhtisar Dinamis).</p>`;
+        catDiv.innerHTML = catHtml;
         
         const findDiv = document.getElementById('static-findings');
-        findDiv.innerHTML = '';
+        let findingsHtml = '';
         if(stat.findings && stat.findings.length > 0) {
             stat.findings.forEach(f => {
-                let findingHTML = `<div class="term-line warn" style="margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
+                let fHtml = `<div class="term-line warn" style="margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">
                     <strong>[AST] Pola '${escapeHTML(f.pattern)}'</strong> pada file <code>${escapeHTML(f.file)}</code> (Baris ${f.line})
                 `;
-                // Tampilkan potongan kode jika ada
                 if (f.matched_text) {
-                    findingHTML += `<br><span style="color:#cbd5e1; font-family:monospace; margin-left: 15px;">&gt; ${escapeHTML(f.matched_text)}</span>`;
+                    fHtml += `<br><span style="color:#cbd5e1; font-family:monospace; margin-left: 15px;">&gt; ${escapeHTML(f.matched_text)}</span>`;
                 }
-                findingHTML += `</div>`;
-                findDiv.innerHTML += findingHTML;
+                fHtml += `</div>`;
+                findingsHtml += fHtml;
             });
         } else {
-            findDiv.innerHTML = `<div class="term-line success">[AST] Tidak ada API sensitif yang dipanggil.</div>`;
+            findingsHtml = `<div class="term-line success">[AST] Tidak ada API sensitif yang dipanggil.</div>`;
         }
+        findDiv.innerHTML = findingsHtml;
     }
     
     // Dynamic Analysis Interactive Table
     const logsBody = document.getElementById('logs-body');
-    logsBody.innerHTML = '';
+    let logsHtml = '';
     if(data.dynamic_logs && data.dynamic_logs.length > 0) {
         data.dynamic_logs.forEach((log, idx) => {
             const method = log.method || 'GET';
@@ -286,11 +383,11 @@ function showResult(data) {
             const payloadStr = log.post_data ? escapeHTML(log.post_data) : '{ Tidak ada Payload }';
             const headersStr = log.headers ? escapeHTML(log.headers) : '{}';
             
-            logsBody.innerHTML += `
+            logsHtml += `
                 <tr class="main-row" onclick="toggleRow(${idx})">
                     <td><span class="method-badge method-${method}">${method}</span></td>
-                    <td>${log.domain || 'N/A'}</td>
-                    <td>${log.source || 'Unknown'}</td>
+                    <td>${escapeHTML(log.domain || 'N/A')}</td>
+                    <td>${escapeHTML(log.source || 'Unknown')}</td>
                     <td>${authStatus}</td>
                 </tr>
                 <tr class="detail-row" id="detail-${idx}">
@@ -308,8 +405,9 @@ function showResult(data) {
             `;
         });
     } else {
-        logsBody.innerHTML = `<tr><td colspan="4" style="text-align: center;">Tidak ada lalu lintas dinamis terekam.</td></tr>`;
+        logsHtml = `<tr><td colspan="4" style="text-align: center;">Tidak ada lalu lintas dinamis terekam.</td></tr>`;
     }
+    logsBody.innerHTML = logsHtml;
 }
 
 function resetUI() {
