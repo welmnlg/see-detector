@@ -219,6 +219,8 @@ def process_extension_analysis(filepath):
             })
 
         response_data = {
+            "ext_name": static_result.get('name', 'Tidak diketahui'),
+            "ext_id": static_result.get('extension_id', 'N/A'),
             "status": status,
             "score": round(confidence_score, 2),
             "see_categories": cats_str,

@@ -202,16 +202,23 @@ function showResult(data) {
     statusCard.className = 'glass-panel result-header';
     statusIcon.className = 'fa-solid';
     
-    if (data.status === 'MALICIOUS') {
-        statusCard.classList.add('status-malicious');
-        statusIcon.classList.add('fa-triangle-exclamation');
-        statusText.textContent = 'RENTAN SEE (VULNERABLE)';
+    const isMalicious = data.status === 'MALICIOUS';
+    if (isMalicious) {
+        statusCard.className = 'glass-panel result-header malicious';
+        statusText.textContent = 'RENTAN (SEE ATTACK DETECTED)';
+        statusIcon.className = 'fa-solid fa-triangle-exclamation';
+        document.getElementById('mitigation-box').classList.remove('hidden');
     } else {
-        statusCard.classList.add('status-safe');
-        statusIcon.classList.add('fa-shield-check');
+        statusCard.className = 'glass-panel result-header safe';
         statusText.textContent = 'AMAN (SAFE)';
+        statusIcon.className = 'fa-solid fa-shield-check';
+        document.getElementById('mitigation-box').classList.add('hidden');
     }
     scoreText.textContent = `${data.score}%`;
+    
+    // Set Extension Meta Info
+    document.getElementById('res-ext-name').textContent = data.ext_name || 'Extension Name Unknown';
+    document.getElementById('res-ext-id').textContent = data.ext_id || 'N/A';
     
     // Mapping Tooltip untuk Insights
     const tooltipMap = {
