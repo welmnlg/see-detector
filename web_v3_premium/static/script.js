@@ -207,12 +207,10 @@ function showResult(data) {
         statusCard.className = 'glass-panel result-header malicious';
         statusText.textContent = 'RENTAN (SEE ATTACK DETECTED)';
         statusIcon.className = 'fa-solid fa-triangle-exclamation';
-        document.getElementById('mitigation-box').classList.remove('hidden');
     } else {
         statusCard.className = 'glass-panel result-header safe';
         statusText.textContent = 'AMAN (SAFE)';
         statusIcon.className = 'fa-solid fa-shield-check';
-        document.getElementById('mitigation-box').classList.add('hidden');
     }
     scoreText.textContent = `${data.score}%`;
     
