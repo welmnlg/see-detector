@@ -258,16 +258,20 @@ function showResult(data) {
     // Insights
     const insightList = document.getElementById('insight-list');
     let insightHtml = '';
-    for(const [key, val] of Object.entries(data.insights)) {
-        let displayKey = key;
-        if (key === "Danger Multiplier Score") {
-            displayKey = "Skor Risiko Obfuscation";
+    if (isMalicious) {
+        for(const [key, val] of Object.entries(data.insights)) {
+            let displayKey = key;
+            if (key === "Danger Multiplier Score") {
+                displayKey = "Skor Risiko Obfuscation";
+            }
+            
+            const tooltipText = tooltipMap[displayKey] || "Indikator fitur Machine Learning.";
+            const tooltipHtml = `<span class="info-tooltip">?<span class="tooltip-text">${tooltipText}</span></span>`;
+            
+            insightHtml += `<li><span>${displayKey} ${tooltipHtml}</span> <strong>${val}</strong></li>`;
         }
-        
-        const tooltipText = tooltipMap[displayKey] || "Indikator fitur Machine Learning.";
-        const tooltipHtml = `<span class="info-tooltip">?<span class="tooltip-text">${tooltipText}</span></span>`;
-        
-        insightHtml += `<li><span>${displayKey} ${tooltipHtml}</span> <strong>${val}</strong></li>`;
+    } else {
+        insightHtml = `<li style="justify-content:center; color:#4ade80;">Tidak ada indikator bahaya yang relevan.</li>`;
     }
     insightList.innerHTML = insightHtml;
     
@@ -348,12 +352,12 @@ function showResult(data) {
         
         const catDiv = document.getElementById('static-categories');
         let catHtml = '';
-        if(stat.categories && stat.categories.length > 0) {
+        if(isMalicious && stat.categories && stat.categories.length > 0) {
             stat.categories.forEach(c => {
                 catHtml += `<span class="tag" style="cursor:pointer;" onclick="showTagInfo('${c}', 'static-cat-info')"><i class="fa-solid fa-tag"></i> ${c}</span>`;
             });
         } else {
-            catHtml += `<span class="tag safe">Tidak Ada Kategori Terdeteksi</span>`;
+            catHtml += `<span class="tag safe">Tidak Ada Kategori (atau Dianulir oleh ML karena Aman)</span>`;
         }
         // Tambahkan peringatan beda statis dan dinamis
         catHtml += `<div id="static-cat-info" style="display:none; width: 100%; animation: fadeIn 0.3s;"></div>`;
