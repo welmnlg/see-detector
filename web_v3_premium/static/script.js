@@ -204,11 +204,11 @@ function showResult(data) {
     
     const isMalicious = data.status === 'MALICIOUS';
     if (isMalicious) {
-        statusCard.className = 'glass-panel result-header malicious';
+        statusCard.className = 'glass-panel result-header status-malicious';
         statusText.textContent = 'RENTAN (SEE ATTACK DETECTED)';
         statusIcon.className = 'fa-solid fa-triangle-exclamation';
     } else {
-        statusCard.className = 'glass-panel result-header safe';
+        statusCard.className = 'glass-panel result-header status-safe';
         statusText.textContent = 'AMAN (SAFE)';
         statusIcon.className = 'fa-solid fa-shield-check';
     }

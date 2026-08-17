@@ -105,6 +105,42 @@ def extract_extension(file_path: str, output_dir: str) -> tuple[bool, str]:
 
 # ─── Step 2: Parse Manifest ──────────────────────────────────────────────────
 
+def resolve_localization(ext_dir: str, value: str) -> str:
+    """Resolve __MSG_something__ dari folder _locales."""
+    if not value or not isinstance(value, str) or not value.startswith("__MSG_"):
+        return value
+    key = value.replace("__MSG_", "").replace("__", "")
+    
+    locales_dir = Path(ext_dir) / "_locales"
+    if not locales_dir.exists():
+        return value
+        
+    # Coba bahasa default (Inggris) dulu
+    for lang in ["en", "en_US", "en_GB"]:
+        msg_file = locales_dir / lang / "messages.json"
+        if msg_file.exists():
+            try:
+                with open(msg_file, "r", encoding="utf-8", errors="ignore") as f:
+                    msgs = json.load(f)
+                    if key in msgs and "message" in msgs[key]:
+                        return msgs[key]["message"]
+            except:
+                pass
+                
+    # Fallback ke folder bahasa pertama yang tersedia
+    for child in locales_dir.iterdir():
+        if child.is_dir():
+            msg_file = child / "messages.json"
+            if msg_file.exists():
+                try:
+                    with open(msg_file, "r", encoding="utf-8", errors="ignore") as f:
+                        msgs = json.load(f)
+                        if key in msgs and "message" in msgs[key]:
+                            return msgs[key]["message"]
+                except:
+                    pass
+    return value
+
 def parse_manifest(ext_dir: str) -> dict:
     manifest_path = Path(ext_dir) / 'manifest.json'
     features = {
@@ -137,9 +173,14 @@ def parse_manifest(ext_dir: str) -> dict:
             m = json.load(f)
 
         features['manifest_version']      = m.get('manifest_version', 0)
-        features['_extension_name']       = m.get('name', '')
+        
+        # Ekstrak dan resolve nama/deskripsi lokalisasi
+        raw_name = m.get('name', '')
+        features['_extension_name']       = resolve_localization(ext_dir, raw_name)
         features['_extension_version']    = m.get('version', '')
-        features['_extension_description']= m.get('description', '')
+        
+        raw_desc = m.get('description', '')
+        features['_extension_description']= resolve_localization(ext_dir, raw_desc)
 
         # permissions
         perms = m.get('permissions', [])

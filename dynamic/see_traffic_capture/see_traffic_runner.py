@@ -43,6 +43,40 @@ EVIDENCE_KEYWORDS = {
     "audio_capture": ["microphone", "audio", "getusermedia", "stream", "record", "voice", "speech", "webrtc"],
 }
 
+def resolve_localization(ext_dir: str, value: str) -> str:
+    """Resolve __MSG_something__ dari folder _locales."""
+    if not value or not isinstance(value, str) or not value.startswith("__MSG_"):
+        return value
+    key = value.replace("__MSG_", "").replace("__", "")
+    
+    locales_dir = Path(ext_dir) / "_locales"
+    if not locales_dir.exists():
+        return value
+        
+    for lang in ["en", "en_US", "en_GB"]:
+        msg_file = locales_dir / lang / "messages.json"
+        if msg_file.exists():
+            try:
+                with open(msg_file, "r", encoding="utf-8", errors="ignore") as f:
+                    msgs = json.load(f)
+                    if key in msgs and "message" in msgs[key]:
+                        return msgs[key]["message"]
+            except:
+                pass
+                
+    for child in locales_dir.iterdir():
+        if child.is_dir():
+            msg_file = child / "messages.json"
+            if msg_file.exists():
+                try:
+                    with open(msg_file, "r", encoding="utf-8", errors="ignore") as f:
+                        msgs = json.load(f)
+                        if key in msgs and "message" in msgs[key]:
+                            return msgs[key]["message"]
+                except:
+                    pass
+    return value
+
 # Well-known infrastructure domains (not suspicious by themselves)
 INFRASTRUCTURE_DOMAINS = {
     "google.com", "googleapis.com", "gstatic.com", "googleusercontent.com",
@@ -138,8 +172,10 @@ class SEETrafficRunner:
     def _get_extension_name(self):
         """Return manifest name."""
         name = self.manifest.get("name", "")
+        name = resolve_localization(self.ext_dir, name)
         if not name or name.startswith("__MSG_"):
             name = self.manifest.get("short_name", os.path.basename(self.ext_dir))
+            name = resolve_localization(self.ext_dir, name)
         return name
 
     def _get_extension_id(self):

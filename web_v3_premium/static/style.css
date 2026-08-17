@@ -542,7 +542,7 @@ input[type="text"]:focus {
     margin-bottom: 0.3rem;
     line-height: 1.4;
 }
-.term-line.info { color: #ffffff; }
+.term-line.info { color: #38bdf8; }
 .term-line.warn { color: #fbbf24; }
 .term-line.error { color: #f87171; }
 .term-line.success { color: #4ade80; }
